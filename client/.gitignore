@@ -6,11 +6,12 @@
 .pnp.js
 
 # testing
-/coverage
+/__test__/coverage
 
 # next.js
 /.next/
 /out/
+.swc
 
 # production
 /build
