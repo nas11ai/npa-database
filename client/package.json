@@ -1,5 +1,5 @@
 {
-  "name": "NPA Database Client",
+  "name": "npa-database-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
