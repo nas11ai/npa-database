@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>Noble Property Asia | Database Management System</title>
-        <link rel="shortcut icon" href="/assets/npa-logo.png" />
+        <link rel="shortcut icon" href="/images/npa-logo.png" />
       </Head>
       <Component {...pageProps} />
     </>
