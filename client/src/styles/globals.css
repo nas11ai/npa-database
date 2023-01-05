@@ -5,6 +5,6 @@
 
 @layer base {
   body {
-    @apply font-inter;
+    @apply font-inter text-npa-neutral-900;
   }
 }
