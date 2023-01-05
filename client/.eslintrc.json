@@ -50,7 +50,11 @@
         }
       }
     ],
-    "import/no-unresolved": [2, { "commonjs": true, "amd": true }],
+    "import/no-unresolved": [
+      2,
+      { "ignore": ["^@/"], "commonjs": true, "amd": true }
+    ],
+    "import/extensions": ["error", "never"],
     "import/named": 2,
     "import/namespace": 2,
     "import/default": 2,
@@ -75,6 +79,7 @@
     "react/jsx-newline": 0,
     "react/jsx-closing-tag-location": 0,
     "react/no-multi-comp": 0,
+    "eslintimport/extensions": 0,
     "array-element-newline": 0,
     "react/jsx-max-props-per-line": 0,
     "no-extra-parens": 0,
