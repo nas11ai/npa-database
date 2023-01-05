@@ -2,7 +2,8 @@
   "root": true,
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
@@ -14,21 +15,22 @@
     "plugin:import/warnings",
     "next/core-web-vitals"
   ],
-  "overrides": [
-    // Only uses Testing Library lint rules in test files
-    {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
-    }
-  ],
+  "plugins": ["react", "prettier", "import", "testing-library"],
+
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "import", "prettier", "testing-library"],
+  "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "./src/__tests__/**/*.[jt]s?(x)",
+        "./src/**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ],
   "rules": {
     "import/order": [
       "error",
@@ -48,16 +50,44 @@
         }
       }
     ],
-    // "import/no-unresolved": [2, { "commonjs": true, "amd": true }],
-    // "import/named": 2,
-    // "import/namespace": 2,
-    // "import/default": 2,
-    // "import/export": 2,
+    "import/no-unresolved": [2, { "commonjs": true, "amd": true }],
+    "import/named": 2,
+    "import/namespace": 2,
+    "import/default": 2,
+    "import/export": 2,
     "prettier/prettier": "error",
     "prefer-arrow-callback": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-no-literals": 0,
     "arrow-body-style": "off",
     "quotes": ["error", "double"],
+    "object-curly-newline": 0,
+    "no-console": "off",
+    "one-var": ["error", "never"],
+    "quote-props": 0,
+    "react/prop-types": 0,
+    "react/jsx-indent": 0,
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-max-depth": 0,
+    "react/jsx-newline": 0,
+    "react/jsx-closing-tag-location": 0,
+    "react/no-multi-comp": 0,
+    "array-element-newline": 0,
+    "react/jsx-max-props-per-line": 0,
+    "no-extra-parens": 0,
+    "react/jsx-curly-newline": 0,
+    "react/jsx-wrap-multilines": 0,
+    "react/jsx-fragments": 0,
+    "react/jsx-curly-brace-presence": 0,
+    "react/jsx-props-no-multi-spaces": 0,
+    "react/jsx-no-bind": 0,
+    "new-cap": 0,
+    "react/style-prop-object": 0,
+    "dot-location": 0,
+    "no-trailing-spaces": 0,
     "lines-around-comment": [
       "error",
       {
