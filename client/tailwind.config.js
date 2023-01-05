@@ -11,8 +11,15 @@ module.exports = {
       md: "0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06)",
       lg: "0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)",
       xl: "0px 20px 25px -5px rgba(16, 24, 40, 0.08), 0px 10px 10px -5px rgba(16, 24, 40, 0.03)",
+      input: "inset 1px 2px 4px rgba(0, 0, 0, 0.1)",
     },
     extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
+      borderWidth: {
+        1: "1px",
+      },
       colors: {
         npa: {
           neutral: {
@@ -81,9 +88,6 @@ module.exports = {
             900: "#0a152d",
           },
         },
-      },
-      fontFamily: {
-        inter: ["Inter", "sans-serif"],
       },
     },
   },
