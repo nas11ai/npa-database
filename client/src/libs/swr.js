@@ -1,7 +1,7 @@
 import useSWR from "swr";
 
-import axios from "./axios";
+import { instance } from "./axios";
 
-const fetcher = (endpoint) => axios.get(endpoint).then((res) => res.data);
+const fetcher = (endpoint) => instance.get(endpoint).then((res) => res.data);
 
 export { useSWR, fetcher };
