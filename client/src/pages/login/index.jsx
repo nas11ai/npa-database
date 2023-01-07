@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
+import { LoginAlert } from "./login-alert";
 import { LoginButton } from "./login-button";
-import { LoginErrorText } from "./login-error-text";
 
 import { InputField, Label } from "@/components";
 import { instance } from "@/libs";
@@ -13,6 +14,7 @@ const Login = () => {
     control,
     handleSubmit,
     trigger,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: "onSubmit",
@@ -22,22 +24,35 @@ const Login = () => {
     },
   });
 
+  const [isAlertIsShow, setIsAlertIsShow] = useState(false);
+
   const onSubmit = async (data) => {
-    await instance.post("/login", data);
+    const res = await instance.post("/login", data);
+    reset({}, { keepDefaultValues: true });
+
+    console.log(res);
   };
 
   const onError = (error) => {
-    console.error("ERORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-    console.error("error", error);
+    setIsAlertIsShow(true);
+    reset(
+      {},
+      {
+        keepValues: true,
+        keepDirtyValues: true,
+        keepErrors: true,
+        keepTouched: false,
+        keepIsValid: true,
+        keepDefaultValues: false,
+      }
+    );
+
+    console.error(error);
   };
 
   return (
-    <section
-      className={
-        "flex h-screen items-center justify-center bg-npa-login-background bg-cover bg-no-repeat object-cover py-6"
-      }
-    >
-      <div className="flex h-max w-[90%] max-w-xl flex-col gap-8 rounded-2xl bg-white p-10 shadow-xl xl:w-[650px] xl:max-w-[650px] xl:gap-10">
+    <section className="flex h-screen items-center justify-center bg-npa-login-background bg-cover bg-no-repeat object-cover py-6">
+      <div className="flex h-max w-[90%] max-w-xl flex-col gap-8 rounded-2xl bg-white p-10 shadow-xl xl:gap-10">
         <div className="flex flex-col items-center gap-8 xl:gap-10">
           <Image
             src={npaLogoFull}
@@ -54,6 +69,9 @@ const Login = () => {
             </p>
           </div>
         </div>
+        {isAlertIsShow && (
+          <LoginAlert onAlertIsShow={() => setIsAlertIsShow(false)} />
+        )}
         <form
           className="flex flex-col gap-10"
           onSubmit={(event) => {
@@ -75,7 +93,7 @@ const Login = () => {
                 name="username"
                 control={control}
                 rules={{
-                  required: "Username harus diisi!",
+                  required: "Username is required",
                 }}
                 render={({
                   field: { value, ref, onChange, onBlur },
@@ -86,7 +104,7 @@ const Login = () => {
                     id="username"
                     value={value}
                     disabled={isSubmitting}
-                    placeholder="Masukkan username"
+                    placeholder="Enter username"
                     isError={errors.username}
                     inputRef={ref}
                     onChange={onChange}
@@ -95,9 +113,11 @@ const Login = () => {
                   />
                 )}
               />
-              <LoginErrorText isShow={errors.username}>
-                {errors.username?.message}
-              </LoginErrorText>
+              {errors?.username && (
+                <p className="text-sm text-red-500">
+                  {errors?.username.message}
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col gap-3">
@@ -109,7 +129,7 @@ const Login = () => {
                 name="password"
                 control={control}
                 rules={{
-                  required: "Password harus diisi!",
+                  required: "Password is required",
                 }}
                 render={({
                   field: { value, ref, onChange, onBlur },
@@ -120,7 +140,7 @@ const Login = () => {
                     id="password"
                     value={value}
                     disabled={isSubmitting}
-                    placeholder="Masukkan Password"
+                    placeholder="Enter password"
                     isError={errors.password}
                     inputRef={ref}
                     onBlur={onBlur}
@@ -129,10 +149,11 @@ const Login = () => {
                   />
                 )}
               />
-
-              <LoginErrorText isShow={errors.password}>
-                {errors.password?.message}
-              </LoginErrorText>
+              {errors?.password && (
+                <p className="text-sm text-red-500">
+                  {errors?.password.message}
+                </p>
+              )}
             </div>
           </div>
 
