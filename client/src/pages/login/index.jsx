@@ -4,15 +4,13 @@ import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
 import { ImSpinner8 } from "react-icons/im";
 
-import npaLogoFull from "../../../public/images/npa-logo-full.png";
+import { LoginAlert } from "./login-alert";
 
-import LoginAlert from "./login-alert";
+import { InputField, Label } from "@/components";
+import { instance } from "@/libs";
+import npaLogoFull from "@/public/images/npa-logo-full.png";
 
-import InputField from "@/components/InputField";
-import Label from "@/components/Label";
-import axios from "@/libs/axios";
-
-export default function Login() {
+const Login = () => {
   const {
     control,
     handleSubmit,
@@ -26,7 +24,7 @@ export default function Login() {
   });
 
   const onSubmit = async (data) => {
-    await axios.post("/login", data);
+    await instance.post("/login", data);
   };
 
   const onError = (error) => {
@@ -157,4 +155,6 @@ export default function Login() {
       </div>
     </section>
   );
-}
+};
+
+export default Login;
