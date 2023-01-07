@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-export const LoginAlert = ({ children, isShow }) => {
+export const LoginErrorText = ({ children, isShow }) => {
   return (
     <div
       className={classNames(
@@ -14,4 +14,4 @@ export const LoginAlert = ({ children, isShow }) => {
   );
 };
 
-export default LoginAlert;
+export default LoginErrorText;
