@@ -20,6 +20,9 @@ module.exports = {
       borderWidth: {
         1: "1px",
       },
+      backgroundImage: {
+        "npa-login-background": "url('/images/npa-login-background.jpg')",
+      },
       colors: {
         npa: {
           neutral: {
