@@ -40,6 +40,7 @@
     "import/namespace": 2,
     "import/default": 2,
     "import/export": 2,
+    "react/function-component-definition": 0,
     "import/extensions": 0,
     "import/prefer-default-export": 0,
     "prefer-arrow-callback": 0,
@@ -107,13 +108,7 @@
       2,
       { "ignore": ["^@/"], "commonjs": true, "amd": true }
     ],
-    "react/function-component-definition": [
-      1,
-      {
-        "namedComponents": "arrow-function",
-        "unnamedComponents": "function-expression"
-      }
-    ],
+
     "lines-around-comment": [
       "error",
       {
