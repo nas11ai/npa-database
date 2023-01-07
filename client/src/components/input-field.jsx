@@ -8,6 +8,7 @@ export const InputField = ({
   placeholder,
   disabled,
   onTouched,
+  inputRef,
   onChange,
   onBlur,
   isError,
@@ -16,7 +17,7 @@ export const InputField = ({
   return (
     <div
       className={classNames(
-        "flex items-center justify-between rounded-lg border-1 border-npa-neutral-400  px-6 py-4 duration-300 focus-within:shadow-input focus-within:ring-4",
+        "flex items-center justify-between rounded-lg border-1 border-npa-neutral-400 py-3 px-4 duration-300 focus-within:shadow-input focus-within:ring-4 md:px-5 xl:py-4 xl:px-6",
         {
           "bg-npa-neutral-50 focus-within:ring-npa-primary-400/20 hover:border-npa-primary-400":
             !disabled && !isError,
@@ -34,6 +35,7 @@ export const InputField = ({
         placeholder={placeholder}
         disabled={disabled}
         value={value}
+        ref={inputRef}
         onBlur={onBlur}
         onChange={onChange}
         className={classNames(
