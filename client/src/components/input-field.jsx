@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { RiErrorWarningFill } from "react-icons/ri";
 
-export default function InputField({
+export const InputField = ({
   type = "text",
   id,
   value,
@@ -11,7 +11,7 @@ export default function InputField({
   onChange,
   onBlur,
   isError,
-}) {
+}) => {
   console.log(isError, id);
   return (
     <div
@@ -52,4 +52,4 @@ export default function InputField({
       />
     </div>
   );
-}
+};
