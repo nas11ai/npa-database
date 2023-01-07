@@ -1,10 +1,8 @@
-import classNames from "classnames";
 import Image from "next/image";
-import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
-import { ImSpinner8 } from "react-icons/im";
 
 import { LoginAlert } from "./login-alert";
+import { LoginButton } from "./login-button";
 
 import { InputField, Label } from "@/components";
 import { instance } from "@/libs";
@@ -14,6 +12,7 @@ const Login = () => {
   const {
     control,
     handleSubmit,
+    trigger,
     formState: { errors, isSubmitting },
   } = useForm({
     mode: "onSubmit",
@@ -33,18 +32,24 @@ const Login = () => {
   };
 
   return (
-    <section className="flex h-screen items-center justify-center bg-npa-neutral-50">
-      <div className="flex w-[90%] flex-col gap-10 rounded-2xl bg-white p-10 shadow-xl lg:w-[650px] lg:max-w-[650px]">
-        <div className="flex flex-col items-center gap-10">
+    <section
+      className={
+        "flex h-screen items-center justify-center bg-npa-login-background bg-cover bg-no-repeat object-cover py-6"
+      }
+    >
+      <div className="flex h-max w-[90%] flex-col gap-8 rounded-2xl bg-white p-10 shadow-xl lg:w-[650px] lg:max-w-[650px] xl:gap-10">
+        <div className="flex flex-col items-center gap-8 xl:gap-10">
           <Image
             src={npaLogoFull}
             alt="Noble Properties Asia Logo"
-            className="object-contain"
+            className="w-44 bg-cover object-contain xl:w-60"
             priority
           />
-          <div className="text-center">
-            <h1 className="text-2xl font-semibold">Welcome to NPA Database</h1>
-            <p className="text-sm">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <h1 className="text-xl font-semibold xl:text-2xl">
+              Welcome to NPA Database
+            </h1>
+            <p className="xl:text-sm">
               Sign in under using an account to access the dashboard
             </p>
           </div>
@@ -73,7 +78,7 @@ const Login = () => {
                   required: "Username harus diisi!",
                 }}
                 render={({
-                  field: { value, onChange, onBlur },
+                  field: { value, ref, onChange, onBlur },
                   fieldState: { isTouched },
                 }) => (
                   <InputField
@@ -83,6 +88,7 @@ const Login = () => {
                     disabled={isSubmitting}
                     placeholder="Masukkan username"
                     isError={errors.username}
+                    inputRef={ref}
                     onChange={onChange}
                     onBlur={onBlur}
                     onTouched={isTouched}
@@ -106,7 +112,7 @@ const Login = () => {
                   required: "Password harus diisi!",
                 }}
                 render={({
-                  field: { value, onChange, onBlur },
+                  field: { value, ref, onChange, onBlur },
                   fieldState: { isTouched },
                 }) => (
                   <InputField
@@ -116,6 +122,7 @@ const Login = () => {
                     disabled={isSubmitting}
                     placeholder="Masukkan Password"
                     isError={errors.password}
+                    inputRef={ref}
                     onBlur={onBlur}
                     onChange={onChange}
                     onTouched={isTouched}
@@ -129,28 +136,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center gap-5">
-            <button
-              type="submit"
-              className="flex w-full items-center justify-center gap-3 rounded-xl bg-npa-primary-400 p-4 text-white duration-200 hover:brightness-90 disabled:cursor-not-allowed disabled:bg-npa-primary-500/60"
-              disabled={isSubmitting}
-            >
-              <ImSpinner8
-                className={classNames("animate-spin", {
-                  block: isSubmitting,
-                  hidden: !isSubmitting,
-                })}
-              />
-              SIGN IN
-            </button>
-
-            <Link
-              href={"/login"}
-              className="text-npa-primary-400 duration-200 hover:brightness-75"
-            >
-              Forgot password?
-            </Link>
-          </div>
+          <LoginButton isSubmitting={isSubmitting} trigger={trigger} />
         </form>
       </div>
     </section>
