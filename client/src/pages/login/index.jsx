@@ -37,7 +37,7 @@ const Login = () => {
         "flex h-screen items-center justify-center bg-npa-login-background bg-cover bg-no-repeat object-cover py-6"
       }
     >
-      <div className="flex h-max w-[90%] flex-col gap-8 rounded-2xl bg-white p-10 shadow-xl md:w-[650px] md:max-w-[650px] xl:gap-10">
+      <div className="flex h-max w-[90%] max-w-xl flex-col gap-8 rounded-2xl bg-white p-10 shadow-xl xl:w-[650px] xl:max-w-[650px] xl:gap-10">
         <div className="flex flex-col items-center gap-8 xl:gap-10">
           <Image
             src={npaLogoFull}
