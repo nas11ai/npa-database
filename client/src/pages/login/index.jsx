@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useForm, Controller } from "react-hook-form";
 
-import { LoginAlert } from "./login-alert";
 import { LoginButton } from "./login-button";
+import { LoginErrorText } from "./login-error-text";
 
 import { InputField, Label } from "@/components";
 import { instance } from "@/libs";
@@ -95,9 +95,9 @@ const Login = () => {
                   />
                 )}
               />
-              <LoginAlert isShow={errors.username}>
+              <LoginErrorText isShow={errors.username}>
                 {errors.username?.message}
-              </LoginAlert>
+              </LoginErrorText>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -130,9 +130,9 @@ const Login = () => {
                 )}
               />
 
-              <LoginAlert isShow={errors.password}>
+              <LoginErrorText isShow={errors.password}>
                 {errors.password?.message}
-              </LoginAlert>
+              </LoginErrorText>
             </div>
           </div>
 
