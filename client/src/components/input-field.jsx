@@ -13,7 +13,6 @@ export const InputField = ({
   onBlur,
   isError,
 }) => {
-  console.log(isError, id);
   return (
     <div
       className={classNames(
