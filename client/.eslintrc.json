@@ -16,7 +16,6 @@
     "next/core-web-vitals"
   ],
   "plugins": ["react", "prettier", "import", "testing-library"],
-
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
@@ -40,39 +39,45 @@
     "import/namespace": 2,
     "import/default": 2,
     "import/export": 2,
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",
+        "children": "never"
+      }
+    ],
+    "react/jsx-indent": [2, 2, { "indentLogicalExpressions": true }],
     "react/function-component-definition": 0,
     "import/extensions": 0,
     "import/prefer-default-export": 0,
     "prefer-arrow-callback": 0,
-    "react/jsx-props-no-spreading": 0,
-    "react/react-in-jsx-scope": 0,
-    "react/jsx-no-literals": 0,
     "arrow-body-style": 0,
     "object-curly-newline": 0,
     "no-console": 0,
     "quote-props": 0,
     "react/prop-types": 0,
-    "react/jsx-indent": 0,
+    "react/no-multi-comp": 0,
+    "eslintimport/extensions": 0,
+    "array-element-newline": 0,
+    "no-extra-parens": 0,
+    "new-cap": 0,
+    "react/style-prop-object": 0,
+    "dot-location": 0,
+    "no-trailing-spaces": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-no-literals": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-one-expression-per-line": 0,
     "react/jsx-max-depth": 0,
     "react/jsx-newline": 0,
     "react/jsx-closing-tag-location": 0,
-    "react/no-multi-comp": 0,
-    "eslintimport/extensions": 0,
-    "array-element-newline": 0,
     "react/jsx-max-props-per-line": 0,
-    "no-extra-parens": 0,
     "react/jsx-curly-newline": 0,
     "react/jsx-wrap-multilines": 0,
     "react/jsx-fragments": 0,
-    "react/jsx-curly-brace-presence": 0,
     "react/jsx-props-no-multi-spaces": 0,
     "react/jsx-no-bind": 0,
-    "new-cap": 0,
-    "react/style-prop-object": 0,
-    "dot-location": 0,
-    "no-trailing-spaces": 0,
     "import/order": [
       "error",
       {
@@ -108,7 +113,6 @@
       2,
       { "ignore": ["^@/"], "commonjs": true, "amd": true }
     ],
-
     "lines-around-comment": [
       "error",
       {
