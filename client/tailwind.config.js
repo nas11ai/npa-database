@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
@@ -9,8 +11,18 @@ module.exports = {
       md: "0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06)",
       lg: "0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)",
       xl: "0px 20px 25px -5px rgba(16, 24, 40, 0.08), 0px 10px 10px -5px rgba(16, 24, 40, 0.03)",
+      input: "inset 1px 2px 4px rgba(0, 0, 0, 0.1)",
     },
     extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
+      borderWidth: {
+        1: "1px",
+      },
+      backgroundImage: {
+        "npa-login-background": "url('/images/npa-login-background.jpg')",
+      },
       colors: {
         npa: {
           neutral: {
@@ -80,10 +92,11 @@ module.exports = {
           },
         },
       },
-      fontFamily: {
-        inter: ["Inter", "sans-serif"],
-      },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/forms")({
+      strategy: "class", // only generate classes
+    }),
+  ],
 };
