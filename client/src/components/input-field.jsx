@@ -71,6 +71,15 @@ export const InputField = ({
           onClick={handleVisiblePassword}
         />
       )}
+
+      {type !== "password" && (
+        <RiErrorWarningFill
+          className={classNames("h-6 w-6 text-npa-error-500", {
+            hidden: !isError,
+            block: isError,
+          })}
+        />
+      )}
     </div>
   );
 };
