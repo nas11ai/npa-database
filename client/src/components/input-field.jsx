@@ -55,23 +55,22 @@ export const InputField = ({
       />
       {isVisible && type === "password" && (
         <AiFillEyeInvisible
-          className="h-6 w-6 cursor-pointer text-npa-neutral-400"
+          className={classNames("h-6 w-6 cursor-pointer", {
+            "text-npa-error-500": isError,
+            "text-npa-neutral-400": !isError,
+          })}
           onClick={handleVisiblePassword}
         />
       )}
       {!isVisible && type === "password" && (
         <AiFillEye
-          className="h-6 w-6 cursor-pointer text-npa-neutral-400"
+          className={classNames("h-6 w-6 cursor-pointer", {
+            "text-npa-error-500": isError,
+            "text-npa-neutral-400": !isError,
+          })}
           onClick={handleVisiblePassword}
         />
       )}
-
-      <RiErrorWarningFill
-        className={classNames("h-6 w-6 text-npa-error-500", {
-          hidden: !isError,
-          block: isError,
-        })}
-      />
     </div>
   );
 };
