@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { ImSpinner8 } from "react-icons/im";
 
-export const LoginButton = ({ isSubmitting, trigger }) => {
+const LoginButton = ({ isSubmitting, trigger }) => {
   return (
     <button
       type="submit"
@@ -21,3 +21,5 @@ export const LoginButton = ({ isSubmitting, trigger }) => {
     </button>
   );
 };
+
+export default LoginButton;
