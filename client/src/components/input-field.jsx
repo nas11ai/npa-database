@@ -1,4 +1,6 @@
 import classNames from "classnames";
+import { useState } from "react";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { RiErrorWarningFill } from "react-icons/ri";
 
 export const InputField = ({
@@ -13,6 +15,12 @@ export const InputField = ({
   onBlur,
   isError,
 }) => {
+  const [isVisible, setIsVisible] = useState(!(type === "password"));
+
+  const handleVisiblePassword = () => {
+    setIsVisible((oldValue) => !oldValue);
+  };
+
   return (
     <div
       className={classNames(
@@ -29,7 +37,7 @@ export const InputField = ({
       )}
     >
       <input
-        type={type}
+        type={isVisible ? "text" : "password"}
         id={id}
         placeholder={placeholder}
         disabled={disabled}
@@ -45,12 +53,33 @@ export const InputField = ({
           }
         )}
       />
-      <RiErrorWarningFill
-        className={classNames("h-6 w-6 text-npa-error-500", {
-          hidden: !isError,
-          block: isError,
-        })}
-      />
+      {isVisible && type === "password" && (
+        <AiFillEyeInvisible
+          className={classNames("h-6 w-6 cursor-pointer", {
+            "text-npa-error-500": isError,
+            "text-npa-neutral-400": !isError,
+          })}
+          onClick={handleVisiblePassword}
+        />
+      )}
+      {!isVisible && type === "password" && (
+        <AiFillEye
+          className={classNames("h-6 w-6 cursor-pointer", {
+            "text-npa-error-500": isError,
+            "text-npa-neutral-400": !isError,
+          })}
+          onClick={handleVisiblePassword}
+        />
+      )}
+
+      {type !== "password" && (
+        <RiErrorWarningFill
+          className={classNames("h-6 w-6 text-npa-error-500", {
+            hidden: !isError,
+            block: isError,
+          })}
+        />
+      )}
     </div>
   );
 };

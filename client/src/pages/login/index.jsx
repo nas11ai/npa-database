@@ -2,8 +2,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
-import { LoginAlert } from "./login-alert";
-import { LoginButton } from "./login-button";
+import LoginAlert from "./login-alert";
+import LoginButton from "./login-button";
 
 import { InputField, Label } from "@/components";
 import { instance } from "@/libs";
