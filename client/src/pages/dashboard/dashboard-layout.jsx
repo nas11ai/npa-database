@@ -5,7 +5,7 @@ export const DashboardLayout = ({ children }) => {
   return (
     <>
       <Aside />
-      <div className="flex flex-col">
+      <div className="flex w-full flex-col">
         <Header />
         <main>{children}</main>
       </div>
