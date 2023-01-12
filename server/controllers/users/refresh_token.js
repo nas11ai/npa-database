@@ -47,7 +47,7 @@ router.post("/", async (req, res, next) => {
     res.status(200).json({
       error: false,
       message: "Access token has not expired yet",
-      accessToken: "",
+      access_token: "",
     });
     return;
   }
@@ -55,7 +55,7 @@ router.post("/", async (req, res, next) => {
   res.status(201).json({
     error: false,
     message: "New access token has been created",
-    accessToken: newAccessToken
+    access_token: newAccessToken
   });
 });
 

@@ -25,10 +25,10 @@ router.post('/', isLoggedIn, async (req, res, next) => {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   });
 
-  res.status(200).send({
+  res.status(200).json({
     error: false,
     message: "Login success",
-    accessToken: newAccessToken
+    access_token: newAccessToken
   });
 });
 
