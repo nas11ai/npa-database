@@ -5,10 +5,10 @@
 
 @layer base {
   body {
-    @apply font-inter text-npa-neutral-900;
+    @apply overflow-hidden font-inter text-npa-neutral-900;
   }
 
   #__next {
-    @apply relative flex;
+    @apply relative flex min-h-screen overflow-auto;
   }
 }
