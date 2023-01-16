@@ -8,7 +8,7 @@ API ini dibuat menggunakan teknologi berikut:
 
 ## Endpoint
 
-http://localhost:3001
+https://npa-database-production.up.railway.app
 
 # User
 
