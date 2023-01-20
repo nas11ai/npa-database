@@ -19,6 +19,9 @@ const { connectToDatabase } = require("./utils/db");
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 79b4eb1 (fix: cors policy error and cookie does not included in browser)
 const corsOptions = {
 <<<<<<< HEAD
   origin: [
