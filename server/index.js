@@ -15,6 +15,7 @@ const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const corsOptions = {
 <<<<<<< HEAD
   origin: [
