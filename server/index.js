@@ -89,6 +89,7 @@ const corsOptions = {
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
   credentials: true,
+<<<<<<< HEAD
 };
 
 app.set("trust proxy", 1);
