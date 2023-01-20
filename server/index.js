@@ -16,6 +16,7 @@ const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const corsOptions = {
 <<<<<<< HEAD
   origin: [
@@ -67,6 +68,14 @@ app.use(function (req, res, next) {
   next();
 });
 >>>>>>> f040049 (feat: using self made middleware for cors policy)
+=======
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+>>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
 app.use(express.json());
 app.use(cookieParser());
 

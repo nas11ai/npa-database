@@ -28,6 +28,22 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+<<<<<<< HEAD
+=======
+
+  res.cookie('refresh_token', newRefreshToken, {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  });
+
+  res.status(200).json({
+    error: false,
+    message: "Login success",
+    access_token: newAccessToken
+  });
+>>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
 });
 
 module.exports = router;
