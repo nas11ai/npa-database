@@ -28,7 +28,6 @@ const corsOptions = {
 app.set("trust proxy", 1);
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
