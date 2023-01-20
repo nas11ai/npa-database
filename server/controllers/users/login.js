@@ -27,6 +27,20 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
+  res.cookie('refresh_token', newRefreshToken, {
+    httpOnly: true,
+    sameSite: 'none',
+    //TODO: ganti ke true kalau sudah di deploy
+    secure: false,
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+  });
+
+  res.status(200).json({
+    error: false,
+    message: "Login success",
+    access_token: newAccessToken
+  });
 });
 
 module.exports = router;
