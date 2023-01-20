@@ -24,11 +24,16 @@ const corsOptions = {
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
   credentials: true,
+<<<<<<< HEAD
 };
 
 app.set("trust proxy", 1);
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
+=======
+  // methods: 'GET,POST,PUT,DELETE',
+}))
+>>>>>>> 5e60dde (fix: commenting methods in cors)
 app.use(express.json());
 app.use(cookieParser());
 
