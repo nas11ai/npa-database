@@ -19,17 +19,11 @@ const { connectToDatabase } = require("./utils/db");
 <<<<<<< HEAD
 <<<<<<< HEAD
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://na-database.vercel.app',
-    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
-    'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
-  ],
+  origin: 'http://localhost:3000',
   credentials: true,
 };
 
 app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
