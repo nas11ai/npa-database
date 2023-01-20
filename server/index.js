@@ -13,7 +13,7 @@ const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
 app.use(cors({
-  origin: '*',
+  origin: ['http://localhost:3000'],
   credentials: true,
   methods: 'GET,POST,PUT,DELETE',
 }));
