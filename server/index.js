@@ -50,8 +50,9 @@ const corsOptions = {
   origin: ['http://localhost:3000', 'https://na-database.vercel.app/', 'https://fe-na-database-bdilh31im-xploratech.vercel.app'],
 >>>>>>> e830b00 (feat: add more origin for cors policy)
   credentials: true,
-  // methods: 'GET,POST,PUT,DELETE',
-}))
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
