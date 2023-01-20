@@ -20,8 +20,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
   res.cookie('refresh_token', newRefreshToken, {
     httpOnly: true,
     sameSite: 'none',
-    //TODO: ganti ke true kalau sudah di deploy
-    secure: false,
+    secure: true,
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   });
 
