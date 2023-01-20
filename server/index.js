@@ -12,7 +12,11 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
-app.use(cors({ credentials: true }));
+app.use(cors({
+  origin: '*',
+  credentials: true,
+  methods: 'GET,POST,PUT,DELETE',
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
