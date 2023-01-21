@@ -8,6 +8,7 @@ router.post('/', async (req, res, next) => {
   const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
@@ -31,6 +32,7 @@ router.post('/', async (req, res, next) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
+<<<<<<< HEAD
 <<<<<<< HEAD
       maxAge: 24 * 60 * 60 * 1000,
 >>>>>>> 7c3571e (feat: remove secure:true for development)
