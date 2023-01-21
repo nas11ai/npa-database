@@ -1,20 +1,29 @@
 const router = require('express').Router();
 const { refreshTokenValidator } = require("../../services/users");
 
-router.post("/", async (req, res, next) => {
-  const refreshToken = req.cookies.refresh_token
+router.get("/", async (req, res, next) => {
+  try {
+    console.log(req.cookies);
 
-  const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
+    const cookies = req.cookies;
 
-  const { newAccessToken, userRole, error } = await refreshTokenValidator(refreshToken);
-  if (error) {
-    res.clearCookie('refresh_token');
-    res.status(error.statusCode).json({
-      error: true,
-      name: error.name,
-      message: error.message,
+    if (!cookies?.jwt) {
+      throw new RefreshTokenError(401, "Missing refresh token");
+    }
+
+    const refreshToken = cookies.jwt
+
+    const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
+
+    res.status(201).json({
+      error: false,
+      message: "New access token has been created",
+      user_role: userRole,
+      access_token: newAccessToken,
     });
-    return;
+  } catch (error) {
+    // res.clearCookie('refresh_token');
+    next(error);
   }
 
   res.status(201).json({
