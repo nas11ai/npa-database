@@ -45,6 +45,18 @@ router.get("/", async (req, res, next) => {
     const cookies = req.cookies;
 
     if (!cookies?.jwt) {
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
+      // TODO: ganti console ke log kalau sudah mau production
+      console.error(err);
+      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+=======
+router.get("/", async (req, res, next) => {
+  try {
+    console.log(req.cookies);
+
+    const cookies = req.cookies;
+
+    if (!cookies?.jwt) {
       throw new RefreshTokenError(401, "Missing refresh token");
 >>>>>>> 7c3571e (feat: remove secure:true for development)
     }
