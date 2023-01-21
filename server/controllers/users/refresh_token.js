@@ -1,10 +1,32 @@
-const router = require('express').Router();
-const { refreshTokenValidator } = require("../../services/users");
+const jwt = require('jsonwebtoken');
 
-<<<<<<< HEAD
-const { SuccessResponse, DataDetails, ErrorResponse, ErrorDetails } = require("../../models/response");
+const { ErrorResponse, ErrorDetails } = require("../models/response");
+const {
+  ACCESS_TOKEN_SECRET,
+  TOKEN_ALGORITHM,
+  TOKEN_ISSUER,
+  TOKEN_AUDIENCE,
+} = require("../utils/config");
 
-router.get("/", async (req, res, next) => {
+const accessTokenValidator = (req, res, next) => {
+  const authorizationHeader = req.header('authorization');
+  if (!authorizationHeader) {
+    const err = new ErrorDetails("AccessTokenError", "access_token", "access token is wrong");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+  }
+
+  const parts = authorizationHeader.split(' ');
+  if (parts.length !== 2 || parts[0].toLowerCase() !== 'bearer') {
+    const err = new ErrorDetails("AccessTokenError", "access_token", "access token is missing");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+  }
+
+  const accessToken = parts[1];
+
   try {
     const cookies = req.cookies;
     if (!cookies?.jwt) {
@@ -52,21 +74,13 @@ router.post("/", async (req, res, next) => {
     return;
   }
 
-    if (!cookies?.jwt) {
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
+    next();
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      const err = new ErrorDetails("AccessTokenError", "access_token", "access token has expired");
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);
       throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-=======
-router.get("/", async (req, res, next) => {
-  try {
-    console.log(req.cookies);
-
-    const cookies = req.cookies;
-
-    if (!cookies?.jwt) {
-      throw new RefreshTokenError(401, "Missing refresh token");
->>>>>>> 7c3571e (feat: remove secure:true for development)
     }
 
     const refreshToken = cookies.jwt
@@ -93,4 +107,4 @@ router.get("/", async (req, res, next) => {
 >>>>>>> 8325ee2 (fix: login and auth logic error)
 });
 
-module.exports = router;
+module.exports = accessTokenValidator

@@ -9,7 +9,6 @@ router.post('/', async (req, res, next) => {
 
     const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
-<<<<<<< HEAD
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
