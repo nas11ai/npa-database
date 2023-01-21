@@ -11,7 +11,6 @@ const {
 } = require("./controllers/users");
 
 //TODO: add allowed origins
-//TODO: add allowed origins
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
@@ -26,6 +25,7 @@ const corsOptions = {
   credentials: true,
 };
 
+app.set("trust proxy", 1);
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
