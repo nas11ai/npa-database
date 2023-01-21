@@ -13,17 +13,25 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://na-database.vercel.app',
-    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
-    'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
-  ],
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: [
+//     'http://localhost:3000',
+//     'https://na-database.vercel.app',
+//     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
+//     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
+//   ],
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
+  next();
+});
 app.use(express.json());
 app.use(cookieParser());
 
