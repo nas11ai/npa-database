@@ -101,14 +101,7 @@ router.post("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   const refreshToken = req.cookies.refresh_token
 
-  if (!refreshToken) {
-    res.status(401).json({
-      error: true,
-      name: "MissingToken",
-      message: "Missing refresh token",
-    });
-    return;
-  }
+  const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
 
   const { newAccessToken, userRole, error } = await refreshTokenValidator(refreshToken);
   if (error) {
@@ -127,7 +120,6 @@ router.post("/", async (req, res, next) => {
     user_role: userRole,
     access_token: newAccessToken,
   });
->>>>>>> 8325ee2 (fix: login and auth logic error)
 });
 
 module.exports = accessTokenValidator
