@@ -15,7 +15,6 @@ router.post('/', async (req, res, next) => {
       secure: true,
       //TODO: Ganti ke 1 hari kalau deployment
       // maxAge: 24 * 60 * 60 * 1000,
-<<<<<<< HEAD
       maxAge: 15 * 1000,
     });
 
