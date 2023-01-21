@@ -7,15 +7,6 @@ router.post('/', async (req, res, next) => {
 
   const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
-    // if (error) {
-    //   res.status(error.statusCode).json({
-    //     error: true,
-    //     name: error.name,
-    //     message: error.message,
-    //   });
-    //   return;
-    // }
-
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
