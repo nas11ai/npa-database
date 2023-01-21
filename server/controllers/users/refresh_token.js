@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
       access_token: newAccessToken,
     });
   } catch (error) {
-    // res.clearCookie('refresh_token');
+    res.clearCookie('refresh_token');
     next(error);
   }
 
