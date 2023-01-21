@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./middleware/error_handler");
 
 const {
   registerRouter,
@@ -35,5 +36,7 @@ const main = async () => {
     console.log(`Server is running on port ${PORT}`);
   })
 }
+
+app.use(errorHandler);
 
 main();
