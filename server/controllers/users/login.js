@@ -33,6 +33,10 @@ router.post('/', async (req, res, next) => {
       secure: false,
       maxAge: 24 * 60 * 60 * 1000,
 >>>>>>> 7c3571e (feat: remove secure:true for development)
+=======
+      // maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 10 * 1000,
+>>>>>>> eb5e7af (feat: change cookie expired time to 10 second)
     });
 
     const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
