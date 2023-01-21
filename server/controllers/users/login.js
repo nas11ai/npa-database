@@ -4,8 +4,7 @@ const { login } = require("../../services/users");
 
 
 router.post('/', async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
+  const { username, password } = req.body;
 
     const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
@@ -56,7 +55,7 @@ router.post('/', async (req, res, next) => {
 
   res.cookie('refresh_token', newRefreshToken, {
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: 'None',
     secure: true,
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
   });

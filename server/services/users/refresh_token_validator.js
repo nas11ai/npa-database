@@ -10,6 +10,7 @@ const {
   TOKEN_ALGORITHM,
   TOKEN_ISSUER,
   TOKEN_AUDIENCE,
+  ENCRYPTION_ALGORITHM,
 } = require("../../utils/config");
 
 <<<<<<< HEAD
@@ -21,7 +22,7 @@ const { SessionBlacklist } = require("../../models");
 
 const refreshTokenValidator = async (refreshToken) => {
   try {
-    const { userId, jti } = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, {
+    const { userId, jwtid } = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, {
       algorithm: TOKEN_ALGORITHM,
       issuer: TOKEN_ISSUER,
       audience: TOKEN_AUDIENCE,
@@ -86,21 +87,36 @@ const refreshTokenValidator = async (refreshToken) => {
 
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      const { userId, jti } = jwt.decode(refreshToken, {
+      const { userId, jwtid } = jwt.decode(refreshToken, {
         algorithm: TOKEN_ALGORITHM,
       });
 
-      const blacklistedToken = await SessionBlacklist.create({ jwtid: jti, refreshToken, userId });
+      const cipher = crypto.createCipheriv(ENCRYPTION_ALGORITHM, crypto.randomBytes(32), crypto.randomBytes(16));
+
+      let encryptedRefreshToken = cipher.update(refreshToken, "utf-8", "hex");
+      encryptedRefreshToken += cipher.final("hex");
+
+      const blacklistedToken = await SessionBlacklist.create({ jwtid, encryptedRefreshToken, userId });
       if (!blacklistedToken) {
-        const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token is wrong");
-        // TODO: ganti console ke log kalau sudah mau production
-        console.error(err);
-        throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+        return {
+          newAccessToken: "",
+          userRole: "",
+          error: {
+            name: "RefreshTokenError",
+            statusCode: 400,
+            message: "Invalid token",
+          },
+        };
       }
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token has expired");
-      // TODO: ganti console ke log kalau sudah mau production
-      console.error(err);
-      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+      return {
+        newAccessToken: "",
+        userRole: "",
+        error: {
+          name: "RefreshTokenError",
+          statusCode: 401,
+          message: "Session has expired",
+        },
+      };
     }
     const err = new ErrorDetails(error.name, "refresh_token", error.message);
     // TODO: ganti console ke log kalau sudah mau production
