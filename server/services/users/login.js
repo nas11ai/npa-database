@@ -31,22 +31,29 @@ const login = async (username, password) => {
     ? await bcrypt.compare(password, user.passwordHash)
     : false;
 
-  if (!passwordExists) {
-    const err = new ErrorDetails("LoginFormError", "password", "password is wrong");
-    // TODO: ganti console ke log kalau sudah mau production
-    console.error(err);
-    throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
+  if (!(user && passwordExists)) {
+    return {
+      newAccessToken: "",
+      newRefreshToken: "",
+      userRole: "",
+      error: {
+        name: "LoginError",
+        statusCode: 401,
+        message: "Invalid username or password"
+      },
+    };
   }
 
   const newAccessToken = jwt.sign({
+    userId: user.id,
+    userRole: user.role,
     userId: user.id,
     userRole: user.role,
   }, ACCESS_TOKEN_SECRET, {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-    //TODO: Change to 10 minute when production
-    expiresIn: '15s'
+    expiresIn: '10m'
   });
 
   const newRefreshToken = jwt.sign({
@@ -56,14 +63,14 @@ const login = async (username, password) => {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-    //TODO: Change to 1 day when production
-    expiresIn: '30s',
+    expiresIn: '1d',
   });
 
   return {
     newAccessToken,
     newRefreshToken,
     userRole: user.role,
+    error: null,
   };
 }
 

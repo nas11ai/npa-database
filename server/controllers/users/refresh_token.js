@@ -1,33 +1,28 @@
 const router = require('express').Router();
 const { refreshTokenValidator } = require("../../services/users");
 
-const { SuccessResponse, DataDetails, ErrorResponse, ErrorDetails } = require("../../models/response");
+router.post("/", async (req, res, next) => {
+  const refreshToken = req.cookies.refresh_token
 
-router.get("/", async (req, res, next) => {
-  try {
-    const cookies = req.cookies;
+  const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
 
-    if (!cookies?.jwt) {
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
-      // TODO: ganti console ke log kalau sudah mau production
-      console.error(err);
-      throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
-    }
-
-    const refreshToken = cookies.jwt
-
-    const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
-
-    const response = new SuccessResponse(201, "CREATED", new DataDetails("bearer_token", {
-      "user_role": userRole,
-      "new_access_token": newAccessToken,
-    }));
-
-    res.status(201).json(response);
-  } catch (error) {
-    res.clearCookie('jwt');
-    next(error);
+  const { newAccessToken, userRole, error } = await refreshTokenValidator(refreshToken);
+  if (error) {
+    res.clearCookie('refresh_token');
+    res.status(error.statusCode).json({
+      error: true,
+      name: error.name,
+      message: error.message,
+    });
+    return;
   }
+
+  res.status(201).json({
+    error: false,
+    message: "New access token has been created",
+    user_role: userRole,
+    access_token: newAccessToken,
+  });
 });
 
 module.exports = router;
