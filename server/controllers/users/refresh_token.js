@@ -28,7 +28,10 @@ const accessTokenValidator = (req, res, next) => {
   const accessToken = parts[1];
 
   try {
+    console.log(req.cookies);
+
     const cookies = req.cookies;
+
     if (!cookies?.jwt) {
       const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
       // TODO: ganti console ke log kalau sudah mau production
@@ -45,7 +48,9 @@ router.get("/", async (req, res, next) => {
       throw new RefreshTokenError(401, "Missing refresh token");
 >>>>>>> 7c3571e (feat: remove secure:true for development)
     }
+
     const refreshToken = cookies.jwt
+
     const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
 
     const response = new SuccessResponse(201, "CREATED", new DataDetails("access_token", {
