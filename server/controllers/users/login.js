@@ -17,11 +17,11 @@ router.post('/', async (req, res, next) => {
     //   return;
     // }
 
-    res.cookie('refresh_token', newRefreshToken, {
+    res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
-      sameSite: 'none',
+      sameSite: 'None',
       secure: true,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({

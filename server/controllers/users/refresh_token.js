@@ -2,13 +2,15 @@ const router = require('express').Router();
 const { refreshTokenValidator } = require("../../services/users");
 const { RefreshTokenError } = require("../../models/error");
 
-router.post("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    const refreshToken = req.cookies.refresh_token
+    const cookies = req.cookies;
 
-    if (!refreshToken) {
+    if (!cookies?.jwt) {
       throw new RefreshTokenError(401, "Missing refresh token");
     }
+
+    const refreshToken = cookies.jwt
 
     const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
 
