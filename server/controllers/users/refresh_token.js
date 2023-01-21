@@ -28,12 +28,16 @@ const accessTokenValidator = (req, res, next) => {
   const accessToken = parts[1];
 
   try {
-    console.log(req.cookies);
+    jwt.verify(accessToken, ACCESS_TOKEN_SECRET, {
+      algorithm: TOKEN_ALGORITHM,
+      issuer: TOKEN_ISSUER,
+      audience: TOKEN_AUDIENCE,
+    });
 
-    const cookies = req.cookies;
-
-    if (!cookies?.jwt) {
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
+    next();
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      const err = new ErrorDetails("AccessTokenError", "access_token", "access token has expired");
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);
       throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
@@ -121,6 +125,6 @@ router.post("/", async (req, res, next) => {
     // res.clearCookie('refresh_token');
     next(error);
   }
-});
+}
 
 module.exports = accessTokenValidator
