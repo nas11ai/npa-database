@@ -1,3 +1,3 @@
-const isLoggedIn = require("./is_logged_in");
+const accessTokenValidator = require("./access_token_validator");
 
-module.exports = { isLoggedIn };
+module.exports = { accessTokenValidator };

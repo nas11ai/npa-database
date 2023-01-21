@@ -12,20 +12,19 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
-app.use(cors({
-  origin: ['http://localhost:3000'],
+const corsOptions = {
+  origin: 'http://localhost:3000',
   credentials: true,
-  methods: 'GET,POST,PUT,DELETE',
-}));
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("NA Database API is running 🥳");
 })
 
-app.use(cors());
-app.use(express.json());
-app.use(cookieParser());
 app.use('/users/register', registerRouter);
 app.use('/users/login', loginRouter);
 app.use('/users/refresh_token', refreshTokenRouter);
