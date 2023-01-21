@@ -21,12 +21,17 @@ router.post('/', async (req, res, next) => {
       sameSite: 'None',
       secure: true,
 <<<<<<< HEAD
+<<<<<<< HEAD
       //TODO: Ganti ke satu hari kalau sudah mau production
       // maxAge: 24 * 60 * 60 * 1000,
       maxAge: 15 * 1000,
 =======
       maxAge: 24 * 60 * 60 * 1000,
 >>>>>>> aa7f850 (feat add secure:true for cookie)
+=======
+      // maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 10 * 1000,
+>>>>>>> eb5e7af (feat: change cookie expired time to 10 second)
     });
 
     const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
