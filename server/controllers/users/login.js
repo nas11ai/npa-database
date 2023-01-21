@@ -2,7 +2,9 @@ const router = require('express').Router();
 const { SuccessResponse, DataDetails } = require('../../models/response');
 const { login } = require("../../services/users");
 router.post('/', async (req, res, next) => {
-  const { username, password } = req.body;
+<<<<<<< HEAD
+  try {
+    const { username, password } = req.body;
 
   const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
