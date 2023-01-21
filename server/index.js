@@ -11,12 +11,14 @@ const {
 } = require("./controllers/users");
 
 //TODO: add allowed origins
+//TODO: add allowed origins
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
 const corsOptions = {
   origin: [
     'http://localhost:3000',
+    'http://localhost:5173',
     'https://na-database.vercel.app',
     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
@@ -25,6 +27,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
