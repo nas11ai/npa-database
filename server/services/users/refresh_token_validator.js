@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const User = require("../../models");
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -11,7 +12,7 @@ const {
 
 const { SessionBlacklist } = require("../../models");
 
-const refreshTokenValidator = async (accessToken, refreshToken) => {
+const refreshTokenValidator = async (refreshToken) => {
   try {
     const { userId, jwtid } = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, {
       algorithm: TOKEN_ALGORITHM,
@@ -19,49 +20,42 @@ const refreshTokenValidator = async (accessToken, refreshToken) => {
       audience: TOKEN_AUDIENCE,
     });
 
+    const user = await User.findOne({
+      where: {
+        id: userId,
+        deletedAt: null,
+      },
+    });
+
     const blacklistedToken = await SessionBlacklist.findByPk(jwtid);
 
     if (blacklistedToken) {
       return {
         newAccessToken: "",
+        userRole: "",
         error: {
-          name: "BlacklistedTokenError",
+          name: "RefreshTokenError",
           statusCode: 401,
           message: "Session has expired"
         },
       };
     }
 
-    const err = accessTokenValidator(accessToken);
-    if (!err) {
-      return {
-        newAccessToken: "",
-        error: null,
-      };
-    }
-
-    if (err && err.name !== "TokenExpiredError") {
-      return {
-        newAccessToken: "",
-        error: {
-          name: err.name,
-          statusCode: 401,
-          message: err.message,
-        },
-      };
-    }
-
     const newAccessToken = jwt.sign({
-      userId
-    }, ACCESS_TOKEN_SECRET, {
-      algorithm: TOKEN_ALGORITHM,
-      issuer: TOKEN_ISSUER,
-      audience: TOKEN_AUDIENCE,
-      expiresIn: '1h'
-    });
+      userId,
+      userRole,
+    },
+      ACCESS_TOKEN_SECRET,
+      {
+        algorithm: TOKEN_ALGORITHM,
+        issuer: TOKEN_ISSUER,
+        audience: TOKEN_AUDIENCE,
+        expiresIn: '10m'
+      });
 
     return {
       newAccessToken,
+      userRole: user.role,
       error: null,
     };
 
@@ -80,8 +74,9 @@ const refreshTokenValidator = async (accessToken, refreshToken) => {
       if (!blacklistedToken) {
         return {
           newAccessToken: "",
+          userRole: "",
           error: {
-            name: "TokenValidatorError",
+            name: "RefreshTokenError",
             statusCode: 400,
             message: "Invalid token",
           },
@@ -89,8 +84,9 @@ const refreshTokenValidator = async (accessToken, refreshToken) => {
       }
       return {
         newAccessToken: "",
+        userRole: "",
         error: {
-          name: "BlacklistedTokenError",
+          name: "RefreshTokenError",
           statusCode: 401,
           message: "Session has expired",
         },
@@ -98,34 +94,12 @@ const refreshTokenValidator = async (accessToken, refreshToken) => {
     }
     return {
       newAccessToken: "",
+      userRole: "",
       error: {
-        name: error.name,
+        name: 'RefreshTokenError',
         statusCode: 500,
         message: error.message,
       },
-    };
-  }
-}
-
-const accessTokenValidator = (accessToken) => {
-  try {
-    jwt.verify(accessToken, ACCESS_TOKEN_SECRET, {
-      algorithm: TOKEN_ALGORITHM,
-      issuer: TOKEN_ISSUER,
-      audience: TOKEN_AUDIENCE,
-    });
-
-    return null
-  } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      return {
-        name: "TokenExpiredError",
-        message: "Access token has expired"
-      };
-    }
-    return {
-      name: error.name,
-      message: error.message
     };
   }
 }
