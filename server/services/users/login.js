@@ -27,6 +27,7 @@ const login = async (username, password) => {
     return {
       newAccessToken: "",
       newRefreshToken: "",
+      userRole: "",
       error: {
         name: "LoginError",
         statusCode: 401,
@@ -36,12 +37,13 @@ const login = async (username, password) => {
   }
 
   const newAccessToken = jwt.sign({
-    userId: user.id
+    userId: user.id,
+    userRole: user.role,
   }, ACCESS_TOKEN_SECRET, {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-    expiresIn: '1h'
+    expiresIn: '10m'
   });
 
   const newRefreshToken = jwt.sign({
@@ -51,12 +53,13 @@ const login = async (username, password) => {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-    expiresIn: '7d',
+    expiresIn: '1d',
   });
 
   return {
     newAccessToken,
     newRefreshToken,
+    userRole: user.role,
     error: null,
   };
 }
