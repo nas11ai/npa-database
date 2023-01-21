@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
-const { User } = require("../../models");
+const { User } = require("../../models/user");
+const { LoginError } = require("../../models/error");
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -24,16 +25,7 @@ const login = async (username, password) => {
     : false;
 
   if (!(user && passwordExists)) {
-    return {
-      newAccessToken: "",
-      newRefreshToken: "",
-      userRole: "",
-      error: {
-        name: "LoginError",
-        statusCode: 401,
-        message: "Invalid username or password"
-      },
-    };
+    throw new LoginError(401, "Invalid username or password")
   }
 
   const newAccessToken = jwt.sign({

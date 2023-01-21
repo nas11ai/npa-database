@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const User = require("../../models");
+const User = require("../../models/user");
+
+const { RefreshTokenError } = require("../../models/error");
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -10,7 +12,7 @@ const {
   ENCRYPTION_ALGORITHM,
 } = require("../../utils/config");
 
-const { SessionBlacklist } = require("../../models");
+const { SessionBlacklist } = require("../../models/user");
 
 const refreshTokenValidator = async (refreshToken) => {
   try {
@@ -30,15 +32,7 @@ const refreshTokenValidator = async (refreshToken) => {
     const blacklistedToken = await SessionBlacklist.findByPk(jwtid);
 
     if (blacklistedToken) {
-      return {
-        newAccessToken: "",
-        userRole: "",
-        error: {
-          name: "RefreshTokenError",
-          statusCode: 401,
-          message: "Session has expired"
-        },
-      };
+      throw new RefreshTokenError(401, "Refresh token has expired");
     }
 
     const newAccessToken = jwt.sign({
@@ -72,35 +66,11 @@ const refreshTokenValidator = async (refreshToken) => {
 
       const blacklistedToken = await SessionBlacklist.create({ jwtid, encryptedRefreshToken, userId });
       if (!blacklistedToken) {
-        return {
-          newAccessToken: "",
-          userRole: "",
-          error: {
-            name: "RefreshTokenError",
-            statusCode: 401,
-            message: "Invalid token",
-          },
-        };
+        throw new RefreshTokenError(401, "Invalid refresh token");
       }
-      return {
-        newAccessToken: "",
-        userRole: "",
-        error: {
-          name: "RefreshTokenError",
-          statusCode: 401,
-          message: "Session has expired",
-        },
-      };
+      throw new RefreshTokenError(401, "Refresh token has expired");
     }
-    return {
-      newAccessToken: "",
-      userRole: "",
-      error: {
-        name: 'RefreshTokenError',
-        statusCode: 500,
-        message: error.message,
-      },
-    };
+    throw new RefreshTokenError(500, error.message);
   }
 }
 
