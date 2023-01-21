@@ -14,8 +14,6 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const corsOptions = {
   origin: [
     'http://localhost:3000',
@@ -25,7 +23,6 @@ const corsOptions = {
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
   credentials: true,
-<<<<<<< HEAD
 };
 
 app.set("trust proxy", 1);
