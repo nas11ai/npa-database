@@ -4,10 +4,16 @@ const { login } = require("../../services/users");
 
 
 router.post('/', async (req, res, next) => {
+<<<<<<< HEAD
   try {
     const { username, password } = req.body;
 
     const { newAccessToken, newRefreshToken, userRole, error } = await login(username, password);
+=======
+  const { username, password } = req.body;
+
+  const { newAccessToken, newRefreshToken, userRole, error } = await login(username, password);
+>>>>>>> 8325ee2 (fix: login and auth logic error)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
