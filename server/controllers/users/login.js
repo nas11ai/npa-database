@@ -8,21 +8,13 @@ router.post('/', async (req, res, next) => {
 
     const { newAccessToken, newRefreshToken, userRole, error } = await login(username, password);
 
-    // if (error) {
-    //   res.status(error.statusCode).json({
-    //     error: true,
-    //     name: error.name,
-    //     message: error.message,
-    //   });
-    //   return;
-    // }
-
     res.cookie('jwt', newRefreshToken, {
       path: "/",
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      // maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 15 * 1000,
     });
 
     res.status(200).json({
