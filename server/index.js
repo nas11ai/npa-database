@@ -14,15 +14,15 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
-// const corsOptions = {
-//   origin: [
-//     'http://localhost:3000',
-//     'https://na-database.vercel.app',
-//     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
-//     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
-//   ],
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'https://na-database.vercel.app',
+    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
+    'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
+  ],
+  credentials: true,
+};
 
 // app.use(cors(corsOptions));
 
