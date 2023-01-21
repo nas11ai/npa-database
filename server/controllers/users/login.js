@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
-      secure: false,
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,
 >>>>>>> 7c3571e (feat: remove secure:true for development)
     });
