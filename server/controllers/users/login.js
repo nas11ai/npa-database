@@ -35,12 +35,13 @@ router.post('/', async (req, res, next) => {
     httpOnly: true,
     sameSite: 'none',
     secure: true,
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
   });
 
   res.status(200).json({
     error: false,
     message: "Login success",
+    user_role: userRole,
     access_token: newAccessToken
   });
 >>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
