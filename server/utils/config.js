@@ -10,7 +10,10 @@ const allowedOrigins = [
 
 module.exports = {
   ALLOWED_ORIGINS: allowedOrigins,
+<<<<<<< HEAD
   API_VERSION: process.env.API_VERSION,
+=======
+>>>>>>> 7c3571e (feat: remove secure:true for development)
   DB_NAME: process.env.DB_NAME,
   DB_USER: process.env.DB_USER,
   DB_PASSWORD: process.env.DB_PASSWORD,
