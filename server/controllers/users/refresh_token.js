@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { refreshTokenValidator } = require("../../services/users");
 
+<<<<<<< HEAD
 const { SuccessResponse, DataDetails, ErrorResponse, ErrorDetails } = require("../../models/response");
 
 router.get("/", async (req, res, next) => {
