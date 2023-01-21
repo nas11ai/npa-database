@@ -1,11 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-<<<<<<< HEAD
-const { User } = require("../../models/user");
-
-=======
 const User = require("../../models");
->>>>>>> 8325ee2 (fix: login and auth logic error)
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -15,12 +10,7 @@ const {
   ENCRYPTION_ALGORITHM,
 } = require("../../utils/config");
 
-<<<<<<< HEAD
-const { SessionBlacklist } = require("../../models/user");
-const { ErrorResponse, ErrorDetails } = require("../../models/response");
-=======
 const { SessionBlacklist } = require("../../models");
->>>>>>> 8325ee2 (fix: login and auth logic error)
 
 const refreshTokenValidator = async (refreshToken) => {
   try {
@@ -40,11 +30,6 @@ const refreshTokenValidator = async (refreshToken) => {
     const blacklistedToken = await SessionBlacklist.findByPk(jwtid);
 
     if (blacklistedToken) {
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token has expired");
-      // TODO: ganti console ke log kalau sudah mau production
-      console.error(err);
-      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-=======
       return {
         newAccessToken: "",
         userRole: "",
@@ -54,37 +39,24 @@ const refreshTokenValidator = async (refreshToken) => {
           message: "Session has expired"
         },
       };
->>>>>>> 8325ee2 (fix: login and auth logic error)
     }
 
     const newAccessToken = jwt.sign({
       userId,
-<<<<<<< HEAD
-      userRole: user.role,
-=======
       userRole,
->>>>>>> 8325ee2 (fix: login and auth logic error)
     },
       ACCESS_TOKEN_SECRET,
       {
         algorithm: TOKEN_ALGORITHM,
         issuer: TOKEN_ISSUER,
         audience: TOKEN_AUDIENCE,
-<<<<<<< HEAD
-        //TODO: Change to 10 minute when production
-        expiresIn: '15s',
-=======
         expiresIn: '10m'
->>>>>>> 8325ee2 (fix: login and auth logic error)
       });
 
     return {
       newAccessToken,
       userRole: user.role,
-<<<<<<< HEAD
-=======
       error: null,
->>>>>>> 8325ee2 (fix: login and auth logic error)
     };
 
   } catch (error) {
@@ -100,21 +72,6 @@ const refreshTokenValidator = async (refreshToken) => {
 
       const blacklistedToken = await SessionBlacklist.create({ jwtid, encryptedRefreshToken, userId });
       if (!blacklistedToken) {
-        const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token is wrong");
-        // TODO: ganti console ke log kalau sudah mau production
-        console.error(err);
-        throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-      }
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token has expired");
-      // TODO: ganti console ke log kalau sudah mau production
-      console.error(err);
-      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-    }
-    const err = new ErrorDetails(error.name, "refresh_token", error.message);
-    // TODO: ganti console ke log kalau sudah mau production
-    console.error(err);
-    throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
-=======
         return {
           newAccessToken: "",
           userRole: "",
@@ -144,7 +101,6 @@ const refreshTokenValidator = async (refreshToken) => {
         message: error.message,
       },
     };
->>>>>>> 8325ee2 (fix: login and auth logic error)
   }
 }
 
