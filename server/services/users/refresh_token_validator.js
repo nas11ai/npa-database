@@ -77,7 +77,7 @@ const refreshTokenValidator = async (refreshToken) => {
           userRole: "",
           error: {
             name: "RefreshTokenError",
-            statusCode: 400,
+            statusCode: 401,
             message: "Invalid token",
           },
         };
