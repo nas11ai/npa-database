@@ -16,6 +16,7 @@ const { connectToDatabase } = require("./utils/db");
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const corsOptions = {
 <<<<<<< HEAD
   origin: [
@@ -28,10 +29,16 @@ const corsOptions = {
 =======
     'http://localhost:5173',
 >>>>>>> 3f2280c (feat: add one origin for cors policy)
+=======
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+>>>>>>> 7c3571e (feat: remove secure:true for development)
     'https://na-database.vercel.app',
     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
+<<<<<<< HEAD
 =======
   origin: ['http://localhost:3000', 'https://na-database.vercel.app/', 'https://fe-na-database-bdilh31im-xploratech.vercel.app'],
 >>>>>>> e830b00 (feat: add more origin for cors policy)
