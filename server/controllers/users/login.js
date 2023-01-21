@@ -14,7 +14,11 @@ router.post('/', async (req, res, next) => {
       sameSite: 'None',
       secure: true,
       // maxAge: 24 * 60 * 60 * 1000,
+<<<<<<< HEAD
       maxAge: 15 * 1000,
+=======
+      maxAge: 10 * 1000,
+>>>>>>> eb5e7af (feat: change cookie expired time to 10 second)
     });
 
     const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
