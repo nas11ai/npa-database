@@ -10,6 +10,7 @@ router.post('/', async (req, res, next) => {
     const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
@@ -26,6 +27,8 @@ router.post('/', async (req, res, next) => {
     //   return;
     // }
 
+=======
+>>>>>>> 16ef581 (feat: change token expired time for development)
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
@@ -36,6 +39,10 @@ router.post('/', async (req, res, next) => {
       // maxAge: 24 * 60 * 60 * 1000,
       maxAge: 10 * 1000,
 >>>>>>> eb5e7af (feat: change cookie expired time to 10 second)
+=======
+      // maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 15 * 1000,
+>>>>>>> 16ef581 (feat: change token expired time for development)
     });
 
     const response = new SuccessResponse(200, "OK", new DataDetails("access_token", {
