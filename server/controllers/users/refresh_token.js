@@ -49,6 +49,16 @@ router.get("/", async (req, res, next) => {
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);
       throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+=======
+router.get("/", async (req, res, next) => {
+  try {
+    console.log(req.cookies);
+
+    const cookies = req.cookies;
+
+    if (!cookies?.jwt) {
+      throw new RefreshTokenError(401, "Missing refresh token");
+>>>>>>> 7c3571e (feat: remove secure:true for development)
     }
 
     const refreshToken = cookies.jwt
@@ -94,7 +104,11 @@ router.post("/", async (req, res, next) => {
       access_token: newAccessToken,
     });
   } catch (error) {
+<<<<<<< HEAD
     res.clearCookie('jwt');
+=======
+    // res.clearCookie('refresh_token');
+>>>>>>> 7c3571e (feat: remove secure:true for development)
     next(error);
   }
 });

@@ -22,6 +22,65 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+<<<<<<< HEAD
+<<<<<<< HEAD
+    'http://localhost:5173',
+=======
+>>>>>>> 0f62c58 (feat: add origin domain)
+=======
+    'http://localhost:5173',
+>>>>>>> 3f2280c (feat: add one origin for cors policy)
+=======
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+>>>>>>> 7c3571e (feat: remove secure:true for development)
+    'https://na-database.vercel.app',
+    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
+    'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
+  ],
+<<<<<<< HEAD
+=======
+  origin: ['http://localhost:3000', 'https://na-database.vercel.app/', 'https://fe-na-database-bdilh31im-xploratech.vercel.app'],
+>>>>>>> e830b00 (feat: add more origin for cors policy)
+  credentials: true,
+};
+
+app.set("trust proxy", 1);
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
+=======
+  // methods: 'GET,POST,PUT,DELETE',
+}))
+>>>>>>> 5e60dde (fix: commenting methods in cors)
+=======
+// const corsOptions = {
+//   origin: [
+//     'http://localhost:3000',
+//     'https://na-database.vercel.app',
+//     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
+//     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
+//   ],
+//   credentials: true,
+// };
+
+// app.use(cors(corsOptions));
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
+  next();
+});
+>>>>>>> f040049 (feat: using self made middleware for cors policy)
+=======
 const corsOptions = {
   origin: [
     'http://localhost:3000',
