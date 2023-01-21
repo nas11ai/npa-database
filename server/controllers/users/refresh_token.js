@@ -28,7 +28,11 @@ router.get("/", async (req, res, next) => {
       access_token: newAccessToken,
     });
   } catch (error) {
+<<<<<<< HEAD
     res.clearCookie('jwt');
+=======
+    // res.clearCookie('refresh_token');
+>>>>>>> 7c3571e (feat: remove secure:true for development)
     next(error);
   }
 =======
