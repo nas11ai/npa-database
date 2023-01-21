@@ -44,7 +44,8 @@ const refreshTokenValidator = async (refreshToken) => {
         algorithm: TOKEN_ALGORITHM,
         issuer: TOKEN_ISSUER,
         audience: TOKEN_AUDIENCE,
-        expiresIn: '10m'
+        //TODO: Change to 10 minute when production
+        expiresIn: '15s',
       });
 
     return {
