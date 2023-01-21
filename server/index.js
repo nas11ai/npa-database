@@ -72,8 +72,9 @@ app.use(function (req, res, next) {
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://na-database.vercel.app/',
-    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app')
+    'https://na-database.vercel.app',
+    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
+    'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
   credentials: true,
 };
