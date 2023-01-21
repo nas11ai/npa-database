@@ -14,7 +14,7 @@ router.post('/', async (req, res, next) => {
       sameSite: 'None',
       secure: true,
       // maxAge: 24 * 60 * 60 * 1000,
-      maxAge: 10 * 1000,
+      maxAge: 10 * 1000
     });
 
     res.status(200).json({
