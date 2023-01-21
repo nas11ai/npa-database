@@ -72,7 +72,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   const refreshToken = req.cookies.refresh_token
 
-  const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
+    const cookies = req.cookies;
 
     next();
   } catch (error) {
