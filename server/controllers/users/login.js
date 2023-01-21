@@ -29,6 +29,7 @@ router.post('/', async (req, res, next) => {
     // }
 
     res.cookie('jwt', newRefreshToken, {
+      path: "/",
       httpOnly: true,
       sameSite: 'None',
       secure: true,
