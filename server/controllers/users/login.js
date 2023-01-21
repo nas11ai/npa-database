@@ -8,15 +8,6 @@ router.post('/', async (req, res, next) => {
 
     const { newAccessToken, newRefreshToken, userRole, error } = await login(username, password);
 
-    // if (error) {
-    //   res.status(error.statusCode).json({
-    //     error: true,
-    //     name: error.name,
-    //     message: error.message,
-    //   });
-    //   return;
-    // }
-
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
@@ -40,12 +31,13 @@ router.post('/', async (req, res, next) => {
     httpOnly: true,
     sameSite: 'none',
     secure: true,
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
   });
 
   res.status(200).json({
     error: false,
     message: "Login success",
+    user_role: userRole,
     access_token: newAccessToken
   });
 >>>>>>> 4b3631d (feat: channge same site cookie to none)
