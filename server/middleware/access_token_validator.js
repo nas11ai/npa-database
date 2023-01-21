@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+<<<<<<< HEAD
 
 const { ErrorResponse, ErrorDetails } = require("../models/response");
 const {
