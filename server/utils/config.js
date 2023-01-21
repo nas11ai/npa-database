@@ -1,6 +1,15 @@
 require('dotenv').config();
 
+const allowedOrigins = [
+  'http://localhost:3001',
+  'http://localhost:3000',
+  'https://na-database.vercel.app',
+  new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
+  'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
+];
+
 module.exports = {
+  ALLOWED_ORIGINS: allowedOrigins,
   DB_NAME: process.env.DB_NAME,
   DB_USER: process.env.DB_USER,
   DB_PASSWORD: process.env.DB_PASSWORD,

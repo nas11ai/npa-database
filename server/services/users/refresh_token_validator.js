@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const User = require("../../models/user");
+const { User } = require("../../models/user");
 
 const { RefreshTokenError } = require("../../models/error");
 const {
@@ -37,7 +37,7 @@ const refreshTokenValidator = async (refreshToken) => {
 
     const newAccessToken = jwt.sign({
       userId,
-      userRole,
+      userRole: user.role,
     },
       ACCESS_TOKEN_SECRET,
       {
