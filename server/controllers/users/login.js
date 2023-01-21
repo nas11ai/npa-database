@@ -22,6 +22,9 @@ router.post('/', async (req, res, next) => {
       //TODO: Ganti ke 1 hari kalau deployment
       // maxAge: 24 * 60 * 60 * 1000,
       maxAge: 15 * 1000,
+=======
+      maxAge: 24 * 60 * 60 * 1000,
+>>>>>>> aa7f850 (feat add secure:true for cookie)
     });
 
     const response = new SuccessResponse(200, "OK", new DataDetails("login", {
