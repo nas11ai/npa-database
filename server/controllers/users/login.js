@@ -4,7 +4,6 @@ const { login } = require("../../services/users");
 
 
 router.post('/', async (req, res, next) => {
-<<<<<<< HEAD
   try {
     const { username, password } = req.body;
 
