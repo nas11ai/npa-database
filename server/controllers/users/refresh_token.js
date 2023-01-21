@@ -35,10 +35,14 @@ router.get("/", async (req, res, next) => {
     res.status(201).json(response);
   } catch (error) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     res.clearCookie('jwt');
 =======
     // res.clearCookie('refresh_token');
 >>>>>>> 7c3571e (feat: remove secure:true for development)
+=======
+    res.clearCookie('jwt');
+>>>>>>> 2c8f84d (feat: add trust proxy)
     next(error);
   }
 });

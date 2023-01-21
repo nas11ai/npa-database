@@ -87,6 +87,7 @@ const corsOptions = {
   credentials: true,
 };
 
+app.set("trust proxy", 1);
 app.use(cors(corsOptions));
 >>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
 =======
