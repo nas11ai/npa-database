@@ -18,6 +18,7 @@ const { connectToDatabase } = require("./utils/db");
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const corsOptions = {
 <<<<<<< HEAD
   origin: [
@@ -55,6 +56,8 @@ app.use(express.urlencoded({ extended: false }));
 }))
 >>>>>>> 5e60dde (fix: commenting methods in cors)
 =======
+=======
+>>>>>>> f040049 (feat: using self made middleware for cors policy)
 // const corsOptions = {
 //   origin: [
 //     'http://localhost:3000',
@@ -64,6 +67,7 @@ app.use(express.urlencoded({ extended: false }));
 //   ],
 //   credentials: true,
 // };
+<<<<<<< HEAD
 
 // app.use(cors(corsOptions));
 
@@ -97,6 +101,18 @@ app.use(cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 >>>>>>> 7c3571e (feat: remove secure:true for development)
+=======
+
+// app.use(cors(corsOptions));
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
+  next();
+});
+>>>>>>> f040049 (feat: using self made middleware for cors policy)
 app.use(express.json());
 app.use(cookieParser());
 
