@@ -21,9 +21,13 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
 <<<<<<< HEAD
+<<<<<<< HEAD
     'http://localhost:5173',
 =======
 >>>>>>> 0f62c58 (feat: add origin domain)
+=======
+    'http://localhost:5173',
+>>>>>>> 3f2280c (feat: add one origin for cors policy)
     'https://na-database.vercel.app',
     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
