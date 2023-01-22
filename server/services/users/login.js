@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const { User } = require("../../models/user");
-const { LoginError } = require("../../models/error");
+const { ErrorResponse, ErrorDetails } = require("../../models/response");
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -20,12 +20,22 @@ const login = async (username, password) => {
     },
   });
 
+  if (!user) {
+    const err = new ErrorDetails("LoginFormError", "username", "is wrong");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
+  }
+
   const passwordExists = user
     ? await bcrypt.compare(password, user.passwordHash)
     : false;
 
-  if (!(user && passwordExists)) {
-    throw new LoginError(401, "Invalid username or password")
+  if (!passwordExists) {
+    const err = new ErrorDetails("LoginFormError", "password", "is wrong");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
   }
 
   const newAccessToken = jwt.sign({
@@ -35,7 +45,8 @@ const login = async (username, password) => {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-    expiresIn: '10m'
+    //TODO: Change to 10 minute when production
+    expiresIn: '15s'
   });
 
   const newRefreshToken = jwt.sign({
@@ -45,14 +56,14 @@ const login = async (username, password) => {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-    expiresIn: '1d',
+    //TODO: Change to 1 day when production
+    expiresIn: '30s',
   });
 
   return {
     newAccessToken,
     newRefreshToken,
     userRole: user.role,
-    error: null,
   };
 }
 

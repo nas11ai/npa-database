@@ -10,6 +10,7 @@ const allowedOrigins = [
 
 module.exports = {
   ALLOWED_ORIGINS: allowedOrigins,
+  API_VERSION: process.env.API_VERSION,
   DB_NAME: process.env.DB_NAME,
   DB_USER: process.env.DB_USER,
   DB_PASSWORD: process.env.DB_PASSWORD,

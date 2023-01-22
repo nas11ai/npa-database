@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { User } = require("../../models/user");
 
-const { RefreshTokenError } = require("../../models/error");
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -13,6 +12,7 @@ const {
 } = require("../../utils/config");
 
 const { SessionBlacklist } = require("../../models/user");
+const { ErrorResponse, ErrorDetails } = require("../../models/response");
 
 const refreshTokenValidator = async (refreshToken) => {
   try {
@@ -32,7 +32,10 @@ const refreshTokenValidator = async (refreshToken) => {
     const blacklistedToken = await SessionBlacklist.findByPk(jwtid);
 
     if (blacklistedToken) {
-      throw new RefreshTokenError(401, "Refresh token has expired");
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "has expired");
+      // TODO: ganti console ke log kalau sudah mau production
+      console.error(err);
+      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
     }
 
     const newAccessToken = jwt.sign({
@@ -44,13 +47,13 @@ const refreshTokenValidator = async (refreshToken) => {
         algorithm: TOKEN_ALGORITHM,
         issuer: TOKEN_ISSUER,
         audience: TOKEN_AUDIENCE,
-        expiresIn: '10m'
+        //TODO: Change to 10 minute when production
+        expiresIn: '15s',
       });
 
     return {
       newAccessToken,
       userRole: user.role,
-      error: null,
     };
 
   } catch (error) {
@@ -66,11 +69,20 @@ const refreshTokenValidator = async (refreshToken) => {
 
       const blacklistedToken = await SessionBlacklist.create({ jwtid, encryptedRefreshToken, userId });
       if (!blacklistedToken) {
-        throw new RefreshTokenError(401, "Invalid refresh token");
+        const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is wrong");
+        // TODO: ganti console ke log kalau sudah mau production
+        console.error(err);
+        throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
       }
-      throw new RefreshTokenError(401, "Refresh token has expired");
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "has expired");
+      // TODO: ganti console ke log kalau sudah mau production
+      console.error(err);
+      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
     }
-    throw new RefreshTokenError(500, error.message);
+    const err = new ErrorDetails(error.name, "refresh_token", error.message);
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
   }
 }
 
