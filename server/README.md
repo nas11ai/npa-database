@@ -19,8 +19,9 @@ https://npa-database-production.up.railway.app
 - ### Method
   - POST
 - ### Request Body Example
-  - Username pengguna itu _unique_
-  - Setiap pengguna hanya bisa mempunyai salah satu dari 3 role, yaitu (superadmin)/(admin)/(user)
+  - `username` pengguna harus _unique_
+  - `username`, `fullname`, `role`, dan `password` harus diisi
+  - Setiap pengguna hanya bisa mempunyai salah satu dari 3 `role`, yaitu (`superadmin`)/(`admin`)/(`user`)
   ```json
   {
     "username": "root",
@@ -33,16 +34,30 @@ https://npa-database-production.up.railway.app
   - Expected output:
     ```json
     {
-      "error": false,
-      "message": "Registration success"
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "users",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:11:24 PM"
+      }
     }
     ```
   - Error response:
     ```json
     {
-      "error": true,
-      "name": "RegistrationError",
-      "message": "Invalid role"
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "username": "has been taken"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 9:45:05 PM"
+      }
     }
     ```
 
@@ -63,17 +78,33 @@ https://npa-database-production.up.railway.app
   - Expected output:
     ```json
     {
-      "error": false,
-      "message": "Login success",
-      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MzUxODk2NCwiZXhwIjoxNjczNTIyNTY0LCJhdWQiOiJucGEuY29tIiwiaXNzIjoiYXBpLm5wYS5jb20ifQ.dVYNU4-7RVek8HaWqIKTCXD_djGOY9AXQ-IdJoPJO04"
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "bearer_token",
+        "attributes": {
+          "user_role": "superadmin",
+          "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJSb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTY3NDM5NjY4NCwiZXhwIjoxNjc0Mzk2Njk5LCJhdWQiOiJucGEuY29tIiwiaXNzIjoiYXBpLm5wYS5jb20ifQ.eBw_3B2MGCFMa6IRIOm_ff_DWf8i29fy3mRMPlP3t_Y"
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:11:24 PM"
+      }
     }
     ```
   - Error response:
     ```json
     {
-      "error": true,
-      "name": "LoginError",
-      "message": "Invalid username or password"
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "password": "is wrong"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:52:34 PM"
+      }
     }
     ```
 
@@ -87,24 +118,32 @@ https://npa-database-production.up.railway.app
   - Expected output jika access token sudah expired:
     ```json
     {
-      "error": false,
-      "message": "New access token has been created",
-      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3MzQ1NDY4NywiZXhwIjoxNjczNDU4Mjg3LCJhdWQiOiJucGEuY29tIiwiaXNzIjoiYXBpLm5wYS5jb20ifQ.3mPTHUm1W9m2ZFHBAty_s77-YXMaVIuRCfszHfaJYlE"
-    }
-    ```
-  - Expected output jika access token belum expired:
-    ```json
-    {
-      "error": false,
-      "message": "Access token has not expired yet",
-      "access_token": ""
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "bearer_token",
+        "attributes": {
+          "user_role": "superadmin",
+          "new_access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJSb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTY3NDM5OTI2OSwiZXhwIjoxNjc0Mzk5Mjg0LCJhdWQiOiJucGEuY29tIiwiaXNzIjoiYXBpLm5wYS5jb20ifQ.lC3IsB64pQUFLRf3RAi9l_bF8ky_X0VObTtqii7zgao"
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:54:29 PM"
+      }
     }
     ```
   - Error response:
     ```json
     {
-      "error": true,
-      "name": "MissingToken",
-      "message": "Missing refresh token"
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "refresh_token": "is missing"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:53:28 PM"
+      }
     }
     ```
