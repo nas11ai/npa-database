@@ -1,11 +1,8 @@
+const { ErrorResponse } = require("../models/response");
+
 const errorHandler = (err, req, res, next) => {
-  if (err.statusCode) {
-    // TODO: ganti console ke log kalau sudah mau production
-    console.error(err);
-    res.status(err.statusCode).json({
-      name: err.name,
-      message: err.message
-    });
+  if (err instanceof ErrorResponse) {
+    res.status(err.code).json(err);
     return
   }
   // TODO: ganti console ke log kalau sudah mau production

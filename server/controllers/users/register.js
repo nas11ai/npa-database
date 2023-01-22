@@ -1,6 +1,7 @@
 const router = require('express').Router();
-
 const { register } = require('../../services/users');
+
+const { SuccessResponse, DataDetails } = require("../../models/response");
 
 router.post('/', async (req, res, next) => {
   try {
@@ -8,10 +9,9 @@ router.post('/', async (req, res, next) => {
 
     await register(username, fullname, role, password);
 
-    res.status(201).json({
-      error: false,
-      message: "Registration success",
-    });
+    const response = new SuccessResponse(201, "CREATED", new DataDetails("users", null));
+
+    res.status(response.code).json(response);
   } catch (error) {
     next(error);
   }

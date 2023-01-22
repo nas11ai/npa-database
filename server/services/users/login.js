@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const { User } = require("../../models/user");
-const { LoginError } = require("../../models/error");
+const { ErrorResponse, ErrorDetails } = require("../../models/response");
 const {
   REFRESH_TOKEN_SECRET,
   ACCESS_TOKEN_SECRET,
@@ -20,12 +20,22 @@ const login = async (username, password) => {
     },
   });
 
+  if (!user) {
+    const err = new ErrorDetails("LoginFormError", "username", "is wrong");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
+  }
+
   const passwordExists = user
     ? await bcrypt.compare(password, user.passwordHash)
     : false;
 
-  if (!(user && passwordExists)) {
-    throw new LoginError(401, "Invalid username or password")
+  if (!passwordExists) {
+    const err = new ErrorDetails("LoginFormError", "password", "is wrong");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
   }
 
   const newAccessToken = jwt.sign({
@@ -54,7 +64,6 @@ const login = async (username, password) => {
     newAccessToken,
     newRefreshToken,
     userRole: user.role,
-    error: null,
   };
 }
 

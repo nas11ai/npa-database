@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { SuccessResponse, DataDetails } = require('../../models/response');
 const { login } = require("../../services/users");
 
 
@@ -13,16 +14,17 @@ router.post('/', async (req, res, next) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
+      //TODO: Ganti ke satu hari kalau sudah mau production
       // maxAge: 24 * 60 * 60 * 1000,
       maxAge: 15 * 1000,
     });
 
-    res.status(200).json({
-      error: false,
-      message: "Login success",
-      user_role: userRole,
-      access_token: newAccessToken
-    });
+    const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
+      "user_role": userRole,
+      "access_token": newAccessToken,
+    }));
+
+    res.status(response.code).json(response);
   } catch (error) {
     next(error);
   }

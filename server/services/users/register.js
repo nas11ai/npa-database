@@ -1,11 +1,35 @@
 const bcrypt = require("bcrypt");
 
-const { RegisterError } = require("../../models/error");
+const { ErrorResponse, ErrorDetails } = require("../../models/response");
 const { User } = require("../../models/user");
 
 const register = async (username, fullname, role, password) => {
-  if (!(username && fullname && role && password)) {
-    throw new RegisterError(400, "Invalid register request");
+  if (!username) {
+    const err = new ErrorDetails("RegisterError", "username", "must not be blank");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
+  }
+
+  if (!fullname) {
+    const err = new ErrorDetails("RegisterError", "fullname", "must not be blank");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
+  }
+
+  if (!role) {
+    const err = new ErrorDetails("RegisterError", "role", "must not be blank");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
+  }
+
+  if (!password) {
+    const err = new ErrorDetails("RegisterError", "password", "must not be blank");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
   }
 
   const saltRounds = 10;
@@ -15,13 +39,19 @@ const register = async (username, fullname, role, password) => {
     //TODO: change createdBy when production
     await User.create({ username, fullname, role, passwordHash, createdBy: "Superadmin" });
   } catch (error) {
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(error);
+
+    const err = {};
     if (error.name === "SequelizeUniqueConstraintError") {
-      throw new RegisterError(400, "Username has been taken");
+      err.username = "has been taken";
+      throw new ErrorResponse(400, "BAD_REQUEST", err);
     }
-    if (error.message.includes("role")) {
-      throw new RegisterError(400, "Invalid role, must be (superadmin)/(admin)/(user)");
+
+    if (error.name === "SequelizeDatabaseError") {
+      err.role = "must be (superadmin)/(admin)/(user)";
+      throw new ErrorResponse(400, "BAD_REQUEST", err);
     }
-    throw new RegisterError(500, error.message);
   }
 
   return;
