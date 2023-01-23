@@ -14,17 +14,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
   dialect: "mysql",
-  // dialectModule: pg,
 });
-
-// const sequelize = new Sequelize(DATABASE_URL, {
-//   dialectOptions: {
-//     ssl: {
-//       require: true,
-//       rejectUnauthorized: false
-//     }
-//   },
-// });
 
 const migrationConf = {
   migrations: {
