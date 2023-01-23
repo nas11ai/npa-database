@@ -47,14 +47,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
->>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
-=======
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
->>>>>>> 7c3571e (feat: remove secure:true for development)
 app.use(express.json());
 app.use(cookieParser());
 
