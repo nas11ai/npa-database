@@ -83,37 +83,6 @@ const refreshTokenValidator = async (refreshToken) => {
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);
     throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
-=======
-        return {
-          newAccessToken: "",
-          userRole: "",
-          error: {
-            name: "RefreshTokenError",
-            statusCode: 400,
-            message: "Invalid token",
-          },
-        };
-      }
-      return {
-        newAccessToken: "",
-        userRole: "",
-        error: {
-          name: "RefreshTokenError",
-          statusCode: 401,
-          message: "Session has expired",
-        },
-      };
-    }
-    return {
-      newAccessToken: "",
-      userRole: "",
-      error: {
-        name: 'RefreshTokenError',
-        statusCode: 500,
-        message: error.message,
-      },
-    };
->>>>>>> 8325ee2 (fix: login and auth logic error)
   }
 }
 
