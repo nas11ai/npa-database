@@ -15,75 +15,6 @@ const {
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 79b4eb1 (fix: cors policy error and cookie does not included in browser)
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-<<<<<<< HEAD
-<<<<<<< HEAD
-    'http://localhost:5173',
-=======
->>>>>>> 0f62c58 (feat: add origin domain)
-=======
-    'http://localhost:5173',
->>>>>>> 3f2280c (feat: add one origin for cors policy)
-=======
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
->>>>>>> 7c3571e (feat: remove secure:true for development)
-    'https://na-database.vercel.app',
-    new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
-    'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
-  ],
-  credentials: true,
-<<<<<<< HEAD
-};
-
-app.set("trust proxy", 1);
-app.use(cors(corsOptions));
->>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
-=======
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: false }));
-=======
-  // methods: 'GET,POST,PUT,DELETE',
-}))
->>>>>>> 5e60dde (fix: commenting methods in cors)
-=======
-=======
->>>>>>> f040049 (feat: using self made middleware for cors policy)
-// const corsOptions = {
-//   origin: [
-//     'http://localhost:3000',
-//     'https://na-database.vercel.app',
-//     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
-//     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
-//   ],
-//   credentials: true,
-// };
-<<<<<<< HEAD
-
-// app.use(cors(corsOptions));
-
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
-  next();
-});
->>>>>>> f040049 (feat: using self made middleware for cors policy)
-=======
 const corsOptions = {
   origin: [
     'http://localhost:3000',
@@ -93,31 +24,11 @@ const corsOptions = {
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
   credentials: true,
-<<<<<<< HEAD
 };
 
 app.set("trust proxy", 1);
 app.use(cors(corsOptions));
->>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
-=======
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
->>>>>>> 7c3571e (feat: remove secure:true for development)
-=======
-
-// app.use(cors(corsOptions));
-
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization');
-  next();
-});
->>>>>>> f040049 (feat: using self made middleware for cors policy)
 app.use(express.json());
 app.use(cookieParser());
 
