@@ -10,7 +10,6 @@ const {
   refreshTokenRouter,
 } = require("./controllers/users");
 
-//TODO: add allowed origins
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
