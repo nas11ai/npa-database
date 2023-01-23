@@ -38,21 +38,6 @@ const accessTokenValidator = (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      res.status(401).json({
-        error: true,
-        name: "AccessTokenError",
-        message: "Access token has expired",
-      });
-    }
-    res.status(500).json({
-      error: true,
-      name: "AccessTokenError",
-      message: error.message,
-    });
-
-    next();
-  } catch (error) {
-    if (error.name === "TokenExpiredError") {
       const err = new ErrorDetails("AccessTokenError", "access_token", "access token has expired");
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);

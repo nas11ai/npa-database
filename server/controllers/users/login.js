@@ -4,7 +4,8 @@ const { login } = require("../../services/users");
 
 
 router.post('/', async (req, res, next) => {
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
     const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
@@ -60,12 +61,15 @@ router.post('/', async (req, res, next) => {
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
   });
 
-  res.status(200).json({
-    error: false,
-    message: "Login success",
-    user_role: userRole,
-    access_token: newAccessToken
-  });
+    const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
+      "user_role": userRole,
+      "access_token": newAccessToken,
+    }));
+
+    res.status(response.code).json(response);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
