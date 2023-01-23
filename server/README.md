@@ -52,7 +52,7 @@ https://npa-database-production.up.railway.app
       "code": 400,
       "status": "BAD_REQUEST",
       "errors": {
-        "username": "has been taken"
+        "username": "username has been taken"
       },
       "meta": {
         "version": "1.0",
@@ -99,7 +99,7 @@ https://npa-database-production.up.railway.app
       "code": 400,
       "status": "BAD_REQUEST",
       "errors": {
-        "password": "is wrong"
+        "password": "password is wrong"
       },
       "meta": {
         "version": "1.0",
@@ -139,7 +139,7 @@ https://npa-database-production.up.railway.app
       "code": 401,
       "status": "UNAUTHORIZED",
       "errors": {
-        "refresh_token": "is missing"
+        "refresh_token": "refresh token is missing"
       },
       "meta": {
         "version": "1.0",
