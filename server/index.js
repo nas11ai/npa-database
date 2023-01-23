@@ -23,7 +23,6 @@ const { connectToDatabase } = require("./utils/db");
 =======
 >>>>>>> 79b4eb1 (fix: cors policy error and cookie does not included in browser)
 const corsOptions = {
-<<<<<<< HEAD
   origin: [
     'http://localhost:3000',
 <<<<<<< HEAD
@@ -43,15 +42,17 @@ const corsOptions = {
     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
   ],
-<<<<<<< HEAD
-=======
-  origin: ['http://localhost:3000', 'https://na-database.vercel.app/', 'https://fe-na-database-bdilh31im-xploratech.vercel.app'],
->>>>>>> e830b00 (feat: add more origin for cors policy)
   credentials: true,
 <<<<<<< HEAD
 };
 
 app.set("trust proxy", 1);
+app.use(cors(corsOptions));
+>>>>>>> d783db1 (fix: cors policy error and cookie does not included in browser)
+=======
+  credentials: true,
+};
+
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 =======
