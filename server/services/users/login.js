@@ -32,25 +32,11 @@ const login = async (username, password) => {
     ? await bcrypt.compare(password, user.passwordHash)
     : false;
 
-<<<<<<< HEAD
   if (!passwordExists) {
     const err = new ErrorDetails("LoginFormError", "password", "password is wrong");
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);
     throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
-=======
-  if (!(user && passwordExists)) {
-    return {
-      newAccessToken: "",
-      newRefreshToken: "",
-      userRole: "",
-      error: {
-        name: "LoginError",
-        statusCode: 401,
-        message: "Invalid username or password"
-      },
-    };
->>>>>>> 8325ee2 (fix: login and auth logic error)
   }
 
   const newAccessToken = jwt.sign({
@@ -60,12 +46,8 @@ const login = async (username, password) => {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-<<<<<<< HEAD
     //TODO: Change to 10 minute when production
     expiresIn: '15s'
-=======
-    expiresIn: '10m'
->>>>>>> 8325ee2 (fix: login and auth logic error)
   });
 
   const newRefreshToken = jwt.sign({
@@ -75,22 +57,14 @@ const login = async (username, password) => {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
-<<<<<<< HEAD
     //TODO: Change to 1 day when production
     expiresIn: '30s',
-=======
-    expiresIn: '1d',
->>>>>>> 8325ee2 (fix: login and auth logic error)
   });
 
   return {
     newAccessToken,
     newRefreshToken,
     userRole: user.role,
-<<<<<<< HEAD
-=======
-    error: null,
->>>>>>> 8325ee2 (fix: login and auth logic error)
   };
 }
 
