@@ -6,6 +6,10 @@ API ini dibuat menggunakan teknologi berikut:
 2. MySQL
 3. Sequelize
 
+## API Version
+
+- 1.0
+
 ## Endpoint
 
 https://npa-database-production.up.railway.app
@@ -113,7 +117,7 @@ https://npa-database-production.up.railway.app
 - ### URL
   - /users/refresh_token
 - ### Method
-  - POST
+  - GET
 - ### Response
   - Expected output jika access token sudah expired:
     ```json
@@ -144,6 +148,43 @@ https://npa-database-production.up.railway.app
       "meta": {
         "version": "1.0",
         "timestamp": "1/22/2023, 10:53:28 PM"
+      }
+    }
+    ```
+
+## Logout
+
+- ### URL
+  - /users/logout
+- ### Method
+  - GET
+- ### Response
+  - Expected output jika access token sudah expired:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "logout",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:54:29 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "invalid signature"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/23/2023, 2:26:38 PM"
       }
     }
     ```
