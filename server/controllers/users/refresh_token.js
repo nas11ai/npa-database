@@ -97,13 +97,6 @@ router.post("/", async (req, res, next) => {
     res.clearCookie('jwt');
     next(error);
   }
-
-  res.status(201).json({
-    error: false,
-    message: "New access token has been created",
-    user_role: userRole,
-    access_token: newAccessToken,
-  });
 });
 
 module.exports = accessTokenValidator

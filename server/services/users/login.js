@@ -32,17 +32,11 @@ const login = async (username, password) => {
     ? await bcrypt.compare(password, user.passwordHash)
     : false;
 
-  if (!(user && passwordExists)) {
-    return {
-      newAccessToken: "",
-      newRefreshToken: "",
-      userRole: "",
-      error: {
-        name: "LoginError",
-        statusCode: 401,
-        message: "Invalid username or password"
-      },
-    };
+  if (!passwordExists) {
+    const err = new ErrorDetails("LoginFormError", "password", "password is wrong");
+    // TODO: ganti console ke log kalau sudah mau production
+    console.error(err);
+    throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
   }
 
   const newAccessToken = jwt.sign({
@@ -73,7 +67,6 @@ const login = async (username, password) => {
     newAccessToken,
     newRefreshToken,
     userRole: user.role,
-    error: null,
   };
 }
 
