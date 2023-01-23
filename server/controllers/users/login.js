@@ -4,27 +4,28 @@ const { login } = require("../../services/users");
 
 
 router.post('/', async (req, res, next) => {
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
-  const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
+    const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
-  res.cookie('jwt', newRefreshToken, {
-    httpOnly: true,
-    sameSite: 'None',
-    secure: true,
-    // maxAge: 24 * 60 * 60 * 1000,
-    maxAge: 15 * 1000,
-  });
+    res.cookie('jwt', newRefreshToken, {
+      httpOnly: true,
+      sameSite: 'None',
+      secure: true,
+      // maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 15 * 1000,
+    });
 
-  const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
-    "user_role": userRole,
-    "access_token": newAccessToken,
-  }));
+    const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
+      "user_role": userRole,
+      "access_token": newAccessToken,
+    }));
 
-  res.status(response.code).json(response);
-} catch (error) {
-  next(error);
-}
+    res.status(response.code).json(response);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

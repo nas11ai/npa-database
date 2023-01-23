@@ -69,25 +69,15 @@ const refreshTokenValidator = async (refreshToken) => {
 
       const blacklistedToken = await SessionBlacklist.create({ jwtid, encryptedRefreshToken, userId });
       if (!blacklistedToken) {
-        return {
-          newAccessToken: "",
-          userRole: "",
-          error: {
-            name: "RefreshTokenError",
-            statusCode: 400,
-            message: "Invalid token",
-          },
-        };
+        const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token is wrong");
+        // TODO: ganti console ke log kalau sudah mau production
+        console.error(err);
+        throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
       }
-      return {
-        newAccessToken: "",
-        userRole: "",
-        error: {
-          name: "RefreshTokenError",
-          statusCode: 401,
-          message: "Session has expired",
-        },
-      };
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token has expired");
+      // TODO: ganti console ke log kalau sudah mau production
+      console.error(err);
+      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
     }
     const err = new ErrorDetails(error.name, "refresh_token", error.message);
     // TODO: ganti console ke log kalau sudah mau production
