@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { refreshTokenValidator } = require("../../services/users");
 
+const { SuccessResponse, DataDetails, ErrorResponse, ErrorDetails } = require("../../models/response");
+
 router.get("/", async (req, res, next) => {
   try {
     console.log(req.cookies);
@@ -25,13 +27,6 @@ router.get("/", async (req, res, next) => {
     res.clearCookie('jwt');
     next(error);
   }
-
-  res.status(201).json({
-    error: false,
-    message: "New access token has been created",
-    user_role: userRole,
-    access_token: newAccessToken,
-  });
 });
 
 module.exports = router;
