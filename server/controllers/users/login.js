@@ -4,7 +4,6 @@ const { login } = require("../../services/users");
 
 
 router.post('/', async (req, res, next) => {
-<<<<<<< HEAD
   try {
     const { username, password } = req.body;
 
@@ -71,23 +70,6 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-<<<<<<< HEAD
-=======
-
-  res.cookie('refresh_token', newRefreshToken, {
-    httpOnly: true,
-    sameSite: 'none',
-    secure: true,
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  });
-
-  res.status(200).json({
-    error: false,
-    message: "Login success",
-    user_role: userRole,
-    access_token: newAccessToken
-  });
->>>>>>> 8325ee2 (fix: login and auth logic error)
 });
 
 module.exports = router;
