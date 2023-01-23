@@ -26,6 +26,20 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
+  res.cookie('refresh_token', newRefreshToken, {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  });
+
+  res.status(200).json({
+    error: false,
+    message: "Login success",
+    user_role: userRole,
+    access_token: newAccessToken
+  });
 });
 
 module.exports = router;
