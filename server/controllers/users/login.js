@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
       maxAge: 15 * 1000,
     });
 
-    const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
+    const response = new SuccessResponse(200, "OK", new DataDetails("login", {
       "user_role": userRole,
       "access_token": newAccessToken,
     }));

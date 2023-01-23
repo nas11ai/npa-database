@@ -3,11 +3,13 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error_handler");
+const accessTokenValidator = require("./middleware/access_token_validator");
 
 const {
   registerRouter,
   loginRouter,
   refreshTokenRouter,
+  logoutRouter,
 } = require("./controllers/users");
 
 const { PORT } = require("./utils/config");
@@ -37,6 +39,11 @@ app.get("/", (req, res) => {
 app.use('/users/register', registerRouter);
 app.use('/users/login', loginRouter);
 app.use('/users/refresh_token', refreshTokenRouter);
+
+//API that needs access token validation
+app.use(accessTokenValidator);
+
+app.use('/users/logout', logoutRouter);
 
 const main = async () => {
   await connectToDatabase();
