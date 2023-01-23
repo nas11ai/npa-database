@@ -7,13 +7,13 @@ router.post('/', async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
+    const { newAccessToken, newRefreshToken, userRole, error } = await login(username, password);
 
     res.cookie('jwt', newRefreshToken, {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      //TODO: Ganti ke 1 hari kalau deployment
+      //TODO: Ganti ke satu hari kalau sudah mau production
       // maxAge: 24 * 60 * 60 * 1000,
       maxAge: 15 * 1000,
     });
