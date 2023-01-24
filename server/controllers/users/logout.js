@@ -1,10 +1,24 @@
 const router = require('express').Router();
 const { SuccessResponse, DataDetails } = require('../../models/response');
+const logout = require('../../services/users/logout');
 
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
+    const cookies = req.cookies;
+
+    if (!cookies?.jwt) {
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
+      // TODO: ganti console ke log kalau sudah mau production
+      console.error(err);
+      throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
+    }
+
+    const refreshToken = cookies.jwt
+
+    await logout(refreshToken);
+
     res.removeHeader("Authorization");
-    res.clearCookie();
+    res.clearCookie('jwt');
 
     const response = new SuccessResponse(200, "OK", new DataDetails("logout", null));
 

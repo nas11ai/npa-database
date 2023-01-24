@@ -85,7 +85,7 @@ module.exports = {
           },
         },
       },
-      encrypted_refresh_token: {
+      refresh_token: {
         type: DataTypes.STRING,
         unique: {
           args: true,
@@ -121,7 +121,7 @@ module.exports = {
         uniqueKeys: {
           unique_tag: {
             customIndex: true,
-            fields: ["jwtid", "encrypted_refresh_token"],
+            fields: ["jwtid", "refresh_token"],
           },
         },
       });

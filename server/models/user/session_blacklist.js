@@ -19,7 +19,7 @@ SessionBlacklist.init({
       },
     },
   },
-  encryptedRefreshToken: {
+  refreshToken: {
     type: DataTypes.STRING,
     unique: {
       args: true,
@@ -50,7 +50,7 @@ SessionBlacklist.init({
   indexes: [
     {
       unique: true,
-      fields: ["jwtid", "encrypted_refresh_token"],
+      fields: ["jwtid", "refresh_token"],
     },
   ],
 });
