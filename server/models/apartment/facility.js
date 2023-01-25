@@ -30,15 +30,6 @@ ApartmentFacility.init({
     },
     references: { model: 'property_facility_names', key: 'id' },
   },
-  placeName: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-    validate: {
-      notNull: {
-        msg: 'Please enter iconic place name',
-      },
-    },
-  },
   type: {
     type: DataTypes.STRING(50),
     allowNull: true,

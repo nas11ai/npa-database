@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 
 const { sequelize } = require('../../utils/db');
 
-class ApartmentFees extends Model { }
+class ApartmentFee extends Model { }
 
-ApartmentFees.init({
+ApartmentFee.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -61,7 +61,7 @@ ApartmentFees.init({
   sequelize,
   underscored: true,
   timestamps: true,
-  modelName: 'ApartmentFees',
+  modelName: 'ApartmentFee',
 });
 
-module.exports = ApartmentFees;
+module.exports = ApartmentFee;

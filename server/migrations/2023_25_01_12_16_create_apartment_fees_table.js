@@ -35,25 +35,12 @@ module.exports = {
         type: DataTypes.BIGINT.UNSIGNED,
         allowNull: true,
       },
-      apartment_payment_name_id: {
+      apartment_payment_term_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: { model: 'apartment_payment_terms', key: 'id' },
       },
-      place_name: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Please enter iconic place name',
-          },
-        },
-      },
-      type: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
-      },
-      unit: {
+      lease_term: {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
