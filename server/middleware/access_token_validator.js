@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { ErrorResponse, ErrorDetails } = require("../../models/response");
+const { ErrorResponse, ErrorDetails } = require("../models/response");
 const {
   ACCESS_TOKEN_SECRET,
   TOKEN_ALGORITHM,
