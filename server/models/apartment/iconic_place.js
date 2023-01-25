@@ -12,6 +12,10 @@ ApartmentIconicPlace.init({
   },
   placeName: {
     type: DataTypes.STRING(255),
+    unique: {
+      args: true,
+      msg: 'place name is already exist in the table',
+    },
     allowNull: false,
     validate: {
       notNull: {
@@ -24,6 +28,12 @@ ApartmentIconicPlace.init({
   underscored: true,
   timestamps: true,
   modelName: 'ApartmentIconicPlace',
+  indexes: [
+    {
+      unique: true,
+      fields: ["place_name"],
+    },
+  ],
 });
 
 module.exports = ApartmentIconicPlace;

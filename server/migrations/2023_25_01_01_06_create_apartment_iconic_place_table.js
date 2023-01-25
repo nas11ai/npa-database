@@ -10,6 +10,10 @@ module.exports = {
       },
       place_name: {
         type: DataTypes.STRING(255),
+        unique: {
+          args: true,
+          msg: 'place name is already exist in the table',
+        },
         allowNull: false,
         validate: {
           notNull: {
@@ -25,7 +29,15 @@ module.exports = {
         type: DataTypes.DATE,
         allowNull: false,
       },
-    });
+    },
+      {
+        uniqueKeys: {
+          unique_tag: {
+            customIndex: true,
+            fields: ["place_name"],
+          },
+        },
+      });
   },
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable("apartment_iconic_places");

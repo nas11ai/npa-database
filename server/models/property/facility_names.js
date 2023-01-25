@@ -12,6 +12,10 @@ PropertyFacilityName.init({
   },
   facilityName: {
     type: DataTypes.STRING(100),
+    unique: {
+      args: true,
+      msg: 'facility name is already exist in the table',
+    },
     allowNull: false,
     validate: {
       notNull: {
@@ -24,6 +28,12 @@ PropertyFacilityName.init({
   underscored: true,
   timestamps: true,
   modelName: 'PropertyFacilityName',
+  indexes: [
+    {
+      unique: true,
+      fields: ["facility_name"],
+    },
+  ],
 });
 
 module.exports = PropertyFacilityName;

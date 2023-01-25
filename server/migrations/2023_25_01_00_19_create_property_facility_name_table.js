@@ -10,6 +10,10 @@ module.exports = {
       },
       facility_name: {
         type: DataTypes.STRING(100),
+        unique: {
+          args: true,
+          msg: 'facility name is already exist in the table',
+        },
         allowNull: false,
         validate: {
           notNull: {
@@ -25,7 +29,15 @@ module.exports = {
         type: DataTypes.DATE,
         allowNull: false,
       },
-    });
+    },
+      {
+        uniqueKeys: {
+          unique_tag: {
+            customIndex: true,
+            fields: ["facility_name"],
+          },
+        },
+      });
   },
   down: async ({ context: queryInterface }) => {
     await queryInterface.dropTable("property_facility_names");

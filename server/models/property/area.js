@@ -12,6 +12,10 @@ PropertyArea.init({
   },
   regionName: {
     type: DataTypes.STRING(100),
+    unique: {
+      args: true,
+      msg: 'region name is already exist in the table',
+    },
     allowNull: false,
     validate: {
       notNull: {
@@ -24,6 +28,12 @@ PropertyArea.init({
   underscored: true,
   timestamps: true,
   modelName: 'PropertyArea',
+  indexes: [
+    {
+      unique: true,
+      fields: ["region_name"],
+    },
+  ],
 });
 
 module.exports = PropertyArea;
