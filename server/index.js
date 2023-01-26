@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const errorHandler = require("./middleware/error_handler");
-const accessTokenValidator = require("./middleware/access_token_validator");
+
+const { accessTokenValidator, errorHandler } = require("./middleware");
 
 const {
   registerRouter,

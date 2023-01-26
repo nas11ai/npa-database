@@ -7,7 +7,7 @@ router.get("/", async (req, res, next) => {
     const cookies = req.cookies;
 
     if (!cookies?.jwt) {
-      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token is missing");
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);
       throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
