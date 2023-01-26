@@ -46,6 +46,10 @@ app.use('/users/refresh_token', refreshTokenRouter);
 app.use(accessTokenValidator);
 
 app.use('/users/logout', logoutRouter);
+app.use('/property/areas/create', createNewPropertyAreaRouter);
+app.use('/property/areas/read', readPropertyAreaRouter);
+app.use('/property/areas/update', updatePropertyAreaRouter);
+app.use('/property/areas/delete', deletePropertyAreaRouter)
 
 const main = async () => {
   await connectToDatabase();
