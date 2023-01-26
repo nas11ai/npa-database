@@ -1,52 +1,29 @@
-const jwt = require('jsonwebtoken');
+const router = require('express').Router();
+const { refreshTokenValidator } = require("../../services/users");
 
-const { ErrorResponse, ErrorDetails } = require("../models/response");
-const {
-  ACCESS_TOKEN_SECRET,
-  TOKEN_ALGORITHM,
-  TOKEN_ISSUER,
-  TOKEN_AUDIENCE,
-} = require("../utils/config");
+const { SuccessResponse, DataDetails, ErrorResponse, ErrorDetails } = require("../../models/response");
 
-const accessTokenValidator = (req, res, next) => {
-  const authorizationHeader = req.header('authorization');
-  if (!authorizationHeader) {
-    const err = new ErrorDetails("AccessTokenError", "access_token", "access token is wrong");
-    // TODO: ganti console ke log kalau sudah mau production
-    console.error(err);
-    throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-  }
-
-  const parts = authorizationHeader.split(' ');
-  if (parts.length !== 2 || parts[0].toLowerCase() !== 'bearer') {
-    const err = new ErrorDetails("AccessTokenError", "access_token", "access token is missing");
-    // TODO: ganti console ke log kalau sudah mau production
-    console.error(err);
-    throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-  }
-
-  const accessToken = parts[1];
-
+router.get("/", async (req, res, next) => {
   try {
-    jwt.verify(accessToken, ACCESS_TOKEN_SECRET, {
-      algorithm: TOKEN_ALGORITHM,
-      issuer: TOKEN_ISSUER,
-      audience: TOKEN_AUDIENCE,
-    });
-
-    next();
-  } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      const err = new ErrorDetails("AccessTokenError", "access_token", "access token has expired");
+    const cookies = req.cookies;
+    if (!cookies?.jwt) {
+      const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "is missing");
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);
       throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
     }
-    const err = new ErrorDetails("AccessTokenError", "access_token", error.message);
-    // TODO: ganti console ke log kalau sudah mau production
-    console.error(err);
-    throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-  }
-}
+    const refreshToken = cookies.jwt
+    const { newAccessToken, userRole } = await refreshTokenValidator(refreshToken);
 
-module.exports = accessTokenValidator
+    const response = new SuccessResponse(201, "CREATED", new DataDetails("access_token", {
+      "user_role": userRole,
+      "new_access_token": newAccessToken,
+    }));
+    res.status(201).json(response);
+  } catch (error) {
+    res.clearCookie('jwt');
+    next(error);
+  }
+});
+
+module.exports = router;

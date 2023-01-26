@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 const { User } = require("../../models/user");
 
 const {
@@ -8,7 +7,6 @@ const {
   TOKEN_ALGORITHM,
   TOKEN_ISSUER,
   TOKEN_AUDIENCE,
-  ENCRYPTION_ALGORITHM,
 } = require("../../utils/config");
 
 const { SessionBlacklist } = require("../../models/user");
@@ -16,7 +14,7 @@ const { ErrorResponse, ErrorDetails } = require("../../models/response");
 
 const refreshTokenValidator = async (refreshToken) => {
   try {
-    const { userId, jwtid } = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, {
+    const { userId, jti } = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, {
       algorithm: TOKEN_ALGORITHM,
       issuer: TOKEN_ISSUER,
       audience: TOKEN_AUDIENCE,
@@ -29,7 +27,7 @@ const refreshTokenValidator = async (refreshToken) => {
       },
     });
 
-    const blacklistedToken = await SessionBlacklist.findByPk(jwtid);
+    const blacklistedToken = await SessionBlacklist.findByPk(jti);
 
     if (blacklistedToken) {
       const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token has expired");
@@ -58,16 +56,11 @@ const refreshTokenValidator = async (refreshToken) => {
 
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      const { userId, jwtid } = jwt.decode(refreshToken, {
+      const { userId, jti } = jwt.decode(refreshToken, {
         algorithm: TOKEN_ALGORITHM,
       });
 
-      const cipher = crypto.createCipheriv(ENCRYPTION_ALGORITHM, crypto.randomBytes(32), crypto.randomBytes(16));
-
-      let encryptedRefreshToken = cipher.update(refreshToken, "utf-8", "hex");
-      encryptedRefreshToken += cipher.final("hex");
-
-      const blacklistedToken = await SessionBlacklist.create({ jwtid, encryptedRefreshToken, userId });
+      const blacklistedToken = await SessionBlacklist.create({ jwtid: jti, refreshToken, userId });
       if (!blacklistedToken) {
         const err = new ErrorDetails("BlacklistTokenError", "refresh_token", "refresh token is wrong");
         // TODO: ganti console ke log kalau sudah mau production
