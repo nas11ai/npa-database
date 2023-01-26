@@ -22,7 +22,6 @@ const login = async (username, password) => {
 
   if (!user) {
     const err = new ErrorDetails("LoginFormError", "username", "username is wrong");
-    const err = new ErrorDetails("LoginFormError", "username", "username is wrong");
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);
     throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
