@@ -28,24 +28,6 @@ const accessTokenValidator = (req, res, next) => {
   const accessToken = parts[1];
 
   try {
-    const authorizationHeader = req.header('authorization');
-    if (!authorizationHeader) {
-      const err = new ErrorDetails("AccessTokenError", "access_token", "access token is wrong");
-      // TODO: ganti console ke log kalau sudah mau production
-      console.error(err);
-      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-    }
-
-    const parts = authorizationHeader.split(' ');
-    if (parts.length !== 2 || parts[0].toLowerCase() !== 'bearer') {
-      const err = new ErrorDetails("AccessTokenError", "access_token", "access token is missing");
-      // TODO: ganti console ke log kalau sudah mau production
-      console.error(err);
-      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
-    }
-
-    const accessToken = parts[1];
-
     jwt.verify(accessToken, ACCESS_TOKEN_SECRET, {
       algorithm: TOKEN_ALGORITHM,
       issuer: TOKEN_ISSUER,
