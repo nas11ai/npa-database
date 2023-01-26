@@ -5,7 +5,7 @@ router.post('/', async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-  const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
+    const { newAccessToken, newRefreshToken, userRole } = await login(username, password);
 
 <<<<<<< HEAD
 <<<<<<< HEAD

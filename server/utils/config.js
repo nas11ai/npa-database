@@ -8,14 +8,6 @@ const allowedOrigins = [
   'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
 ];
 
-const allowedOrigins = [
-  'http://localhost:3001',
-  'http://localhost:3000',
-  'https://na-database.vercel.app',
-  new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
-  'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
-];
-
 module.exports = {
   ALLOWED_ORIGINS: allowedOrigins,
   DB_NAME: process.env.DB_NAME,
