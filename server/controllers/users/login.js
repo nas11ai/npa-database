@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { SuccessResponse, DataDetails } = require('../../models/response');
 const { login } = require("../../services/users");
-
-
 router.post('/', async (req, res, next) => {
   try {
     const { username, password } = req.body;

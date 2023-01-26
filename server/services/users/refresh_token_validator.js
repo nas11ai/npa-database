@@ -20,7 +20,6 @@ const refreshTokenValidator = async (refreshToken) => {
       issuer: TOKEN_ISSUER,
       audience: TOKEN_AUDIENCE,
     });
-
     const user = await User.findOne({
       where: {
         id: userId,
@@ -36,7 +35,6 @@ const refreshTokenValidator = async (refreshToken) => {
       console.error(err);
       throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
     }
-
     const newAccessToken = jwt.sign({
       userId,
       userRole: user.role,
@@ -49,7 +47,6 @@ const refreshTokenValidator = async (refreshToken) => {
         //TODO: Change to 10 minute when production
         expiresIn: '15s',
       });
-
     return {
       newAccessToken,
       userRole: user.role,
@@ -94,5 +91,4 @@ const refreshTokenValidator = async (refreshToken) => {
     throw new ErrorResponse(500, "INTERNAL_SERVER_ERROR", { [err.attribute]: err.message });
   }
 }
-
 module.exports = refreshTokenValidator;
