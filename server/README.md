@@ -463,3 +463,275 @@ https://npa-database-production.up.railway.app
       }
     }
     ```
+
+# Property.FacilityName
+
+- Merupakan API data jenis fasilitas properti yang terdaftar di database
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+
+## Add new facility name
+
+- Description:
+
+  - Berfungsi untuk menambahkan data `facilty_name` baru
+  - Membutuhkan request body berupa `facility_name` dengan tipe data `string`
+
+- ### URL
+  - /property/facility_names/create
+- ### Method
+  - POST
+- ### Request Body Example
+  ```json
+  {
+    "facility_name": "Bathroom"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "property_facility_names",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 3:13:39 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "region_name": "facility_name must not be blank"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:09:16 PM"
+      }
+    }
+    ```
+
+## Get all `Property Facility Name`
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Property Facility Name` yang terdaftar di dalam database
+- ### URL
+  - /property/facility_names/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_facility_names",
+        "attributes": [
+          {
+            "id": 1,
+            "facilityName": "Bedroom",
+            "createdAt": "2023-01-27T00:07:03.000Z",
+            "updatedAt": "2023-01-27T00:07:03.000Z"
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:20:31 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "access token has expired"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Get specific facility name
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Property Facility Name` sesuai dengan `facility_name` yang diinginkan
+  - Membutuhkan `query parameter` berupa `facility_name` dengan tipe data `string`. Contoh: `BASE_URL/property/facility_names/read?facility_name=Bedroom`
+- ### URL
+  - /property/facility_names/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_facility_names",
+        "attributes": [
+          {
+            "id": 1,
+            "facilityName": "Bedroom",
+            "createdAt": "2023-01-27T00:07:03.000Z",
+            "updatedAt": "2023-01-27T00:07:03.000Z"
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:24:49 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 404,
+      "status": "NOT_FOUND",
+      "errors": {
+        "facility_name": "facility_name not found"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:25:02 PM"
+      }
+    }
+    ```
+
+## Get specific `Property Facility Name` by id
+
+- Description:
+  - Berfungsi untuk mengembalikan satu data `Property Facility Name` sesuai dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/read/1`
+- ### URL
+  - /property/facility_names/read/:id
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_facility_names",
+        "attributes": {
+          "id": 1,
+          "facilityName": "Bedroom",
+          "createdAt": "2023-01-27T00:07:03.000Z",
+          "updatedAt": "2023-01-27T00:07:03.000Z"
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:27:47 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Update facility name
+
+- Description:
+  - Berfungsi untuk mengubah data `facility_name` yang sudah terdaftar di tabel
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/update/1`
+  - Perlu body request berupa `facility_name` baru yang akan mengubah data `Property Facility Name` yang sudah terdaftar
+- ### URL
+  - /property/facility_names/update/:id
+- ### Method
+  - PUT
+- ### Request Body Example
+  ```json
+  {
+    "new_facility_name": "Study Room"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Delete specific `Property Facility Name` by id
+
+- Description:
+  - Berfungsi untuk menghapus satu data `Property Facility Name` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/delete/1`
+- ### URL
+  - /property/facility_names/delete/:id
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
