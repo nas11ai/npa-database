@@ -19,6 +19,13 @@ const {
   deletePropertyAreaRouter
 } = require("./controllers/property/areas");
 
+const {
+  createNewPropertyFacilityNameRouter,
+  readPropertyFacilityNameRouter,
+  updatePropertyFacilityNameRouter,
+  deletePropertyFacilityNameRouter,
+} = require("./controllers/property/facility_names");
+
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
@@ -53,7 +60,12 @@ app.use('/users/logout', logoutRouter);
 app.use('/property/areas/create', createNewPropertyAreaRouter);
 app.use('/property/areas/read', readPropertyAreaRouter);
 app.use('/property/areas/update', updatePropertyAreaRouter);
-app.use('/property/areas/delete', deletePropertyAreaRouter)
+app.use('/property/areas/delete', deletePropertyAreaRouter);
+
+app.use('/property/facility_names/create', createNewPropertyFacilityNameRouter);
+app.use('/property/facility_names/read', readPropertyFacilityNameRouter);
+app.use('/property/facility_names/update', updatePropertyFacilityNameRouter);
+app.use('/property/facility_names/delete', deletePropertyFacilityNameRouter);
 
 const main = async () => {
   await connectToDatabase();
