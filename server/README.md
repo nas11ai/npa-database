@@ -508,7 +508,7 @@ https://npa-database-production.up.railway.app
       "code": 400,
       "status": "BAD_REQUEST",
       "errors": {
-        "region_name": "facility_name must not be blank"
+        "facility_name": "facility_name must not be blank"
       },
       "meta": {
         "version": "1.0",
@@ -710,6 +710,284 @@ https://npa-database-production.up.railway.app
   - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/delete/1`
 - ### URL
   - /property/facility_names/delete/:id
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+# Apartment.PaymentTerm
+
+- Merupakan API data jenis kesepakatan pembayaran apartemen yang terdaftar di database
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+
+## Add new payment term
+
+- Description:
+
+  - Berfungsi untuk menambahkan data `payment_term` baru
+  - Membutuhkan request body berupa `payment_term` dengan tipe data `string`
+
+- ### URL
+  - /apartment/payment_terms/create
+- ### Method
+  - POST
+- ### Request Body Example
+  ```json
+  {
+    "payment_term": "Full in Advance"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "apartment_payment_terms",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 3:13:39 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "payment_term": "payment_term must not be blank"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:09:16 PM"
+      }
+    }
+    ```
+
+## Get all `Apartment Payment Term`
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Apartment Payment Term` yang terdaftar di dalam database
+- ### URL
+  - /apartment/payment_terms/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartment_payment_terms",
+        "attributes": [
+          {
+            "id": 1,
+            "paymentTerm": "Fully Advanced",
+            "createdAt": "2023-01-27T14:15:30.000Z",
+            "updatedAt": "2023-01-27T14:15:30.000Z"
+          },
+          {
+            "id": 2,
+            "paymentTerm": "Half in Advance",
+            "createdAt": "2023-01-27T15:17:07.000Z",
+            "updatedAt": "2023-01-27T15:17:07.000Z"
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 11:17:15 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "access token has expired"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Get specific payment term
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Apartment Payment Term` sesuai dengan `payment_term` yang diinginkan
+  - Membutuhkan `query parameter` berupa `payment_term` dengan tipe data `string`. Contoh: `BASE_URL/apartment/payment_terms/read?payment_term=Full in Advance`
+- ### URL
+  - /apartment/payment_terms/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartment_payment_terms",
+        "attributes": [
+          {
+            "id": 1,
+            "paymentTerm": "Fully Advanced",
+            "createdAt": "2023-01-27T14:15:30.000Z",
+            "updatedAt": "2023-01-27T14:15:30.000Z"
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:24:49 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 404,
+      "status": "NOT_FOUND",
+      "errors": {
+        "payment_term": "payment_term not found"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:25:02 PM"
+      }
+    }
+    ```
+
+## Get specific `Apartment Payment Term` by id
+
+- Description:
+  - Berfungsi untuk mengembalikan satu data `Apartment Payment Term` sesuai dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/apartment/payment_terms/read/1`
+- ### URL
+  - /apartment/payment_terms/read/:id
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartment_payment_terms",
+        "attributes": {
+          "id": 1,
+          "paymentTerm": "Fully Advanced",
+          "createdAt": "2023-01-27T14:15:30.000Z",
+          "updatedAt": "2023-01-27T14:15:30.000Z"
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:27:47 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Update apartment payment term
+
+- Description:
+  - Berfungsi untuk mengubah data `payment_term` yang sudah terdaftar di tabel
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/apartment/payment_terms/update/1`
+  - Perlu body request berupa `payment_term` baru yang akan mengubah data `Apartment Payment Term` yang sudah terdaftar
+- ### URL
+  - /apartment/payment_terms/update/:id
+- ### Method
+  - PUT
+- ### Request Body Example
+  ```json
+  {
+    "new_payment_term": "Full in Advance"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Delete specific `Apartment Payment Term` by id
+
+- Description:
+  - Berfungsi untuk menghapus satu data `Apartment Payment Term` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/apartment/payment_terms/delete/1`
+- ### URL
+  - /apartment/payment_terms/delete/:id
 - ### Method
   - DELETE
 - ### Request Body Example
