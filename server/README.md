@@ -1013,3 +1013,275 @@ https://npa-database-production.up.railway.app
       }
     }
     ```
+
+# Apartment.IconicPlace
+
+- Merupakan API data tempat yang bisa diakses oleh apartemen yang terdaftar di database
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+
+## Add new place name
+
+- Description:
+
+  - Berfungsi untuk menambahkan data `place_name` baru
+  - Membutuhkan request body berupa `place_name` dengan tipe data `string`
+
+- ### URL
+  - /apartment/iconic_places/create
+- ### Method
+  - POST
+- ### Request Body Example
+  ```json
+  {
+    "place_name": "Indomaret"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "apartment_iconic_places",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 3:13:39 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "place_name": "place_name must not be blank"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:09:16 PM"
+      }
+    }
+    ```
+
+## Get all `Apartment Iconic Place`
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Apartment Iconic Place` yang terdaftar di dalam database
+- ### URL
+  - /apartment/iconic_places/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartment_iconic_places",
+        "attributes": [
+          {
+            "id": 1,
+            "placeName": "Alfamidi",
+            "createdAt": "2023-01-28T04:32:08.000Z",
+            "updatedAt": "2023-01-28T04:55:15.000Z"
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 11:17:15 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "access token has expired"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Get specific place name
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Apartment Iconic Place` sesuai dengan `place_name` yang diinginkan
+  - Membutuhkan `query parameter` berupa `place_name` dengan tipe data `string`. Contoh: `BASE_URL/apartment/iconic_places/read?place_name=Alfamidi`
+- ### URL
+  - /apartment/iconic_places/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartment_payment_terms",
+        "attributes": [
+          {
+            "id": 1,
+            "placeName": "Alfamidi",
+            "createdAt": "2023-01-28T04:32:08.000Z",
+            "updatedAt": "2023-01-28T04:55:15.000Z"
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:24:49 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 404,
+      "status": "NOT_FOUND",
+      "errors": {
+        "place_name": "place_name not found"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:25:02 PM"
+      }
+    }
+    ```
+
+## Get specific `Apartment Iconic Place` by id
+
+- Description:
+  - Berfungsi untuk mengembalikan satu data `Apartment Iconic Place` sesuai dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/apartment/iconic_places/read/1`
+- ### URL
+  - /apartment/iconic_places/read/:id
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartment_iconic_places",
+        "attributes": {
+          "id": 1,
+          "placeName": "Alfamidi",
+          "createdAt": "2023-01-28T04:32:08.000Z",
+          "updatedAt": "2023-01-28T04:55:15.000Z"
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/27/2023, 7:27:47 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Update apartment place name
+
+- Description:
+  - Berfungsi untuk mengubah data `place_name` yang sudah terdaftar di tabel
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/apartment/iconic_places/update/1`
+  - Perlu body request berupa `place_name` baru yang akan mengubah data `Apartment Iconic Place` yang sudah terdaftar
+- ### URL
+  - /apartment/iconic_places/update/:id
+- ### Method
+  - PUT
+- ### Request Body Example
+  ```json
+  {
+    "new_place_name": "Indomaret"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Delete specific `Apartment Iconic Place` by id
+
+- Description:
+  - Berfungsi untuk menghapus satu data `Apartment Iconic Place` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/apartment/iconic_places/delete/1`
+- ### URL
+  - /apartment/iconic_places/delete/:id
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
