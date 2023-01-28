@@ -77,7 +77,7 @@ app.use('/users/login', loginRouter);
 app.use('/users/refresh_token', refreshTokenRouter);
 
 //API that needs access token validation
-// app.use(accessTokenValidator);
+app.use(accessTokenValidator);
 
 app.use('/users/logout', logoutRouter);
 app.use('/property/areas/create', createNewPropertyAreaRouter);

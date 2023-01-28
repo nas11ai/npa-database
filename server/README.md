@@ -464,6 +464,356 @@ https://npa-database-production.up.railway.app
     }
     ```
 
+# Property.PersonInCharge
+
+- Merupakan API berkaitan dengan pemilik properti
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+
+## Add new person in charge
+
+- Description:
+
+  - Berfungsi untuk menambahkan data `fullname`, `role`, `company`, dan `phone_number` baru
+
+- ### URL
+  - /property/person_in_charges/create
+- ### Method
+  - POST
+- ### Request Body Example
+  ```json
+  {
+    "fullname": "Andi Muhammad Rezki",
+    "role": "Developer",
+    "company": "Andi Empire",
+    "phone_number": "082144569073"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "property_person_in_charges",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 3:13:39 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "fullname": "fullname must not be blank"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:09:16 PM"
+      }
+    }
+    ```
+
+## Get all `Property Person In Charge`
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Property Person In Charge` yang terdaftar di dalam database
+- ### URL
+  - /property/person_in_charges/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_person_in_charges",
+        "attributes": [
+          {
+            "id": 1,
+            "fullname": "Ibnu Muttaqiem",
+            "role": "Management",
+            "company": "Noble Asia",
+            "phoneNumber": "081917071995",
+            "createdAt": "2023-01-28T06:02:40.000Z",
+            "updatedAt": "2023-01-28T14:58:39.000Z",
+            "deletedAt": null
+          },
+          {
+            "id": 2,
+            "fullname": "Andi Muhammad Rezki",
+            "role": "Developer",
+            "company": "Andi Empire",
+            "phoneNumber": "082144569073",
+            "createdAt": "2023-01-28T15:10:24.000Z",
+            "updatedAt": "2023-01-28T15:21:41.000Z",
+            "deletedAt": null
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/28/2023, 11:37:39 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "access token has expired"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Get specific `Property Person In Charge`
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Property Person In Charge` sesuai dengan `role` atau `company` yang diinginkan
+- Route Parameter:
+  - `role`
+    - Contoh: `BASE_URL/property/person_in_charges/read?role=Management`
+  - `company`
+    - Contoh: `BASE_URL/property/person_in_charges/read?company=Andi Empire`
+- ### URL
+  - /property/person_in_charges/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_person_in_charges",
+        "attributes": [
+          {
+            "id": 2,
+            "fullname": "Andi Muhammad Rezki",
+            "role": "Developer",
+            "company": "Andi Empire",
+            "phoneNumber": "082144569073",
+            "createdAt": "2023-01-28T15:10:24.000Z",
+            "updatedAt": "2023-01-28T15:21:41.000Z",
+            "deletedAt": null
+          }
+        ]
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 1:56:52 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 404,
+      "status": "NOT_FOUND",
+      "errors": {
+        "person_in_charge": "person_in_charge not found"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Get specific `Property Person In Charge` by id
+
+- Description:
+  - Berfungsi untuk mengembalikan satu data `Property Person In Charge` sesuai dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/read/1`
+- ### URL
+  - /property/person_in_charges/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_person_in_charges",
+        "attributes": {
+          "id": 2,
+          "fullname": "Andi Muhammad Rezki",
+          "role": "Developer",
+          "company": "Andi Empire",
+          "phoneNumber": "082144569073",
+          "createdAt": "2023-01-28T15:10:24.000Z",
+          "updatedAt": "2023-01-28T15:21:41.000Z",
+          "deletedAt": null
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 1:56:52 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Update `Property Person In Charge`
+
+- Description:
+
+  - Berfungsi untuk mengubah data `Property Person In Charge` yang sudah terdaftar di tabel
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/update/1`
+
+- Property yang dapat diubah:
+  - `new_fullname`
+  - `new_role`
+  - `new_company`
+  - `new_phone_number`
+- ### URL
+  - /property/person_in_charges/update/:id
+- ### Method
+  - PUT
+- ### Request Body Example
+  ```json
+  {
+    "new_fullname": "Andi Tornanda Pasaribu"
+  }
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Delete specific `Property Person In Charge` by id
+
+- Description:
+  - Berfungsi untuk menghapus `(soft-delete)` satu data `Property Person In Charge` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/delete/1`
+- ### URL
+  - /property/person_in_charges/delete/:id
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "id": "id must be an integer,id must not be null"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
+    ```
+
+## Restore specific `Property Person In Charge` by id
+
+- Description:
+  - Berfungsi untuk mengembalikan satu data `Property Person In Charge` yang sudah terhapus `(soft-delete)` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/restore/1`
+- ### URL
+  - /property/person_in_charges/restore/:id
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+  - Expected output:
+    ```json
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "property_person_in_charges",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/28/2023, 11:49:16 PM"
+      }
+    }
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "person_in_charge": "person_in_charge is not deleted"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/28/2023, 11:26:11 PM"
+      }
+    }
+    ```
+
 # Property.FacilityName
 
 - Merupakan API data jenis fasilitas properti yang terdaftar di database
