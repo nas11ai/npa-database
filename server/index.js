@@ -33,6 +33,13 @@ const {
   deleteApartmentPaymentTermRouter,
 } = require("./controllers/apartment/payment_terms");
 
+const {
+  createNewApartmentIconicPlaceRouter,
+  readApartmentIconicPlaceRouter,
+  updateApartmentIconicPlaceRouter,
+  deleteApartmentIconicPlaceRouter,
+} = require("./controllers/apartment/iconic_places");
+
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
 
@@ -78,6 +85,11 @@ app.use('/apartment/payment_terms/create', createNewApartmentPaymentTermRouter);
 app.use('/apartment/payment_terms/read', readApartmentPaymentTermRouter);
 app.use('/apartment/payment_terms/update', updateApartmentPaymentTermRouter);
 app.use('/apartment/payment_terms/delete', deleteApartmentPaymentTermRouter);
+
+app.use('/apartment/iconic_places/create', createNewApartmentIconicPlaceRouter);
+app.use('/apartment/iconic_places/read', readApartmentIconicPlaceRouter);
+app.use('/apartment/iconic_places/update', updateApartmentIconicPlaceRouter);
+app.use('/apartment/iconic_places/delete', deleteApartmentIconicPlaceRouter);
 
 const main = async () => {
   await connectToDatabase();

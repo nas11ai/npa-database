@@ -46,7 +46,7 @@ const updatePaymentTermById = async (id, newPaymentTerm) => {
   }
 
   try {
-    paymentTerm.regionName = newPaymentTerm[0].toUpperCase() + newPaymentTerm.slice(1);
+    paymentTerm.paymentTerm = newPaymentTerm[0].toUpperCase() + newPaymentTerm.slice(1);
     await paymentTerm.save();
   } catch (error) {
     // TODO: ganti console ke log kalau sudah mau production
