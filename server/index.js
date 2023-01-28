@@ -27,6 +27,14 @@ const {
 } = require("./controllers/property/facility_names");
 
 const {
+  createNewPropertyPersonInChargeRouter,
+  readPropertyPersonInChargeRouter,
+  updatePropertyPersonInChargeRouter,
+  deletePropertyPersonInChargeRouter,
+  restorePropertyPersonInChargeRouter,
+} = require("./controllers/property/person_in_charges")
+
+const {
   createNewApartmentPaymentTermRouter,
   readApartmentPaymentTermRouter,
   updateApartmentPaymentTermRouter,
@@ -63,12 +71,13 @@ app.get("/", (req, res) => {
   res.send("NA Database API is running 🥳");
 })
 
+//TODO: Tambahkan middleware authorization sesuai role
 app.use('/users/register', registerRouter);
 app.use('/users/login', loginRouter);
 app.use('/users/refresh_token', refreshTokenRouter);
 
 //API that needs access token validation
-app.use(accessTokenValidator);
+// app.use(accessTokenValidator);
 
 app.use('/users/logout', logoutRouter);
 app.use('/property/areas/create', createNewPropertyAreaRouter);
@@ -80,6 +89,13 @@ app.use('/property/facility_names/create', createNewPropertyFacilityNameRouter);
 app.use('/property/facility_names/read', readPropertyFacilityNameRouter);
 app.use('/property/facility_names/update', updatePropertyFacilityNameRouter);
 app.use('/property/facility_names/delete', deletePropertyFacilityNameRouter);
+
+//TODO: Tambahkan middleware authorization sesuai role
+app.use('/property/person_in_charges/create', createNewPropertyPersonInChargeRouter);
+app.use('/property/person_in_charges/read', readPropertyPersonInChargeRouter);
+app.use('/property/person_in_charges/update', updatePropertyPersonInChargeRouter);
+app.use('/property/person_in_charges/delete', deletePropertyPersonInChargeRouter);
+app.use('/property/person_in_charges/restore', restorePropertyPersonInChargeRouter);
 
 app.use('/apartment/payment_terms/create', createNewApartmentPaymentTermRouter);
 app.use('/apartment/payment_terms/read', readApartmentPaymentTermRouter);
