@@ -699,6 +699,14 @@ const updateOrCreateApartmentById = async (req) => {
       }
     });
   } catch (error) {
+    if (req.files.length > 0) {
+      for (const image of req.files) {
+        fs.unlink(image.path, (err) => {
+          if (err) throw err;
+        });
+      }
+    }
+
     throw error;
   }
 }
