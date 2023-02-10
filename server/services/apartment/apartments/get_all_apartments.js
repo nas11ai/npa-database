@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 
-const { Apartment, ApartmentPhoto, ApartmentFee, ApartmentTaxFee, ApartmentFacility, ApartmentAccess, ApartmentIconicPlace, ApartmentPaymentTerm } = require("../../../models/apartment");
+const { Apartment, ApartmentPhoto, ApartmentFee, ApartmentTaxFee, ApartmentFacility, ApartmentAccess } = require("../../../models/apartment");
+const { PropertyIconicPlace, PropertyPaymentTerm } = require("../../../models/property");
 const { PropertyArea, PropertyPersonInCharge, PropertyFacilityName } = require("../../../models/property");
 const { ErrorResponse, ErrorDetails } = require("../../../models/response");
 
@@ -156,17 +157,17 @@ const getAllApartments = async (req) => {
     apartmentFacilityWhere.id = { [Op.ne]: null }
   }
 
-  const apartmentIconicPlaceWhere = {};
+  const propertyIconicPlaceWhere = {};
 
-  const apartmentIconicPlaceOrder = [];
+  const propertyIconicPlaceOrder = [];
 
   if (req.query.access_place) {
     if (req.query.access_place === 'ASC') {
-      apartmentIconicPlaceOrder.push(['placeName', 'ASC']);
+      propertyIconicPlaceOrder.push(['placeName', 'ASC']);
     } else if (req.query.access_place === 'DESC') {
-      apartmentIconicPlaceOrder.push(['placeName', 'DESC']);
+      propertyIconicPlaceOrder.push(['placeName', 'DESC']);
     } else {
-      apartmentIconicPlaceWhere.placeName = { [Op.like]: `%${req.query.access_place}%` };
+      propertyIconicPlaceWhere.placeName = { [Op.like]: `%${req.query.access_place}%` };
     }
   }
 
@@ -234,10 +235,10 @@ const getAllApartments = async (req) => {
     apartmentFeeWhere.leaseTerm = { [Op.between]: [Number(req.query.lease_term_from), req.query.lease_term_to ? Number(req.query.lease_term_to) ? Number(req.query.lease_term_to) : Number(req.query.lease_term_from) : Number(req.query.lease_term_from)] };
   }
 
-  const apartmentPaymentTermWhere = {};
+  const propertyPaymentTermWhere = {};
 
   if (req.query.payment_term) {
-    apartmentPaymentTermWhere.paymentTerm = { [Op.eq]: `${req.query.payment_term}` };
+    propertyPaymentTermWhere.paymentTerm = { [Op.eq]: `${req.query.payment_term}` };
   }
 
   const apartmentTaxFeeWhere = {};
@@ -341,10 +342,10 @@ const getAllApartments = async (req) => {
         attributes: ['id', 'type', 'detail'],
         order: [['id', 'ASC']],
         include: {
-          model: ApartmentIconicPlace,
+          model: PropertyIconicPlace,
           attributes: ['id', 'placeName'],
-          where: apartmentIconicPlaceWhere,
-          order: apartmentIconicPlaceOrder,
+          where: propertyIconicPlaceWhere,
+          order: propertyIconicPlaceOrder,
         },
       },
       {
@@ -372,9 +373,9 @@ const getAllApartments = async (req) => {
         order: apartmentFeeOrder,
         include: [
           {
-            model: ApartmentPaymentTerm,
+            model: PropertyPaymentTerm,
             attributes: ['id', 'paymentTerm'],
-            where: apartmentPaymentTermWhere,
+            where: propertyPaymentTermWhere,
           },
           {
             model: ApartmentTaxFee,
