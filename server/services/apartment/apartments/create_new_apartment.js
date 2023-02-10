@@ -48,7 +48,7 @@ const createNewApartment = async (req) => {
         throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
       }
 
-      pattern = /[^a-zA-Z0-9]+/;
+      pattern = /[^a-zA-Z0-9 ]+/;
 
       if (pattern.test(apartment.name)) {
         const err = new ErrorDetails("ApartmentError", "name", "name must not contain special character");
@@ -103,7 +103,7 @@ const createNewApartment = async (req) => {
       apartment.propertyAreaId = area.id;
 
       if (apartment.address) {
-        pattern = /[^a-zA-Z0-9.,]+/;
+        pattern = /[^a-zA-Z0-9., ]+/;
 
         if (pattern.test(apartment.address)) {
           const err = new ErrorDetails("ApartmentError", "address", "address must not contain special character");
@@ -115,7 +115,7 @@ const createNewApartment = async (req) => {
       }
 
       if (apartment.tower) {
-        pattern = /[^a-zA-Z0-9]+/;
+        pattern = /[^a-zA-Z0-9 ]+/;
 
         if (pattern.test(apartment.tower)) {
           const err = new ErrorDetails("ApartmentError", "tower", "tower must not contain special character");
@@ -127,7 +127,7 @@ const createNewApartment = async (req) => {
       }
 
       if (apartment.floor) {
-        pattern = /[^a-zA-Z0-9]+/;
+        pattern = /[^a-zA-Z0-9 ]+/;
 
         if (pattern.test(apartment.floor)) {
           const err = new ErrorDetails("ApartmentError", "floor", "floor must not contain special character");
@@ -274,9 +274,9 @@ const createNewApartment = async (req) => {
                 throw new ErrorResponse(404, "NOT_FOUND", { [err.attribute]: err.message });
               }
 
-              pattern = /[^a-zA-Z0-9]+/;
+              pattern = /[^a-zA-Z0-9 ]+/;
 
-              if (pattern.test(newFacility.type)) {
+              if (pattern.test(item.type)) {
                 const err = new ErrorDetails("ApartmentFacilityError", "type", "type must not contain special character");
 
                 // TODO: ganti console ke log kalau sudah mau production
@@ -337,7 +337,7 @@ const createNewApartment = async (req) => {
               throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
             }
 
-            pattern = /[^a-zA-Z0-9]+/;
+            pattern = /[^a-zA-Z0-9 ]+/;
 
             if (pattern.test(item.type)) {
               const err = new ErrorDetails("ApartmentAccessError", "type", "type must not contain special character");
