@@ -2,8 +2,8 @@ const ApartmentAccess = require("./access");
 const Apartment = require("./apartment");
 const ApartmentFacility = require("./facility");
 const ApartmentFee = require("./fee");
-const ApartmentIconicPlace = require("./iconic_place");
-const ApartmentPaymentTerm = require("./payment_term");
+const PropertyIconicPlace = require("../property/iconic_place");
+const PropertyPaymentTerm = require("../property/payment_term");
 const ApartmentPhoto = require("./photo");
 const ApartmentTaxFee = require("./tax_fee");
 
@@ -24,8 +24,8 @@ ApartmentFacility.belongsTo(PropertyFacilityName);
 Apartment.hasMany(ApartmentFacility);
 ApartmentFacility.belongsTo(Apartment);
 
-ApartmentPaymentTerm.hasMany(ApartmentFee);
-ApartmentFee.belongsTo(ApartmentPaymentTerm);
+PropertyPaymentTerm.hasMany(ApartmentFee);
+ApartmentFee.belongsTo(PropertyPaymentTerm);
 
 Apartment.hasOne(ApartmentFee);
 ApartmentFee.belongsTo(Apartment);
@@ -33,8 +33,8 @@ ApartmentFee.belongsTo(Apartment);
 ApartmentFee.hasMany(ApartmentTaxFee);
 ApartmentTaxFee.belongsTo(ApartmentFee);
 
-ApartmentIconicPlace.hasMany(ApartmentAccess);
-ApartmentAccess.belongsTo(ApartmentIconicPlace);
+PropertyIconicPlace.hasMany(ApartmentAccess);
+ApartmentAccess.belongsTo(PropertyIconicPlace);
 
 Apartment.hasMany(ApartmentAccess);
 ApartmentAccess.belongsTo(Apartment);
@@ -44,8 +44,6 @@ module.exports = {
   Apartment,
   ApartmentFacility,
   ApartmentFee,
-  ApartmentIconicPlace,
-  ApartmentPaymentTerm,
   ApartmentPhoto,
   ApartmentTaxFee,
 };

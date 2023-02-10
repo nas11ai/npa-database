@@ -38,9 +38,16 @@ ApartmentFacility.init({
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: true,
   },
+  detail: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return `${this.unit} ${this.type} ${this.PropertyFacilityName.facilityName}`;
+    }
+  },
 }, {
   sequelize,
   underscored: true,
+  paranoid: true,
   timestamps: true,
   modelName: 'ApartmentFacility',
 });

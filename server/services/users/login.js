@@ -41,8 +41,7 @@ const login = async (username, password) => {
   const newAccessToken = jwt.sign({
     userId: user.id,
     userRole: user.role,
-    userId: user.id,
-    userRole: user.role,
+    username: user.username,
   }, ACCESS_TOKEN_SECRET, {
     algorithm: TOKEN_ALGORITHM,
     issuer: TOKEN_ISSUER,

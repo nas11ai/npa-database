@@ -49,4 +49,4 @@ const accessTokenValidator = (req, res, next) => {
   }
 }
 
-module.exports = accessTokenValidator
+module.exports = accessTokenValidator;

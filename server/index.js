@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
+const path = require('path');
 
-const { accessTokenValidator, errorHandler } = require("./middleware");
+const { accessTokenValidator, errorHandler, getUsername } = require("./middleware");
 
 const {
   registerRouter,
@@ -35,18 +36,26 @@ const {
 } = require("./controllers/property/person_in_charges")
 
 const {
-  createNewApartmentPaymentTermRouter,
-  readApartmentPaymentTermRouter,
-  updateApartmentPaymentTermRouter,
-  deleteApartmentPaymentTermRouter,
-} = require("./controllers/apartment/payment_terms");
+  createNewPropertyPaymentTermRouter,
+  readPropertyPaymentTermRouter,
+  updatePropertyPaymentTermRouter,
+  deletePropertyPaymentTermRouter,
+} = require("./controllers/property/payment_terms");
 
 const {
-  createNewApartmentIconicPlaceRouter,
-  readApartmentIconicPlaceRouter,
-  updateApartmentIconicPlaceRouter,
-  deleteApartmentIconicPlaceRouter,
-} = require("./controllers/apartment/iconic_places");
+  createNewPropertyIconicPlaceRouter,
+  readPropertyIconicPlaceRouter,
+  updatePropertyIconicPlaceRouter,
+  deletePropertyIconicPlaceRouter,
+} = require("./controllers/property/iconic_places");
+
+const {
+  createNewApartmentRouter,
+  readApartmentRouter,
+  updateApartmentRouter,
+  deleteApartmentRouter,
+  restoreApartmentRouter,
+} = require("./controllers/apartment/apartments")
 
 const { PORT } = require("./utils/config");
 const { connectToDatabase } = require("./utils/db");
@@ -78,6 +87,7 @@ app.use('/users/refresh_token', refreshTokenRouter);
 
 //API that needs access token validation
 app.use(accessTokenValidator);
+app.use('/static', express.static(path.join(__dirname, 'assets')));
 
 app.use('/users/logout', logoutRouter);
 app.use('/property/areas/create', createNewPropertyAreaRouter);
@@ -90,6 +100,11 @@ app.use('/property/facility_names/read', readPropertyFacilityNameRouter);
 app.use('/property/facility_names/update', updatePropertyFacilityNameRouter);
 app.use('/property/facility_names/delete', deletePropertyFacilityNameRouter);
 
+app.use('/property/iconic_places/create', createNewPropertyIconicPlaceRouter);
+app.use('/property/iconic_places/read', readPropertyIconicPlaceRouter);
+app.use('/property/iconic_places/update', updatePropertyIconicPlaceRouter);
+app.use('/property/iconic_places/delete', deletePropertyIconicPlaceRouter);
+
 //TODO: Tambahkan middleware authorization sesuai role
 app.use('/property/person_in_charges/create', createNewPropertyPersonInChargeRouter);
 app.use('/property/person_in_charges/read', readPropertyPersonInChargeRouter);
@@ -97,15 +112,18 @@ app.use('/property/person_in_charges/update', updatePropertyPersonInChargeRouter
 app.use('/property/person_in_charges/delete', deletePropertyPersonInChargeRouter);
 app.use('/property/person_in_charges/restore', restorePropertyPersonInChargeRouter);
 
-app.use('/apartment/payment_terms/create', createNewApartmentPaymentTermRouter);
-app.use('/apartment/payment_terms/read', readApartmentPaymentTermRouter);
-app.use('/apartment/payment_terms/update', updateApartmentPaymentTermRouter);
-app.use('/apartment/payment_terms/delete', deleteApartmentPaymentTermRouter);
+app.use('/property/payment_terms/create', createNewPropertyPaymentTermRouter);
+app.use('/property/payment_terms/read', readPropertyPaymentTermRouter);
+app.use('/property/payment_terms/update', updatePropertyPaymentTermRouter);
+app.use('/property/payment_terms/delete', deletePropertyPaymentTermRouter);
 
-app.use('/apartment/iconic_places/create', createNewApartmentIconicPlaceRouter);
-app.use('/apartment/iconic_places/read', readApartmentIconicPlaceRouter);
-app.use('/apartment/iconic_places/update', updateApartmentIconicPlaceRouter);
-app.use('/apartment/iconic_places/delete', deleteApartmentIconicPlaceRouter);
+app.use(getUsername);
+
+app.use('/apartment/create', createNewApartmentRouter);
+app.use('/apartment/read', readApartmentRouter);
+app.use('/apartment/update', updateApartmentRouter);
+app.use('/apartment/delete', deleteApartmentRouter);
+app.use('/apartment/restore', restoreApartmentRouter);
 
 const main = async () => {
   await connectToDatabase();

@@ -29,16 +29,24 @@ module.exports = {
       },
       rental_price: {
         type: DataTypes.BIGINT.UNSIGNED,
-        allowNull: true,
+        validate: {
+          notNull: {
+            msg: 'Please enter apartment\'s rental price',
+          },
+        },
       },
       sell_price: {
         type: DataTypes.BIGINT.UNSIGNED,
-        allowNull: true,
+        validate: {
+          notNull: {
+            msg: 'Please enter apartment\'s sell price',
+          },
+        },
       },
-      apartment_payment_term_id: {
+      property_payment_term_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        references: { model: 'apartment_payment_terms', key: 'id' },
+        references: { model: 'property_payment_terms', key: 'id' },
       },
       lease_term: {
         type: DataTypes.INTEGER,
@@ -51,6 +59,10 @@ module.exports = {
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      deleted_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
     });
   },

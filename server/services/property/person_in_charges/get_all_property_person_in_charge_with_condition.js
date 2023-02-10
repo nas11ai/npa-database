@@ -12,9 +12,9 @@ const getAllPropertyPersonInChargeWithCondition = async (where) => {
     throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
   }
 
-  const personInCharges = await PropertyPersonInCharge.findAll({ where });
+  const personInCharges = await PropertyPersonInCharge.findOne({ where });
 
-  if (personInCharges.length === 0) {
+  if (!personInCharges) {
     const err = new ErrorDetails("PropertyPersonInChargeError", "person_in_charge", "person_in_charge not found");
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);

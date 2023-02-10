@@ -38,7 +38,7 @@ ApartmentTaxFee.init({
       },
     },
     get() {
-      return `${this.getDataValue('rentalPrice')} %`;
+      return `${this.getDataValue('percentage')}%`;
     }
   },
   includedWithinPrice: {
@@ -53,9 +53,16 @@ ApartmentTaxFee.init({
       return this.getDataValue('rentalPrice') ? "Yes" : "No";
     }
   },
+  detail: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return this.getDataValue('includedWithinPrice') ? `${this.percentage} ${this.taxType} included within price` : `${this.percentage} ${this.taxType} NOT included within price`;
+    }
+  },
 }, {
   sequelize,
   underscored: true,
+  paranoid: true,
   timestamps: true,
   modelName: 'ApartmentTaxFee',
 });

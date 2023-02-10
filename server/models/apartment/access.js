@@ -20,23 +20,30 @@ ApartmentAccess.init({
     },
     references: { model: 'apartments', key: 'kode_propar' },
   },
-  apartmentIconicPlaceId: {
+  propertyIconicPlaceId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
       notNull: {
-        msg: 'Please enter apartment iconic place id',
+        msg: 'Please enter property iconic place id',
       },
     },
-    references: { model: 'apartment_iconic_places', key: 'id' },
+    references: { model: 'property_iconic_places', key: 'id' },
   },
   type: {
     type: DataTypes.STRING(50),
     allowNull: true,
   },
+  detail: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return `${this.type[0].toUpperCase() + this.type.slice(1)} Access to ${this.ApartmentIconicPlace.placeName}`;
+    }
+  },
 }, {
   sequelize,
   underscored: true,
+  paranoid: true,
   timestamps: true,
   modelName: 'ApartmentAccess',
 });

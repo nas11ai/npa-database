@@ -12,9 +12,9 @@ const getAllPropertyAreaWithCondition = async (where) => {
     throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
   }
 
-  const propertyAreas = await PropertyArea.findAll({ where });
+  const propertyAreas = await PropertyArea.findOne({ where });
 
-  if (propertyAreas.length === 0) {
+  if (!propertyAreas) {
     const err = new ErrorDetails("PropertyAreaError", "region_name", "region not found");
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);

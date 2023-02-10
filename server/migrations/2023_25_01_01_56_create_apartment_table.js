@@ -47,7 +47,7 @@ module.exports = {
         type: DataTypes.STRING(50),
         allowNull: true,
       },
-      address: {
+      furnishing: {
         type: DataTypes.ENUM('Fully Furnished', 'Semi Furnished', 'Unfurnished'),
         allowNull: true,
       },

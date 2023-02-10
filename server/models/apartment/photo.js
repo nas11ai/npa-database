@@ -29,9 +29,19 @@ ApartmentPhoto.init({
       },
     },
   },
+  photoUrl: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: 'Please enter apartment\'s photo url',
+      },
+    },
+  },
 }, {
   sequelize,
   underscored: true,
+  paranoid: true,
   timestamps: true,
   modelName: 'ApartmentPhoto',
 });

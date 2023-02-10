@@ -18,15 +18,15 @@ module.exports = {
         },
         references: { model: 'apartments', key: 'kode_propar' },
       },
-      apartment_iconic_place_id: {
+      property_iconic_place_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Please enter apartment iconic place id',
+            msg: 'Please enter property iconic place id',
           },
         },
-        references: { model: 'apartment_iconic_places', key: 'id' },
+        references: { model: 'property_iconic_places', key: 'id' },
       },
       type: {
         type: DataTypes.STRING(50),
@@ -39,6 +39,10 @@ module.exports = {
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      deleted_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
     });
   },

@@ -37,6 +37,7 @@ const refreshTokenValidator = async (refreshToken) => {
     const newAccessToken = jwt.sign({
       userId,
       userRole: user.role,
+      username: user.username,
     },
       ACCESS_TOKEN_SECRET,
       {

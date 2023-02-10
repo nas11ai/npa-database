@@ -12,6 +12,10 @@ ApartmentFee.init({
   },
   apartmentKodePropar: {
     type: DataTypes.STRING(50),
+    unique: {
+      args: true,
+      msg: 'kode propar has been taken',
+    },
     allowNull: false,
     validate: {
       notNull: {
@@ -31,7 +35,12 @@ ApartmentFee.init({
   },
   rentalPrice: {
     type: DataTypes.BIGINT.UNSIGNED,
-    allowNull: true,
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: 'Please enter apartment\'s rental price',
+      },
+    },
     get() {
       const currency = this.getDataValue('priceCurrency') === "Rupiah" ? "IDR" : "USD";
       return this.getDataValue('rentalPrice') ? new Intl.NumberFormat("en-US", { style: "currency", currency }).format(this.getDataValue('rentalPrice')) : null;
@@ -39,19 +48,24 @@ ApartmentFee.init({
   },
   sellPrice: {
     type: DataTypes.BIGINT.UNSIGNED,
-    allowNull: true,
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: 'Please enter apartment\'s sell price',
+      },
+    },
     get() {
       const currency = this.getDataValue('priceCurrency') === "Rupiah" ? "IDR" : "USD";
       return this.getDataValue('sellPrice') ? new Intl.NumberFormat("en-US", { style: "currency", currency }).format(this.getDataValue('sellPrice')) : null;
     }
   },
-  apartmentPaymentTermId: {
+  propertyPaymentTermId: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    references: { model: 'apartment_payment_terms', key: 'id' },
+    references: { model: 'property_payment_terms', key: 'id' },
   },
   leaseTerm: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: true,
     get() {
       return this.getDataValue('leaseTerm') ? `${this.getDataValue('leaseTerm')} month` : null
@@ -60,8 +74,15 @@ ApartmentFee.init({
 }, {
   sequelize,
   underscored: true,
+  paranoid: true,
   timestamps: true,
   modelName: 'ApartmentFee',
+  indexes: [
+    {
+      unique: true,
+      fields: ["kode_propar"],
+    },
+  ],
 });
 
 module.exports = ApartmentFee;

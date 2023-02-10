@@ -12,9 +12,9 @@ const getAllPropertyFacilityNameWithCondition = async (where) => {
     throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
   }
 
-  const propertyFacilityNames = await PropertyFacilityName.findAll({ where });
+  const propertyFacilityNames = await PropertyFacilityName.findOne({ where });
 
-  if (propertyFacilityNames.length === 0) {
+  if (!propertyFacilityNames) {
     const err = new ErrorDetails("PropertyFacilityNameError", "facility_name", "facility_name not found");
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);

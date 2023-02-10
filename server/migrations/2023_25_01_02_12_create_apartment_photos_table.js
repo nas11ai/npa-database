@@ -27,6 +27,15 @@ module.exports = {
           },
         },
       },
+      photo_url: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please enter apartment\'s photo url',
+          },
+        },
+      },
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -34,6 +43,10 @@ module.exports = {
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      deleted_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
     });
   },
