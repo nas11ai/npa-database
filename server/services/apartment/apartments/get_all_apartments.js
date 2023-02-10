@@ -374,7 +374,7 @@ const getAllApartments = async (req) => {
             model: PropertyPaymentTerm,
             attributes: ['id', 'paymentTerm'],
             where: propertyPaymentTermWhere,
-            // required: false,
+            required: false,
           },
           {
             model: ApartmentTaxFee,
