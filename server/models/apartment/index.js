@@ -2,12 +2,10 @@ const ApartmentAccess = require("./access");
 const Apartment = require("./apartment");
 const ApartmentFacility = require("./facility");
 const ApartmentFee = require("./fee");
-const PropertyIconicPlace = require("../property/iconic_place");
-const PropertyPaymentTerm = require("../property/payment_term");
 const ApartmentPhoto = require("./photo");
 const ApartmentTaxFee = require("./tax_fee");
 
-const { PropertyArea, PropertyFacilityName, PropertyPersonInCharge } = require("../property");
+const { PropertyArea, PropertyFacilityName, PropertyPaymentTerm, PropertyIconicPlace, PropertyPersonInCharge } = require("../property");
 
 PropertyPersonInCharge.hasMany(Apartment);
 Apartment.belongsTo(PropertyPersonInCharge);

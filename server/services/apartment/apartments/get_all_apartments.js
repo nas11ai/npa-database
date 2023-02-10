@@ -1,8 +1,7 @@
 const { Op } = require('sequelize');
 
 const { Apartment, ApartmentPhoto, ApartmentFee, ApartmentTaxFee, ApartmentFacility, ApartmentAccess } = require("../../../models/apartment");
-const { PropertyIconicPlace, PropertyPaymentTerm } = require("../../../models/property");
-const { PropertyArea, PropertyPersonInCharge, PropertyFacilityName } = require("../../../models/property");
+const { PropertyArea, PropertyPersonInCharge, PropertyFacilityName, PropertyIconicPlace, PropertyPaymentTerm } = require("../../../models/property");
 const { ErrorResponse, ErrorDetails } = require("../../../models/response");
 
 const getAllApartments = async (req) => {
@@ -350,8 +349,7 @@ const getAllApartments = async (req) => {
       },
       {
         model: ApartmentPhoto,
-        separate: true,
-        attributes: ['id', 'photoPath'],
+        attributes: ['id', 'photoPath', 'photoUrl'],
         order: [['id', 'ASC']],
       },
       {
@@ -376,6 +374,7 @@ const getAllApartments = async (req) => {
             model: PropertyPaymentTerm,
             attributes: ['id', 'paymentTerm'],
             where: propertyPaymentTermWhere,
+            // required: false,
           },
           {
             model: ApartmentTaxFee,
