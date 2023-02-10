@@ -349,6 +349,7 @@ const getAllApartments = async (req) => {
       },
       {
         model: ApartmentPhoto,
+        separate: true,
         attributes: ['id', 'photoPath', 'photoUrl'],
         order: [['id', 'ASC']],
       },
