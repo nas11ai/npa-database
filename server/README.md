@@ -1086,7 +1086,7 @@ https://npa-database-production.up.railway.app
     }
     ```
 
-# Apartment.PaymentTerm
+# Property.PaymentTerm
 
 - Merupakan API data jenis kesepakatan pembayaran apartemen yang terdaftar di database
 - Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
