@@ -10,6 +10,7 @@ const {
   registerRouter,
   loginRouter,
   refreshTokenRouter,
+  accessTokenValidatorRouter,
   logoutRouter,
 } = require("./controllers/users");
 
@@ -84,6 +85,7 @@ app.get("/", (req, res) => {
 app.use('/users/register', registerRouter);
 app.use('/users/login', loginRouter);
 app.use('/users/refresh_token', refreshTokenRouter);
+app.use('/users/access_token', accessTokenValidatorRouter);
 
 //API that needs access token validation
 app.use(accessTokenValidator);
