@@ -170,6 +170,25 @@ const getAllApartments = async (req) => {
     }
   }
 
+  const apartmentPhotoWhere = {};
+
+  if (req.query.photo_ids) {
+    apartmentPhotoWhere.id = {
+      [Op.or]: req.query.photo_ids.split(",").map(id => {
+        if (parseInt(id)) {
+          return parseInt(id)
+        }
+
+        const err = new ErrorDetails("ApartmentError", "photo_ids", "photo_ids must be integer");
+        // TODO: ganti console ke log kalau sudah mau production
+        console.error(err);
+        throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
+      }),
+    };
+
+    console.log(apartmentPhotoWhere)
+  }
+
   const propertyAreaWhere = {};
 
   const propertyAreaOrder = [];
@@ -351,6 +370,7 @@ const getAllApartments = async (req) => {
         model: ApartmentPhoto,
         separate: true,
         attributes: ['id', 'photoPath', 'photoUrl'],
+        where: apartmentPhotoWhere,
         order: [['id', 'ASC']],
       },
       {
