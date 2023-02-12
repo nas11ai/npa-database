@@ -25,7 +25,8 @@ https://npa-database-production.up.railway.app
 - ### Request Body Example
   - `username` pengguna harus _unique_
   - `username`, `fullname`, `role`, dan `password` harus diisi
-  - Setiap pengguna hanya bisa mempunyai salah satu dari 3 `role`, yaitu (`superadmin`)/(`admin`)/(`user`)
+  - Setiap pengguna hanya bisa mempunyai salah satu dari 3 `role`, yaitu
+    (`superadmin`)/(`admin`)/(`user`)
   ```json
   {
     "username": "root",
@@ -156,7 +157,8 @@ https://npa-database-production.up.railway.app
 
 - Description:
 
-  - Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+  - Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+    diakses
 
 - ### URL
   - /users/logout
@@ -196,7 +198,8 @@ https://npa-database-production.up.railway.app
 # Property.Area
 
 - Merupakan API berkaitan dengan zona atau lokasi properti
-- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+  diakses
 
 ## Add new area
 
@@ -248,7 +251,8 @@ https://npa-database-production.up.railway.app
 ## Get all `Property Area`
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Area` yang terdaftar di dalam database
+  - Berfungsi untuk mengembalikan seluruh data `Property Area` yang terdaftar di
+    dalam database
 - ### URL
   - /property/areas/read
 - ### Method
@@ -298,8 +302,10 @@ https://npa-database-production.up.railway.app
 ## Get specific region name
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Area` sesuai dengan `region_name` yang diinginkan
-  - Membutuhkan `query parameter` berupa `region_name` dengan tipe data `string`. Contoh: `BASE_URL/property/areas/read?region_name=Ampera`
+  - Berfungsi untuk mengembalikan seluruh data `Property Area` sesuai dengan
+    `region_name` yang diinginkan
+  - Membutuhkan `query parameter` berupa `region_name` dengan tipe data
+    `string`. Contoh: `BASE_URL/property/areas/read?region_name=Ampera`
 - ### URL
   - /property/areas/read
 - ### Method
@@ -349,10 +355,12 @@ https://npa-database-production.up.railway.app
 ## Get specific `Property Area` by id
 
 - Description:
-  - Berfungsi untuk mengembalikan satu data `Property Area` sesuai dengan `id` yang terdaftar
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/areas/read/1`
+  - Berfungsi untuk mengembalikan satu data `Property Area` sesuai dengan `id`
+    yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/areas/read/1`
 - ### URL
-  - /property/areas/read
+  - /property/areas/read/:id
 - ### Method
   - GET
 - ### Request Body Example
@@ -399,8 +407,10 @@ https://npa-database-production.up.railway.app
 
 - Description:
   - Berfungsi untuk mengubah data `region_name` yang sudah terdaftar di tabel
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/areas/update/1`
-  - Perlu body request berupa `region_name` baru yang akan mengubah data `Property Area` yang sudah terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/areas/update/1`
+  - Perlu body request berupa `region_name` baru yang akan mengubah data
+    `Property Area` yang sudah terdaftar
 - ### URL
   - /property/areas/update/:id
 - ### Method
@@ -434,8 +444,10 @@ https://npa-database-production.up.railway.app
 ## Delete specific `Property Area` by id
 
 - Description:
-  - Berfungsi untuk menghapus satu data `Property Area` sesuai dengan `id` dari database
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/areas/delete/1`
+  - Berfungsi untuk menghapus satu data `Property Area` sesuai dengan `id` dari
+    database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/areas/delete/1`
 - ### URL
   - /property/areas/delete/:id
 - ### Method
@@ -467,13 +479,15 @@ https://npa-database-production.up.railway.app
 # Property.PersonInCharge
 
 - Merupakan API berkaitan dengan pemilik properti
-- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+  diakses
 
 ## Add new person in charge
 
 - Description:
 
-  - Berfungsi untuk menambahkan data `fullname`, `role`, `company`, dan `phone_number` baru
+  - Berfungsi untuk menambahkan data `fullname`, `role`, `company`, dan
+    `phone_number` baru
 
 - ### URL
   - /property/person_in_charges/create
@@ -522,7 +536,8 @@ https://npa-database-production.up.railway.app
 ## Get all `Property Person In Charge`
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Person In Charge` yang terdaftar di dalam database
+  - Berfungsi untuk mengembalikan seluruh data `Property Person In Charge` yang
+    terdaftar di dalam database
 - ### URL
   - /property/person_in_charges/read
 - ### Method
@@ -586,7 +601,8 @@ https://npa-database-production.up.railway.app
 ## Get specific `Property Person In Charge`
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Person In Charge` sesuai dengan `role` atau `company` yang diinginkan
+  - Berfungsi untuk mengembalikan seluruh data `Property Person In Charge`
+    sesuai dengan `role` atau `company` yang diinginkan
 - Route Parameter:
   - `role`
     - Contoh: `BASE_URL/property/person_in_charges/read?role=Management`
@@ -645,10 +661,12 @@ https://npa-database-production.up.railway.app
 ## Get specific `Property Person In Charge` by id
 
 - Description:
-  - Berfungsi untuk mengembalikan satu data `Property Person In Charge` sesuai dengan `id` yang terdaftar
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/read/1`
+  - Berfungsi untuk mengembalikan satu data `Property Person In Charge` sesuai
+    dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/person_in_charges/read/1`
 - ### URL
-  - /property/person_in_charges/read
+  - /property/person_in_charges/read/:id
 - ### Method
   - GET
 - ### Request Body Example
@@ -699,8 +717,10 @@ https://npa-database-production.up.railway.app
 
 - Description:
 
-  - Berfungsi untuk mengubah data `Property Person In Charge` yang sudah terdaftar di tabel
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/update/1`
+  - Berfungsi untuk mengubah data `Property Person In Charge` yang sudah
+    terdaftar di tabel
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/person_in_charges/update/1`
 
 - Property yang dapat diubah:
   - `new_fullname`
@@ -740,8 +760,10 @@ https://npa-database-production.up.railway.app
 ## Delete specific `Property Person In Charge` by id
 
 - Description:
-  - Berfungsi untuk menghapus `(soft-delete)` satu data `Property Person In Charge` sesuai dengan `id` dari database
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/delete/1`
+  - Berfungsi untuk menghapus `(soft-delete)` satu data
+    `Property Person In Charge` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/person_in_charges/delete/1`
 - ### URL
   - /property/person_in_charges/delete/:id
 - ### Method
@@ -773,8 +795,10 @@ https://npa-database-production.up.railway.app
 ## Restore specific `Property Person In Charge` by id
 
 - Description:
-  - Berfungsi untuk mengembalikan satu data `Property Person In Charge` yang sudah terhapus `(soft-delete)` sesuai dengan `id` dari database
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/person_in_charges/restore/1`
+  - Berfungsi untuk mengembalikan satu data `Property Person In Charge` yang
+    sudah terhapus `(soft-delete)` sesuai dengan `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/person_in_charges/restore/1`
 - ### URL
   - /property/person_in_charges/restore/:id
 - ### Method
@@ -817,7 +841,8 @@ https://npa-database-production.up.railway.app
 # Property.FacilityName
 
 - Merupakan API data jenis fasilitas properti yang terdaftar di database
-- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+  diakses
 
 ## Add new facility name
 
@@ -870,7 +895,8 @@ https://npa-database-production.up.railway.app
 ## Get all `Property Facility Name`
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Facility Name` yang terdaftar di dalam database
+  - Berfungsi untuk mengembalikan seluruh data `Property Facility Name` yang
+    terdaftar di dalam database
 - ### URL
   - /property/facility_names/read
 - ### Method
@@ -920,8 +946,11 @@ https://npa-database-production.up.railway.app
 ## Get specific facility name
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Facility Name` sesuai dengan `facility_name` yang diinginkan
-  - Membutuhkan `query parameter` berupa `facility_name` dengan tipe data `string`. Contoh: `BASE_URL/property/facility_names/read?facility_name=Bedroom`
+  - Berfungsi untuk mengembalikan seluruh data `Property Facility Name` sesuai
+    dengan `facility_name` yang diinginkan
+  - Membutuhkan `query parameter` berupa `facility_name` dengan tipe data
+    `string`. Contoh:
+    `BASE_URL/property/facility_names/read?facility_name=Bedroom`
 - ### URL
   - /property/facility_names/read
 - ### Method
@@ -971,8 +1000,10 @@ https://npa-database-production.up.railway.app
 ## Get specific `Property Facility Name` by id
 
 - Description:
-  - Berfungsi untuk mengembalikan satu data `Property Facility Name` sesuai dengan `id` yang terdaftar
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/read/1`
+  - Berfungsi untuk mengembalikan satu data `Property Facility Name` sesuai
+    dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/facility_names/read/1`
 - ### URL
   - /property/facility_names/read/:id
 - ### Method
@@ -1021,8 +1052,10 @@ https://npa-database-production.up.railway.app
 
 - Description:
   - Berfungsi untuk mengubah data `facility_name` yang sudah terdaftar di tabel
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/update/1`
-  - Perlu body request berupa `facility_name` baru yang akan mengubah data `Property Facility Name` yang sudah terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/facility_names/update/1`
+  - Perlu body request berupa `facility_name` baru yang akan mengubah data
+    `Property Facility Name` yang sudah terdaftar
 - ### URL
   - /property/facility_names/update/:id
 - ### Method
@@ -1056,8 +1089,10 @@ https://npa-database-production.up.railway.app
 ## Delete specific `Property Facility Name` by id
 
 - Description:
-  - Berfungsi untuk menghapus satu data `Property Facility Name` sesuai dengan `id` dari database
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/facility_names/delete/1`
+  - Berfungsi untuk menghapus satu data `Property Facility Name` sesuai dengan
+    `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/facility_names/delete/1`
 - ### URL
   - /property/facility_names/delete/:id
 - ### Method
@@ -1088,8 +1123,10 @@ https://npa-database-production.up.railway.app
 
 # Property.PaymentTerm
 
-- Merupakan API data jenis kesepakatan pembayaran apartemen yang terdaftar di database
-- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+- Merupakan API data jenis kesepakatan pembayaran apartemen yang terdaftar di
+  database
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+  diakses
 
 ## Add new payment term
 
@@ -1142,7 +1179,8 @@ https://npa-database-production.up.railway.app
 ## Get all `Property Payment Term`
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Payment Term` yang terdaftar di dalam database
+  - Berfungsi untuk mengembalikan seluruh data `Property Payment Term` yang
+    terdaftar di dalam database
 - ### URL
   - /property/payment_terms/read
 - ### Method
@@ -1198,8 +1236,11 @@ https://npa-database-production.up.railway.app
 ## Get specific payment term
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Payment Term` sesuai dengan `payment_term` yang diinginkan
-  - Membutuhkan `query parameter` berupa `payment_term` dengan tipe data `string`. Contoh: `BASE_URL/property/payment_terms/read?payment_term=Full in Advance`
+  - Berfungsi untuk mengembalikan seluruh data `Property Payment Term` sesuai
+    dengan `payment_term` yang diinginkan
+  - Membutuhkan `query parameter` berupa `payment_term` dengan tipe data
+    `string`. Contoh:
+    `BASE_URL/property/payment_terms/read?payment_term=Full in Advance`
 - ### URL
   - /property/payment_terms/read
 - ### Method
@@ -1249,8 +1290,10 @@ https://npa-database-production.up.railway.app
 ## Get specific `Property Payment Term` by id
 
 - Description:
-  - Berfungsi untuk mengembalikan satu data `Property Payment Term` sesuai dengan `id` yang terdaftar
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/payment_terms/read/1`
+  - Berfungsi untuk mengembalikan satu data `Property Payment Term` sesuai
+    dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/payment_terms/read/1`
 - ### URL
   - /property/payment_terms/read/:id
 - ### Method
@@ -1299,8 +1342,10 @@ https://npa-database-production.up.railway.app
 
 - Description:
   - Berfungsi untuk mengubah data `payment_term` yang sudah terdaftar di tabel
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/payment_terms/update/1`
-  - Perlu body request berupa `payment_term` baru yang akan mengubah data `Property Payment Term` yang sudah terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/payment_terms/update/1`
+  - Perlu body request berupa `payment_term` baru yang akan mengubah data
+    `Property Payment Term` yang sudah terdaftar
 - ### URL
   - /property/payment_terms/update/:id
 - ### Method
@@ -1334,8 +1379,10 @@ https://npa-database-production.up.railway.app
 ## Delete specific `Property Payment Term` by id
 
 - Description:
-  - Berfungsi untuk menghapus satu data `Property Payment Term` sesuai dengan `id` dari database
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/payment_terms/delete/1`
+  - Berfungsi untuk menghapus satu data `Property Payment Term` sesuai dengan
+    `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/payment_terms/delete/1`
 - ### URL
   - /property/payment_terms/delete/:id
 - ### Method
@@ -1366,8 +1413,10 @@ https://npa-database-production.up.railway.app
 
 # Property.IconicPlace
 
-- Merupakan API data tempat yang bisa diakses oleh apartemen yang terdaftar di database
-- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa diakses
+- Merupakan API data tempat yang bisa diakses oleh apartemen yang terdaftar di
+  database
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+  diakses
 
 ## Add new place name
 
@@ -1420,7 +1469,8 @@ https://npa-database-production.up.railway.app
 ## Get all `Property Iconic Place`
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Iconic Place` yang terdaftar di dalam database
+  - Berfungsi untuk mengembalikan seluruh data `Property Iconic Place` yang
+    terdaftar di dalam database
 - ### URL
   - /property/iconic_places/read
 - ### Method
@@ -1470,8 +1520,10 @@ https://npa-database-production.up.railway.app
 ## Get specific place name
 
 - Description:
-  - Berfungsi untuk mengembalikan seluruh data `Property Iconic Place` sesuai dengan `place_name` yang diinginkan
-  - Membutuhkan `query parameter` berupa `place_name` dengan tipe data `string`. Contoh: `BASE_URL/property/iconic_places/read?place_name=Alfamidi`
+  - Berfungsi untuk mengembalikan seluruh data `Property Iconic Place` sesuai
+    dengan `place_name` yang diinginkan
+  - Membutuhkan `query parameter` berupa `place_name` dengan tipe data `string`.
+    Contoh: `BASE_URL/property/iconic_places/read?place_name=Alfamidi`
 - ### URL
   - /property/iconic_places/read
 - ### Method
@@ -1521,8 +1573,10 @@ https://npa-database-production.up.railway.app
 ## Get specific `Property Iconic Place` by id
 
 - Description:
-  - Berfungsi untuk mengembalikan satu data `Property Iconic Place` sesuai dengan `id` yang terdaftar
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/iconic_places/read/1`
+  - Berfungsi untuk mengembalikan satu data `Property Iconic Place` sesuai
+    dengan `id` yang terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/iconic_places/read/1`
 - ### URL
   - /property/iconic_places/read/:id
 - ### Method
@@ -1571,8 +1625,10 @@ https://npa-database-production.up.railway.app
 
 - Description:
   - Berfungsi untuk mengubah data `place_name` yang sudah terdaftar di tabel
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/iconic_places/update/1`
-  - Perlu body request berupa `place_name` baru yang akan mengubah data `Property Iconic Place` yang sudah terdaftar
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/iconic_places/update/1`
+  - Perlu body request berupa `place_name` baru yang akan mengubah data
+    `Property Iconic Place` yang sudah terdaftar
 - ### URL
   - /property/iconic_places/update/:id
 - ### Method
@@ -1606,8 +1662,10 @@ https://npa-database-production.up.railway.app
 ## Delete specific `Property Iconic Place` by id
 
 - Description:
-  - Berfungsi untuk menghapus satu data `Property Iconic Place` sesuai dengan `id` dari database
-  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh: `BASE_URL/property/iconic_places/delete/1`
+  - Berfungsi untuk menghapus satu data `Property Iconic Place` sesuai dengan
+    `id` dari database
+  - Membutuhkan `route parameter` berupa `id` dalam bentuk `integer`. Contoh:
+    `BASE_URL/property/iconic_places/delete/1`
 - ### URL
   - /property/iconic_places/delete/:id
 - ### Method
@@ -1634,4 +1692,147 @@ https://npa-database-production.up.railway.app
         "timestamp": "1/26/2023, 6:43:56 PM"
       }
     }
+    ```
+
+# Property.Apartment
+
+- Merupakan API data apartemen-apartemen yang terdaftar di database
+- Membutuhkan `Authorization` Header berisikan `bearer token` agar API bisa
+  diakses
+
+## Add new `Apartement`
+
+- Description:
+
+  - Berfungsi untuk menambahkan data `Apartment` baru
+
+- ### URL
+  - /apartment/create
+- ### Method
+  - POST
+- ### Request Body Example
+  ```json
+  {}
+  ```
+- ### Response
+
+  - Expected output:
+    ```json
+    {}
+    ```
+  - Error response:
+
+    ```json
+    {}
+    ```
+
+## Get all `Apartment`
+
+- Description:
+  - Berfungsi untuk mengembalikan seluruh data `Apartment` yang terdaftar di
+    dalam database
+- ### URL
+  - /apartment/read
+- ### Method
+  - GET
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+
+  - Expected output:
+    ```json
+    {}
+    ```
+  - Error response:
+
+    ```json
+    {}
+    ```
+
+## Update an `Apartment`
+
+- Description:
+  - Berfungsi untuk mengubah data `apartment` yang sudah terdaftar di tabel
+  - Membutuhkan `route parameter` berupa `kode_propar` dalam bentuk `string`.
+    Contoh: `BASE_URL/property/iconic_places/update/AMP-001`
+  - Perlu body request berupa data `Apartment` baru yang akan mengubah data
+    `Apartment` yang sudah terdaftar
+- ### URL
+  - /apartment/update/:kode_propar
+- ### Method
+  - PUT
+- ### Request Body Example
+  ```json
+  {}
+  ```
+- ### Response
+
+  - Expected output:
+
+    ```txt
+
+    ```
+
+  - Error response:
+
+    ```json
+    {}
+    ```
+
+## Delete specific `Apartment` by kode_propar
+
+- Description:
+  - Berfungsi untuk menghapus satu data `Apartment` sesuai dengan `kode_propar`
+    dari database
+  - Membutuhkan `route parameter` berupa `kode_propar` dalam bentuk `string`.
+    Contoh: `BASE_URL/property/iconic_places/delete/AMP-001`
+- ### URL
+  - /apartment/delete/:kode_propar
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+
+  - Expected output:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+
+    ```json
+    {}
+    ```
+
+## Restore specific `Apartment` by kode_propar
+
+- Description:
+  - Berfungsi untuk mengembalikan satu data `Apartment` yang sudah terhapus
+    `(soft-delete)` sesuai dengan `kode_propar` dari database
+  - Membutuhkan `route parameter` berupa `kode_propar` dalam bentuk `string`.
+    Contoh: `BASE_URL/apartment/restore/AMP-001`
+- ### URL
+  - /apartment/restore/:kode_propar
+- ### Method
+  - DELETE
+- ### Request Body Example
+  ```txt
+  Empty Body Request
+  ```
+- ### Response
+
+  - Expected output:
+
+    ```json
+    {}
+    ```
+
+  - Error response:
+
+    ```json
+    {}
     ```
