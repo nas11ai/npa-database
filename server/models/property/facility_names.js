@@ -23,6 +23,24 @@ PropertyFacilityName.init({
       },
     },
   },
+  iconPath: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: 'Please enter property facility\'s icon filepath',
+      },
+    },
+  },
+  iconUrl: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: 'Please enter property facility\'s icon url',
+      },
+    },
+  },
 }, {
   sequelize,
   underscored: true,
