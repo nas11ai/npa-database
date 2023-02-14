@@ -6,7 +6,7 @@ const { ErrorResponse, ErrorDetails } = require("../../models/response");
 
 const generateMulter = (propertyType) => {
   if (typeof propertyType !== "string") {
-    const err = new ErrorDetails("MulterError", "property_type", "property_type must be boolean");
+    const err = new ErrorDetails("MulterError", "property_type", "property_type must be string");
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);
     throw new ErrorResponse(400, "BAD_REQUEST", { [err.attribute]: err.message });
@@ -15,7 +15,7 @@ const generateMulter = (propertyType) => {
   return multer({
     storage: multer.diskStorage({
       destination: function (req, file, cb) {
-        let imagePath = path.join(path.resolve(''), 'assets', `${propertyType}`, `${req.body.kodePropar}`);
+        let imagePath = path.join(path.resolve(''), 'assets', `${propertyType}`, `${req.body.kodePropar ? req.body.kodePropar : req.body.facilityName}`);
         if (!fs.existsSync(imagePath)) {
           fs.mkdirSync(imagePath, { recursive: true });
         }
@@ -31,7 +31,7 @@ const generateMulter = (propertyType) => {
         let seconds = date.getSeconds().toString().padStart(2, '0');
         let formattedDate = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
 
-        cb(null, `${req.body.kodePropar}_${formattedDate}_${file.originalname}`);
+        cb(null, `${req.body.kodePropar ? req.body.kodePropar : req.body.facilityName}_${formattedDate}_${file.originalname}`);
       }
     }),
   });

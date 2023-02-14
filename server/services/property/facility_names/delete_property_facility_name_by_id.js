@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { PropertyFacilityName } = require("../../../models/property");
 const { ErrorResponse, ErrorDetails } = require("../../../models/response");
 
@@ -26,7 +27,13 @@ const deletePropertyFacilityNameById = async (id) => {
   }
 
   try {
+    const path = propertyFacilityName.iconPath;
     await propertyFacilityName.destroy();
+
+    fs.unlink(path, (err) => {
+      if (err) throw err;
+    });
+
   } catch (error) {
     // TODO: ganti console ke log kalau sudah mau production
     console.error(error);
