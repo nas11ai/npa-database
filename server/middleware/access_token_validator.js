@@ -40,12 +40,12 @@ const accessTokenValidator = (req, res, next) => {
       const err = new ErrorDetails("AccessTokenError", "access_token", "access token has expired");
       // TODO: ganti console ke log kalau sudah mau production
       console.error(err);
-      throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+      return next(new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message }));
     }
     const err = new ErrorDetails("AccessTokenError", "access_token", error.message);
     // TODO: ganti console ke log kalau sudah mau production
     console.error(err);
-    throw new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message });
+    return next(new ErrorResponse(401, "UNAUTHORIZED", { [err.attribute]: err.message }));
   }
 }
 
