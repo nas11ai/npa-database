@@ -47,7 +47,7 @@ const login = async (username, password) => {
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
     //TODO: Change to 10 minute when production
-    expiresIn: '15s'
+    expiresIn: '1m',
   });
 
   const newRefreshToken = jwt.sign({
@@ -58,7 +58,7 @@ const login = async (username, password) => {
     issuer: TOKEN_ISSUER,
     audience: TOKEN_AUDIENCE,
     //TODO: Change to 1 day when production
-    expiresIn: '30s',
+    expiresIn: '15m',
   });
 
   return {

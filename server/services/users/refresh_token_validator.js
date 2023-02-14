@@ -45,7 +45,7 @@ const refreshTokenValidator = async (refreshToken) => {
         issuer: TOKEN_ISSUER,
         audience: TOKEN_AUDIENCE,
         //TODO: Change to 10 minute when production
-        expiresIn: '15s',
+        expiresIn: '1m',
       });
     return {
       newAccessToken,

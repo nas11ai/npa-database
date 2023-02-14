@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
       secure: true,
       //TODO: Ganti ke 1 hari kalau deployment
       // maxAge: 24 * 60 * 60 * 1000,
-      maxAge: 15 * 1000,
+      maxAge: 15 * 60 * 1000,
     });
 
     const response = new SuccessResponse(200, "OK", new DataDetails("bearer_token", {
