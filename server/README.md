@@ -885,12 +885,20 @@ https://npa-database-production.up.railway.app
   - /property/facility_names/create
 - ### Method
   - POST
-- ### Request Body Example
-  ```json
-  {
-    "facility_name": "Bathroom"
-  }
-  ```
+- ### Request Data
+
+  - #### Content-Type
+
+    ```txt
+    multipart/form-data
+    ```
+
+  - #### `Required input attribute` `:` `Data type`
+    ```ts
+    facilityName: string;
+    image: object;
+    ```
+
 - ### Response
   - Expected output:
     ```json
@@ -1090,12 +1098,20 @@ https://npa-database-production.up.railway.app
   - /property/facility_names/update/:id
 - ### Method
   - PUT
-- ### Request Body Example
-  ```json
-  {
-    "new_facility_name": "Study Room"
-  }
-  ```
+- ### Request Data
+
+  - #### Content-Type
+
+    ```txt
+    multipart/form-data
+    ```
+
+  - #### Optional input attribute `:` `Data type`
+    ```ts
+    facilityName: string;
+    image: object;
+    ```
+
 - ### Response
   - Expected output:
     ```txt
