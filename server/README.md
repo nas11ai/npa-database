@@ -113,6 +113,36 @@ https://npa-database-production.up.railway.app
     }
     ```
 
+## Access Token
+
+- ### Description:
+
+  - Membutuhkan `Authorization` Header berisikan `bearer token`
+
+- ### URL
+  - /users/access_token
+- ### Method
+  - GET
+- ### Response
+  - Expected output jika access token sudah expired:
+    ```txt
+    Return 204 No Content and Empty Body Response
+    ```
+  - Error response:
+    ```json
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "access token is missing"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:53:28 PM"
+      }
+    }
+    ```
+
 ## Refresh Token
 
 - ### URL
