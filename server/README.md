@@ -832,7 +832,7 @@ https://npa-database-production.up.railway.app
 - ### URL
   - /property/person_in_charges/restore/:id
 - ### Method
-  - DELETE
+  - PUT
 - ### Request Body Example
   ```txt
   Empty Body Request
@@ -1756,20 +1756,186 @@ https://npa-database-production.up.railway.app
   - /apartment/create
 - ### Method
   - POST
-- ### Request Body Example
-  ```json
-  {}
-  ```
+- ### Request Data
+
+  - #### Content-Type
+
+    ```txt
+    multipart/form-data
+    ```
+
+  - #### `Required input attribute` `:` `Data type`
+
+    ```ts
+    kodePropar: {
+      type: string,
+      pattern: /^[A-Z]{1,7}-[0-9]{3}$/
+    };
+    ```
+
+    ```ts
+    name: {
+      type: string,
+      pattern: /[^a-zA-Z0-9 ]+/
+    };
+    ```
+
+    ```ts
+    picId: number;
+    ```
+
+    ```ts
+    propertyArea: string;
+    ```
+
+  - #### Optional input attribute `:` `Data type`
+
+    - images
+      ```ts
+      images: object[];
+      ```
+    - address
+      ```ts
+      address: {
+        type: string,
+        pattern: /[^a-zA-Z0-9., ]+/
+      };
+      ```
+    - size
+      ```ts
+      size: number;
+      ```
+    - tower
+      ```ts
+      tower: string;
+      ```
+    - floor
+      ```ts
+      floor: string;
+      ```
+    - furnishing
+      ```ts
+      furnishing: string[("Fully Furnished", "Semi Furnished", "Unfurnished")];
+      ```
+    - available
+      ```ts
+      available: boolean;
+      ```
+    - remark
+      ```ts
+      remark: string;
+      ```
+    - fees
+      ```ts
+      fees: object;
+      ```
+      - Jika `fees` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          rentalPrice: number,
+          sellPrice: number,
+          priceCurrency: {
+            type: string[("Rupiah", "US Dollar")],
+            required: true
+          },
+          propertyPaymentTermsName: string,
+          leaseTerms: number,
+        }
+        ```
+    - taxFees
+
+      ```ts
+      taxFees: object[];
+      ```
+
+      - Jika `taxFees` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          taxType: {
+            type: string[("Value Added Tax", "Withholding Tax")],
+            required: true,
+          },
+          percentage: {
+            type: number,
+            required: true,
+          },
+          includedWithinPrice: {
+            type: boolean,
+            required: true,
+          },
+        }
+        ```
+
+    - facilities
+
+      ```ts
+      facilities: object[];
+      ```
+
+      - Jika `facilities` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          propertyFacilityName: {
+            type: string,
+            required: true,
+          },
+          type: {
+            type: string,
+            pattern: /[^a-zA-Z0-9 ]+/,
+          },
+          unit: number,
+        }
+        ```
+
+    - accesses
+      ```ts
+      accesses: object[];
+      ```
+      - Jika `accesses` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          propertyIconicPlaceName: {
+            type: string,
+            required: true,
+          },
+          type: {
+            type: string,
+            pattern: /[^a-zA-Z0-9 ]+/,
+          },
+        }
+        ```
+
 - ### Response
 
   - Expected output:
     ```json
-    {}
+    {
+      "code": 201,
+      "status": "CREATED",
+      "data": {
+        "type": "apartments",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:11:24 PM"
+      }
+    }
     ```
   - Error response:
 
     ```json
-    {}
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "kode_propar": "kode_propar must be a string"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/26/2023, 6:43:56 PM"
+      }
+    }
     ```
 
 ## Get all `Apartment`
@@ -1788,43 +1954,1648 @@ https://npa-database-production.up.railway.app
 - ### Response
 
   - Expected output:
+
     ```json
-    {}
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartments",
+        "attributes": {
+          "current_page": 1,
+          "data_count_on_current_page": 11,
+          "total_data_count": 11,
+          "total_pages": 1,
+          "records": [
+            {
+              "available": "Yes",
+              "kodePropar": "AMP-001",
+              "name": "Ampera Penthouse",
+              "address": "Jl. Palmerah Sel. No.30A",
+              "size": 2000,
+              "tower": "A",
+              "floor": "2A",
+              "furnishing": "Fully Furnished",
+              "remark": "Unreachable",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 50,000,000,000.00",
+                "leaseTerm": "6 month",
+                "id": 1,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": {
+                  "id": 1,
+                  "paymentTerm": "Full in Advance"
+                },
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "5%",
+                    "includedWithinPrice": "No",
+                    "detail": "5% Value Added Tax NOT included within price",
+                    "id": 1,
+                    "taxType": "Value Added Tax"
+                  },
+                  {
+                    "percentage": "3%",
+                    "includedWithinPrice": "No",
+                    "detail": "3% Withholding Tax NOT included within price",
+                    "id": 2,
+                    "taxType": "Withholding Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 1,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                },
+                {
+                  "detail": "Private Access to Alfamidi",
+                  "id": 2,
+                  "type": "Private",
+                  "PropertyIconicPlace": {
+                    "id": 1,
+                    "placeName": "Alfamidi"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "2 King Bedroom",
+                  "id": 1,
+                  "type": "King",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                },
+                {
+                  "detail": "2 Suite Bathroom",
+                  "id": 2,
+                  "type": "Suite",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 12,
+                    "facilityName": "Bathroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": [
+                {
+                  "id": 1,
+                  "photoPath": "/app/assets/apartment/AMP-001/AMP-001_2023-02-10-06-54-14_a mimir.jpg",
+                  "photoUrl": "/static/apartment/AMP-001/AMP-001_2023-02-10-06-54-14_a mimir.jpg"
+                },
+                {
+                  "id": 2,
+                  "photoPath": "/app/assets/apartment/AMP-001/AMP-001_2023-02-10-06-54-14_ayaya.jpg",
+                  "photoUrl": "/static/apartment/AMP-001/AMP-001_2023-02-10-06-54-14_ayaya.jpg"
+                }
+              ]
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "AMP-002",
+              "name": "Ampera Mansion",
+              "address": "Jl. Palmerah Sel. No.30A",
+              "size": 2000,
+              "tower": "A",
+              "floor": "2A",
+              "furnishing": "Fully Furnished",
+              "remark": "Unreachable",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 50,000,000,000.00",
+                "leaseTerm": "6 month",
+                "id": 2,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": {
+                  "id": 1,
+                  "paymentTerm": "Full in Advance"
+                },
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "5%",
+                    "includedWithinPrice": "No",
+                    "detail": "5% Value Added Tax NOT included within price",
+                    "id": 3,
+                    "taxType": "Value Added Tax"
+                  },
+                  {
+                    "percentage": "3%",
+                    "includedWithinPrice": "No",
+                    "detail": "3% Withholding Tax NOT included within price",
+                    "id": 4,
+                    "taxType": "Withholding Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 3,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                },
+                {
+                  "detail": "Private Access to Alfamidi",
+                  "id": 4,
+                  "type": "Private",
+                  "PropertyIconicPlace": {
+                    "id": 1,
+                    "placeName": "Alfamidi"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "2 King Bedroom",
+                  "id": 3,
+                  "type": "King",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                },
+                {
+                  "detail": "2 Suite Bathroom",
+                  "id": 4,
+                  "type": "Suite",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 12,
+                    "facilityName": "Bathroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": [
+                {
+                  "id": 3,
+                  "photoPath": "/app/assets/apartment/AMP-002/AMP-002_2023-02-11-03-18-34_a mimir.jpg",
+                  "photoUrl": "/static/apartment/AMP-002/AMP-002_2023-02-11-03-18-34_a mimir.jpg"
+                },
+                {
+                  "id": 4,
+                  "photoPath": "/app/assets/apartment/AMP-002/AMP-002_2023-02-11-03-18-34_ayaya.jpg",
+                  "photoUrl": "/static/apartment/AMP-002/AMP-002_2023-02-11-03-18-34_ayaya.jpg"
+                }
+              ]
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "AMP-004",
+              "name": "Ampera Mansionn",
+              "address": "Jl. Palmerah Sel. No.30A",
+              "size": 2000,
+              "tower": "A",
+              "floor": "2A",
+              "furnishing": "Fully Furnished",
+              "remark": "Unreachable",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 50,000,000,000.00",
+                "leaseTerm": "6 month",
+                "id": 3,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": {
+                  "id": 1,
+                  "paymentTerm": "Full in Advance"
+                },
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "5%",
+                    "includedWithinPrice": "No",
+                    "detail": "5% Value Added Tax NOT included within price",
+                    "id": 5,
+                    "taxType": "Value Added Tax"
+                  },
+                  {
+                    "percentage": "3%",
+                    "includedWithinPrice": "No",
+                    "detail": "3% Withholding Tax NOT included within price",
+                    "id": 6,
+                    "taxType": "Withholding Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 5,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                },
+                {
+                  "detail": "Private Access to Alfamidi",
+                  "id": 6,
+                  "type": "Private",
+                  "PropertyIconicPlace": {
+                    "id": 1,
+                    "placeName": "Alfamidi"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "2 King Bedroom",
+                  "id": 5,
+                  "type": "King",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                },
+                {
+                  "detail": "2 Suite Bathroom",
+                  "id": 6,
+                  "type": "Suite",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 12,
+                    "facilityName": "Bathroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": [
+                {
+                  "id": 5,
+                  "photoPath": "/home/ersankarimi/Documents/test-apps/npa-database/server/assets/apartment/AMP-004/AMP-004_2023-02-14-21-09-42_Screenshot from 2023-02-14 09-14-36.png",
+                  "photoUrl": "/static/apartment/AMP-004/AMP-004_2023-02-14-21-09-42_Screenshot from 2023-02-14 09-14-36.png"
+                },
+                {
+                  "id": 6,
+                  "photoPath": "/home/ersankarimi/Documents/test-apps/npa-database/server/assets/apartment/AMP-004/AMP-004_2023-02-14-21-09-42_Screenshot from 2023-02-14 09-13-56.png",
+                  "photoUrl": "/static/apartment/AMP-004/AMP-004_2023-02-14-21-09-42_Screenshot from 2023-02-14 09-13-56.png"
+                }
+              ]
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "AMPR-001",
+              "name": "Sule Mansion",
+              "address": "Jalan Tirta Sule",
+              "size": 2000,
+              "tower": "A",
+              "floor": "10A",
+              "furnishing": "Semi Furnished",
+              "remark": "None",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 50,000,000,000.00",
+                "leaseTerm": "21 month",
+                "id": 10,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "200%",
+                    "includedWithinPrice": "No",
+                    "detail": "200% Value Added Tax included within price",
+                    "id": 14,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 10,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "2 King Bedroom",
+                  "id": 13,
+                  "type": "King",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "AMPR-004",
+              "name": "Ampera Mansion2",
+              "address": "Jl. Palmerah Sel. No.30A",
+              "size": 2000,
+              "tower": "A",
+              "floor": "2A",
+              "furnishing": "Fully Furnished",
+              "remark": "Unreachable",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 50,000,000,000.00",
+                "leaseTerm": "6 month",
+                "id": 9,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": {
+                  "id": 1,
+                  "paymentTerm": "Full in Advance"
+                },
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "5%",
+                    "includedWithinPrice": "No",
+                    "detail": "5% Value Added Tax NOT included within price",
+                    "id": 12,
+                    "taxType": "Value Added Tax"
+                  },
+                  {
+                    "percentage": "3%",
+                    "includedWithinPrice": "No",
+                    "detail": "3% Withholding Tax NOT included within price",
+                    "id": 13,
+                    "taxType": "Withholding Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 8,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                },
+                {
+                  "detail": "Private Access to Alfamidi",
+                  "id": 9,
+                  "type": "Private",
+                  "PropertyIconicPlace": {
+                    "id": 1,
+                    "placeName": "Alfamidi"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "2 King Bedroom",
+                  "id": 11,
+                  "type": "King",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                },
+                {
+                  "detail": "2 Suite Bathroom",
+                  "id": 12,
+                  "type": "Suite",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 12,
+                    "facilityName": "Bathroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": [
+                {
+                  "id": 7,
+                  "photoPath": "/home/ersankarimi/Documents/test-apps/npa-database/server/assets/apartment/AMPR-004/AMPR-004_2023-02-15-10-24-52_Screenshot from 2023-02-14 10-37-52.png",
+                  "photoUrl": "/static/apartment/AMPR-004/AMPR-004_2023-02-15-10-24-52_Screenshot from 2023-02-14 10-37-52.png"
+                },
+                {
+                  "id": 8,
+                  "photoPath": "/home/ersankarimi/Documents/test-apps/npa-database/server/assets/apartment/AMPR-004/AMPR-004_2023-02-15-10-24-52_Screenshot from 2023-02-14 10-19-56.png",
+                  "photoUrl": "/static/apartment/AMPR-004/AMPR-004_2023-02-15-10-24-52_Screenshot from 2023-02-14 10-19-56.png"
+                }
+              ]
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "AMPR-005",
+              "name": "Sule Mansion2",
+              "address": "Jalan Tirta Sule",
+              "size": 2000,
+              "tower": "A",
+              "floor": "10A",
+              "furnishing": "Semi Furnished",
+              "remark": "None",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 50,000,000,000.00",
+                "leaseTerm": "21 month",
+                "id": 11,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "200%",
+                    "includedWithinPrice": "No",
+                    "detail": "200% Value Added Tax included within price",
+                    "id": 15,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 11,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "2 King Bedroom",
+                  "id": 14,
+                  "type": "King",
+                  "unit": 2,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "ERSN-001",
+              "name": "Gnome Terminal",
+              "address": "Jalan ERSN",
+              "size": 2000,
+              "tower": "10A",
+              "floor": "20A",
+              "furnishing": null,
+              "remark": "None",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 1,000,000,000.00",
+                "sellPrice": "IDR 2,000,000,000.00",
+                "leaseTerm": "12 month",
+                "id": 12,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "12%",
+                    "includedWithinPrice": "No",
+                    "detail": "12% Value Added Tax included within price",
+                    "id": 16,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 12,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "12 Premium Bedroom",
+                  "id": 15,
+                  "type": "Premium",
+                  "unit": 12,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "ERSN-002",
+              "name": "Gnome Terminal 2",
+              "address": "None",
+              "size": 2000,
+              "tower": "A",
+              "floor": "10A",
+              "furnishing": null,
+              "remark": "None",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 20,000,000.00",
+                "sellPrice": "IDR 30,000,000.00",
+                "leaseTerm": "12 month",
+                "id": 13,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "12%",
+                    "includedWithinPrice": "No",
+                    "detail": "12% Value Added Tax included within price",
+                    "id": 17,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 13,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "12 King Bedroom",
+                  "id": 16,
+                  "type": "King",
+                  "unit": 12,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "ERSN-003",
+              "name": "Gnome Terminal 3",
+              "address": "None",
+              "size": 2000,
+              "tower": "A",
+              "floor": "10A",
+              "furnishing": null,
+              "remark": "None",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 12,000.00",
+                "sellPrice": "IDR 1,200,000.00",
+                "leaseTerm": "12 month",
+                "id": 16,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "12%",
+                    "includedWithinPrice": "No",
+                    "detail": "12% Value Added Tax included within price",
+                    "id": 18,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 14,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "12 Premium Bedroom",
+                  "id": 17,
+                  "type": "Premium",
+                  "unit": 12,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "ERSN-009",
+              "name": "Gnome Terminal 7",
+              "address": "None",
+              "size": 2000,
+              "tower": "10",
+              "floor": "10A",
+              "furnishing": null,
+              "remark": "None",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 1,000.00",
+                "sellPrice": "IDR 2,000.00",
+                "leaseTerm": "12 month",
+                "id": 17,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "12%",
+                    "includedWithinPrice": "No",
+                    "detail": "12% Value Added Tax included within price",
+                    "id": 19,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 15,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "12 Premium Bedroom",
+                  "id": 18,
+                  "type": "Premium",
+                  "unit": 12,
+                  "PropertyFacilityName": {
+                    "id": 1,
+                    "facilityName": "Bedroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            },
+            {
+              "available": "Yes",
+              "kodePropar": "SCBD-001",
+              "name": "SCBD Suite Apartment",
+              "address": "Jalan Tepo KM. 10",
+              "size": 400,
+              "tower": "B",
+              "floor": "77",
+              "furnishing": null,
+              "remark": "Ownernya kribo",
+              "PropertyArea": {
+                "id": 5,
+                "regionName": "Bekasi"
+              },
+              "ApartmentFee": {
+                "rentalPrice": "IDR 50,000,000.00",
+                "sellPrice": "IDR 120,000,000,000.00",
+                "leaseTerm": "6 month",
+                "id": 8,
+                "priceCurrency": "Rupiah",
+                "PropertyPaymentTerm": null,
+                "ApartmentTaxFees": [
+                  {
+                    "percentage": "5%",
+                    "includedWithinPrice": "No",
+                    "detail": "5% Value Added Tax included within price",
+                    "id": 11,
+                    "taxType": "Value Added Tax"
+                  }
+                ]
+              },
+              "PropertyPersonInCharge": {
+                "id": 2,
+                "fullname": "Andi Muhammad Rezki",
+                "role": "Developer",
+                "company": "Andi Empire",
+                "phoneNumber": "082144569073"
+              },
+              "ApartmentAccesses": [
+                {
+                  "detail": "Direct Access to Indomaret",
+                  "id": 7,
+                  "type": "Direct",
+                  "PropertyIconicPlace": {
+                    "id": 2,
+                    "placeName": "Indomaret"
+                  }
+                }
+              ],
+              "ApartmentFacilities": [
+                {
+                  "detail": "3 Suite Bathroom",
+                  "id": 10,
+                  "type": "Suite",
+                  "unit": 3,
+                  "PropertyFacilityName": {
+                    "id": 12,
+                    "facilityName": "Bathroom",
+                    "iconPath": "",
+                    "iconUrl": ""
+                  }
+                }
+              ],
+              "ApartmentPhotos": []
+            }
+          ]
+        }
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "2/15/2023, 4:42:31 PM"
+      }
+    }
     ```
+
   - Error response:
 
     ```json
-    {}
+    {
+      "code": 401,
+      "status": "UNAUTHORIZED",
+      "errors": {
+        "access_token": "access token is missing"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:53:28 PM"
+      }
+    }
     ```
 
-## Update an `Apartment`
+- ### Query Params List
+
+  - #### Pagination
+
+    - Size
+
+      - Fungsi:
+        - Untuk menentukan banyaknya data dalam 1 halaman
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        size: number;
+        ```
+
+    - Page
+      - Fungsi:
+        - Untuk menentukan nomor halaman
+      - `Nama Query` `:` `Tipe Data`:
+        ```ts
+        page: number;
+        ```
+
+  - #### Apartment
+
+    - Kode Propar
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `kode_propar` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        kode_propar: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan kode propar `AMP-001`
+           ```txt
+           BASE_URL/apartment/read?kode_propar=AMP-001
+           ```
+        2. Mengurutkan apartment berdasarkan `kode_propar` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?kode_propar=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `kode_propar` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?kode_propar=DESC
+           ```
+
+    - Name
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `nama` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        name: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan nama `Ampera Mansion`
+           ```txt
+           BASE_URL/apartment/read?name=Ampera%20Mansion
+           ```
+        2. Mengurutkan apartment berdasarkan `name` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?name=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `name` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?name=DESC
+           ```
+
+    - Address
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `alamat` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        address: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan alamat `Jalan Tepo`
+           ```txt
+           BASE_URL/apartment/read?address=Jalan%20Tepo
+           ```
+        2. Mengurutkan apartment berdasarkan `address` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?address=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `address` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?address=DESC
+           ```
+
+    - Size
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `size` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        apartment_size: string;
+        size_from: number;
+        size_to: number;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan `minimal size` berupa 200
+           ```txt
+           BASE_URL/apartment/read?size_from=200
+           ```
+        2. Mencari apartment dengan `size antara` 200 `hingga` 500
+           ```txt
+           BASE_URL/apartment/read?size_from=200&&size_to=500
+           ```
+        3. Mengurutkan apartment berdasarkan `size` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?apartment_size=ASC
+           ```
+        4. Mengurutkan apartment berdasarkan `size` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?apartment_size=DESC
+           ```
+
+    - Tower
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `tower` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        tower: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan tower `3A`
+           ```txt
+           BASE_URL/apartment/read?tower=3A
+           ```
+        2. Mengurutkan apartment berdasarkan `tower` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?tower=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `tower` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?tower=DESC
+           ```
+
+    - Floor
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `floor` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        floor: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan floor `10`
+           ```txt
+           BASE_URL/apartment/read?floor=10
+           ```
+        2. Mengurutkan apartment berdasarkan `floor` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?floor=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `floor` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?floor=DESC
+           ```
+
+    - Furnishing
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `furnishing` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        furnishing: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan furnishing `Fully Furnished`
+           ```txt
+           BASE_URL/apartment/read?furnishing=Fully%20Furnished
+           ```
+        2. Mengurutkan apartment berdasarkan `furnishing` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?furnishing=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `furnishing` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?furnishing=DESC
+           ```
+
+    - Available
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `available` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        available: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan available `Yes`
+           ```txt
+           BASE_URL/apartment/read?available=Yes
+           ```
+        2. Mengurutkan apartment berdasarkan `available` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?available=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `available` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?available=DESC
+           ```
+
+    - Remark
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `remark` apartment tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        remark: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan remark `Ownernya kribo`
+           ```txt
+           BASE_URL/apartment/read?remark=Ownernya%20kribo
+           ```
+        2. Mengurutkan apartment berdasarkan `remark` secara `ascending`
+           ```txt
+           BASE_URL/apartment/read?remark=ASC
+           ```
+        3. Mengurutkan apartment berdasarkan `remark` secara `descending`
+           ```txt
+           BASE_URL/apartment/read?remark=DESC
+           ```
+
+  - #### Apartment Facility
+
+    - Facility Name
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `property_facility_name` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        facility_name: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan facility_name `Bedroom`
+           ```txt
+           BASE_URL/apartment/read?facility_name=Bedroom
+           ```
+
+    - Facility Type
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `apartment_facility_type` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        facility_name: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan facility_type `Suite`
+           ```txt
+           BASE_URL/apartment/read?facility_type=Suite
+           ```
+
+    - Facility Unit
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `apartment_facility_unit` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        facility_unit: number;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan facility_unit `2`
+           ```txt
+           BASE_URL/apartment/read?facility_unit=2
+           ```
+
+  - #### Apartment Access
+
+    - Access Place
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `property_iconic_place_name` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        access_place: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan access_place `Indomaret`
+           ```txt
+           BASE_URL/apartment/read?access_place=Indomaret
+           ```
+
+  - #### Property Area
+
+    - Area
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `property_area` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        area: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan area `Bekasi`
+           ```txt
+           BASE_URL/apartment/read?area=Bekasi
+           ```
+
+  - #### Apartment Fee
+
+    - Rental Price
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `rental_price` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        rental_price_from: number;
+        rental_price_to: number;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan `minimal rental price` berupa 35000000
+           ```txt
+           BASE_URL/apartment/read?rental_price_from=35000000
+           ```
+        2. Mencari apartment dengan `rental price antara` 35000000 `hingga` 12000000000
+           ```txt
+           BASE_URL/apartment/read?rental_price_from=35000000&&rental_price_to=12000000000
+           ```
+
+    - Sell Price
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `sell_price` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        sell_price_from: number;
+        sell_price_to: number;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan `minimal sell price` berupa 35000000
+           ```txt
+           BASE_URL/apartment/read?sell_price_from=35000000
+           ```
+        2. Mencari apartment dengan `sell price antara` 35000000 `hingga` 12000000000
+           ```txt
+           BASE_URL/apartment/read?sell_price_from=35000000&&sell_price_to=12000000000
+           ```
+
+    - Price Currency
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `price_currency` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        price_currency: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan price_currency `Rupiah`
+           ```txt
+           BASE_URL/apartment/read?price_currency=Rupiah
+           ```
+
+    - Payment Term
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `payment_term` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        payment_term: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan payment_term `Full in Advance`
+           ```txt
+           BASE_URL/apartment/read?payment_term=Full in Advance
+           ```
+
+  - #### Apartment Tax Fee
+
+    - Rental Price
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `tax_percentage` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        tax_percentage_from: number;
+        tax_percentage_to: number;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan `minimal tax_percentage` berupa 3
+           ```txt
+           BASE_URL/apartment/read?tax_percentage_from=3
+           ```
+        2. Mencari apartment dengan `tax_percentage antara` 3 `hingga` 15
+           ```txt
+           BASE_URL/apartment/read?tax_percentage_from=3&&tax_percentage_to=15
+           ```
+
+    - Tax Type
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `tax_type` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        tax_type: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan tax_type `Withholding Tax`
+           ```txt
+           BASE_URL/apartment/read?tax_type=Withholding Tax
+           ```
+
+    - Tax is Included Within Price
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `Tax is Included Within Price` tertentu
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        tax_is_included: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan tax_is_included `Yes`
+           ```txt
+           BASE_URL/apartment/read?tax_is_included=Yes
+           ```
+
+  - #### Property Person in Charge
+
+    - Fullname
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `fullname` tertentu dari `property_person_in_charges`
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        pic_fullname: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan pic_fullname `Andi Rezki Muhammad`
+           ```txt
+           BASE_URL/apartment/read?pic_fullname=Andi%20Rezki%20Muhammad
+           ```
+
+    - Role
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `role` tertentu dari `property_person_in_charges`
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        pic_role: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan pic_role `Owner`
+           ```txt
+           BASE_URL/apartment/read?pic_role=Owner
+           ```
+
+    - Company
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `company` tertentu dari `property_person_in_charges`
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        pic_company: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan pic_company `Andi Empire`
+           ```txt
+           BASE_URL/apartment/read?pic_company=Andi Empire
+           ```
+
+    - Phone Number
+
+      - Fungsi:
+        - Untuk mencari apartement berdasarkan `phone_number` tertentu dari `property_person_in_charges`
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        pic_phone_number: string;
+        ```
+
+      - Contoh request:
+        1. Mencari apartment dengan pic_phone_number `081827110314`
+           ```txt
+           BASE_URL/apartment/read?pic_phone_number=081827110314
+           ```
+
+## Update or Create an `Apartment`
 
 - Description:
+
   - Berfungsi untuk mengubah data `apartment` yang sudah terdaftar di tabel
   - Membutuhkan `route parameter` berupa `kode_propar` dalam bentuk `string`.
-    Contoh: `BASE_URL/property/iconic_places/update/AMP-001`
+    Contoh: `BASE_URL/apartment/update/AMP-001`
   - Perlu body request berupa data `Apartment` baru yang akan mengubah data
     `Apartment` yang sudah terdaftar
+
+- `NOTE`:
+  - Jika data yang ingin diubah adalah data `null`, maka method ini secara otomatis akan membuat data baru sesuai dengan request
 - ### URL
   - /apartment/update/:kode_propar
 - ### Method
   - PUT
-- ### Request Body Example
-  ```json
-  {}
-  ```
+- ### Request Data
+
+  - #### Content-Type
+
+    ```txt
+    multipart/form-data
+    ```
+
+  - #### Optional input attribute `:` `Data type`
+
+    - kodePropar
+      ```ts
+      kodePropar: {
+        type: string,
+        pattern: /^[A-Z]{1,7}-[0-9]{3}$/
+      };
+      ```
+    - name
+      ```ts
+      name: {
+        type: string,
+        pattern: /[^a-zA-Z0-9 ]+/,
+      };
+      ```
+    - picId
+      ```ts
+      picId: number;
+      ```
+    - propertyArea
+      ```ts
+      propertyArea: string;
+      ```
+    - images
+      <br />Untuk menambah foto baru
+      ```ts
+      images: object[];
+      ```
+    - address
+      ```ts
+      address: {
+        type: string,
+        pattern: /[^a-zA-Z0-9., ]+/,
+      };
+      ```
+    - size
+      ```ts
+      size: number;
+      ```
+    - tower
+      ```ts
+      tower: {
+        type: string,
+        pattern: /[^a-zA-Z0-9]+/,
+      };
+      ```
+    - floor
+      ```ts
+      floor: {
+        type: string,
+        pattern: /[^a-zA-Z0-9]+/,
+      };
+      ```
+    - furnishing
+      ```ts
+      furnishing: string[("Fully Furnished", "Semi Furnished", "Unfurnished")];
+      ```
+    - available
+      ```ts
+      available: boolean;
+      ```
+    - remark
+      ```ts
+      remark: string;
+      ```
+    - fees
+      ```ts
+      fees: object;
+      ```
+      - Jika `fees` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          rentalPrice: number,
+          sellPrice: number,
+          priceCurrency: {
+            type: string[("Rupiah", "US Dollar")],
+            required: true
+          },
+          propertyPaymentTermsName: string,
+          leaseTerms: number,
+        }
+        ```
+    - taxFees
+
+      ```ts
+      taxFees: object[];
+      ```
+
+      - Jika `taxFees` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          taxType: string[("Value Added Tax", "Withholding Tax")],
+          percentage: number,
+          includedWithinPrice: boolean,
+        }
+        ```
+
+    - facilities
+
+      ```ts
+      facilities: object[];
+      ```
+
+      - Jika `facilities` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          propertyFacilityName: string,
+          type: {
+            type: string,
+            pattern: /[^a-zA-Z0-9 ]+/,
+          },
+          unit: number,
+        }
+        ```
+
+    - accesses
+
+      ```ts
+      accesses: object[];
+      ```
+
+      - Jika `accesses` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          propertyIconicPlaceName: string,
+          type: {
+            type: string,
+            pattern: /[^a-zA-Z0-9 ]+/,
+          },
+        }
+        ```
+
+    - photoIds
+      <br />Untuk menghapus foto berdasarkan `id`
+      ```ts
+      photoIds: object[];
+      ```
+      - Jika `photoIds` tidak kosong, maka berikut adalah field yang perlu diisi:
+        ```ts
+        {
+          id: number,
+        }
+        ```
+
 - ### Response
 
   - Expected output:
 
     ```txt
-
+    Return 204 No Content and Empty Body Response
     ```
 
   - Error response:
 
     ```json
-    {}
+    {
+      "code": 400,
+      "status": "BAD_REQUEST",
+      "errors": {
+        "size": "size must be integer"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:53:28 PM"
+      }
+    }
     ```
 
 ## Delete specific `Apartment` by kode_propar
@@ -1833,7 +3604,7 @@ https://npa-database-production.up.railway.app
   - Berfungsi untuk menghapus satu data `Apartment` sesuai dengan `kode_propar`
     dari database
   - Membutuhkan `route parameter` berupa `kode_propar` dalam bentuk `string`.
-    Contoh: `BASE_URL/property/iconic_places/delete/AMP-001`
+    Contoh: `BASE_URL/apartment/delete/AMP-001`
 - ### URL
   - /apartment/delete/:kode_propar
 - ### Method
@@ -1851,8 +3622,32 @@ https://npa-database-production.up.railway.app
   - Error response:
 
     ```json
-    {}
+    {
+      "code": 404,
+      "status": "NOT_FOUND",
+      "errors": {
+        "kode_propar": "kode_propar not found"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:53:28 PM"
+      }
+    }
     ```
+
+- ### Query Params List
+
+  - #### Hard Delete
+
+    - force
+
+      - Fungsi:
+        - Untuk melakukan hard delete terhadap apartment berdasarkan `kode_propar`
+      - `Nama Query` `:` `Tipe Data`:
+
+        ```ts
+        force: number;
+        ```
 
 ## Restore specific `Apartment` by kode_propar
 
@@ -1864,7 +3659,7 @@ https://npa-database-production.up.railway.app
 - ### URL
   - /apartment/restore/:kode_propar
 - ### Method
-  - DELETE
+  - PUT
 - ### Request Body Example
   ```txt
   Empty Body Request
@@ -1874,11 +3669,32 @@ https://npa-database-production.up.railway.app
   - Expected output:
 
     ```json
-    {}
+    {
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "type": "apartments",
+        "attributes": null
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:11:24 PM"
+      }
+    }
     ```
 
   - Error response:
 
     ```json
-    {}
+    {
+      "code": 404,
+      "status": "NOT_FOUND",
+      "errors": {
+        "kode_propar": "kode_propar not found"
+      },
+      "meta": {
+        "version": "1.0",
+        "timestamp": "1/22/2023, 10:53:28 PM"
+      }
+    }
     ```

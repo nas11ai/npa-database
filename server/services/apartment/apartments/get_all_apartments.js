@@ -321,7 +321,7 @@ const getAllApartments = async (req) => {
     picWhere.phoneNumber = { [Op.like]: `%${req.query.pic_phone_number}%` };
   }
 
-  return await Apartment.findAll({
+  const { count, rows } = await Apartment.findAndCountAll({
     attributes: [
       'kodePropar',
       'name',
@@ -349,7 +349,7 @@ const getAllApartments = async (req) => {
         order: apartmentFacilityOrder,
         include: {
           model: PropertyFacilityName,
-          attributes: ['id', 'facilityName'],
+          attributes: ['id', 'facilityName', 'iconPath', 'iconUrl'],
           where: propertyFacilityNameWhere,
           order: propertyFacilityOrder,
         },
@@ -427,8 +427,16 @@ const getAllApartments = async (req) => {
       },
     ],
     offset: Number(req.query.page) && Number(req.query.size) ? (Number(req.query.page) - 1) * Number(req.query.size) : 0,
-    limit: Number(req.query.page) && Number(req.query.size) ? Number(req.query.size) % 25 === 0 ? Number(req.query.size) : 25 : 25,
+    limit: Number(req.query.page) && Number(req.query.size) ? Number(req.query.size) === 5 ? 5 : Number(req.query.size) === 25 ? 25 : Number(req.query.size) === 50 ? 50 : 25 : 25,
   });
+
+  return {
+    current_page: Number(req.query.page) ? Number(req.query.page) : 1,
+    data_count_on_current_page: rows.length,
+    total_data_count: count,
+    total_pages: Math.ceil(count / (Number(req.query.page) && Number(req.query.size) ? Number(req.query.size) === 5 ? 5 : Number(req.query.size) === 25 ? 25 : Number(req.query.size) === 50 ? 50 : 25 : 25)),
+    records: rows,
+  };
 }
 
 module.exports = getAllApartments;

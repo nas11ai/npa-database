@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { SuccessResponse, DataDetails } = require("../../../models/response");
 const { restorePropertyPersonInChargeById } = require("../../../services/property/person_in_charges");
 
-router.get("/:id", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     await restorePropertyPersonInChargeById(Number(req.params.id));
 
