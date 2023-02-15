@@ -8,33 +8,33 @@ const ApartmentTaxFee = require("./tax_fee");
 const { PropertyArea, PropertyFacilityName, PropertyPaymentTerm, PropertyIconicPlace, PropertyPersonInCharge } = require("../property");
 
 PropertyPersonInCharge.hasMany(Apartment);
-Apartment.belongsTo(PropertyPersonInCharge);
+Apartment.belongsTo(PropertyPersonInCharge, { as: "propertyPersonInCharge" });
 
 PropertyArea.hasMany(Apartment);
-Apartment.belongsTo(PropertyArea);
+Apartment.belongsTo(PropertyArea, { as: "propertyArea" });
 
-Apartment.hasMany(ApartmentPhoto);
+Apartment.hasMany(ApartmentPhoto, { as: "apartmentPhoto" });
 ApartmentPhoto.belongsTo(Apartment);
 
 PropertyFacilityName.hasMany(ApartmentFacility);
-ApartmentFacility.belongsTo(PropertyFacilityName);
+ApartmentFacility.belongsTo(PropertyFacilityName, { as: "propertyFacilityName" });
 
-Apartment.hasMany(ApartmentFacility);
+Apartment.hasMany(ApartmentFacility, { as: "apartmentFacilities" });
 ApartmentFacility.belongsTo(Apartment);
 
 PropertyPaymentTerm.hasMany(ApartmentFee);
-ApartmentFee.belongsTo(PropertyPaymentTerm);
+ApartmentFee.belongsTo(PropertyPaymentTerm, { as: "propertyPaymentTerm" });
 
-Apartment.hasOne(ApartmentFee);
+Apartment.hasOne(ApartmentFee, { as: "apartmentFee", foreignKey: "apartmentKodePropar" });
 ApartmentFee.belongsTo(Apartment);
 
-ApartmentFee.hasMany(ApartmentTaxFee);
+ApartmentFee.hasMany(ApartmentTaxFee, { as: "taxFees" });
 ApartmentTaxFee.belongsTo(ApartmentFee);
 
 PropertyIconicPlace.hasMany(ApartmentAccess);
-ApartmentAccess.belongsTo(PropertyIconicPlace);
+ApartmentAccess.belongsTo(PropertyIconicPlace, { as: "propertyIconicPlace" });
 
-Apartment.hasMany(ApartmentAccess);
+Apartment.hasMany(ApartmentAccess, { as: "apartmentAccesses" });
 ApartmentAccess.belongsTo(Apartment);
 
 module.exports = {

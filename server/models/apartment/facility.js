@@ -41,7 +41,7 @@ ApartmentFacility.init({
   detail: {
     type: DataTypes.VIRTUAL,
     get() {
-      return `${this.unit} ${this.type} ${this.PropertyFacilityName.facilityName}`;
+      return `${this.unit} ${this.type} ${this.propertyFacilityName.facilityName}`;
     }
   },
 }, {

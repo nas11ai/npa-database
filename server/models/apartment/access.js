@@ -37,7 +37,7 @@ ApartmentAccess.init({
   detail: {
     type: DataTypes.VIRTUAL,
     get() {
-      return `${this.type[0].toUpperCase() + this.type.slice(1)} Access to ${this.PropertyIconicPlace.placeName}`;
+      return `${this.type[0].toUpperCase() + this.type.slice(1)} Access to ${this.propertyIconicPlace.placeName}`;
     }
   },
 }, {

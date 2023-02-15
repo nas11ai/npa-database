@@ -338,6 +338,7 @@ const getAllApartments = async (req) => {
     include: [
       {
         model: ApartmentFacility,
+        as: "apartmentFacilities",
         separate: true,
         attributes: [
           'id',
@@ -349,6 +350,7 @@ const getAllApartments = async (req) => {
         order: apartmentFacilityOrder,
         include: {
           model: PropertyFacilityName,
+          as: "propertyFacilityName",
           attributes: ['id', 'facilityName', 'iconPath', 'iconUrl'],
           where: propertyFacilityNameWhere,
           order: propertyFacilityOrder,
@@ -356,11 +358,13 @@ const getAllApartments = async (req) => {
       },
       {
         model: ApartmentAccess,
+        as: "apartmentAccesses",
         separate: true,
         attributes: ['id', 'type', 'detail'],
         order: [['id', 'ASC']],
         include: {
           model: PropertyIconicPlace,
+          as: "propertyIconicPlace",
           attributes: ['id', 'placeName'],
           where: propertyIconicPlaceWhere,
           order: propertyIconicPlaceOrder,
@@ -368,6 +372,7 @@ const getAllApartments = async (req) => {
       },
       {
         model: ApartmentPhoto,
+        as: "apartmentPhoto",
         separate: true,
         attributes: ['id', 'photoPath', 'photoUrl'],
         where: apartmentPhotoWhere,
@@ -375,12 +380,14 @@ const getAllApartments = async (req) => {
       },
       {
         model: PropertyArea,
+        as: "propertyArea",
         attributes: ['id', 'regionName'],
         where: propertyAreaWhere,
         order: propertyAreaOrder,
       },
       {
         model: ApartmentFee,
+        as: "apartmentFee",
         attributes: [
           'id',
           'rentalPrice',
@@ -393,12 +400,14 @@ const getAllApartments = async (req) => {
         include: [
           {
             model: PropertyPaymentTerm,
+            as: "propertyPaymentTerm",
             attributes: ['id', 'paymentTerm'],
             where: propertyPaymentTermWhere,
             required: false,
           },
           {
             model: ApartmentTaxFee,
+            as: "taxFees",
             separate: true,
             attributes: [
               'id',
@@ -414,6 +423,7 @@ const getAllApartments = async (req) => {
       },
       {
         model: PropertyPersonInCharge,
+        as: "propertyPersonInCharge",
         attributes: [
           'id',
           'fullname',
