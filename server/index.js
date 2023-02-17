@@ -67,6 +67,7 @@ const corsOptions = {
     'https://na-database.vercel.app',
     new RegExp('https:\/\/fe-na-database-.*-xploratech\.vercel\.app'),
     'https://fe-na-database-k1czrpt89-xploratech.vercel.app',
+    'https://na-database-fwkv8xvhn-xploratech.vercel.app',
   ],
   credentials: true,
 };
@@ -88,7 +89,7 @@ app.use('/users/refresh_token', refreshTokenRouter);
 app.use('/users/access_token', accessTokenValidatorRouter);
 
 //API that needs access token validation
-// app.use(accessTokenValidator);
+app.use(accessTokenValidator);
 app.use('/static', express.static(path.join(__dirname, 'assets')));
 
 app.use('/users/logout', logoutRouter);
@@ -119,7 +120,7 @@ app.use('/property/payment_terms/read', readPropertyPaymentTermRouter);
 app.use('/property/payment_terms/update', updatePropertyPaymentTermRouter);
 app.use('/property/payment_terms/delete', deletePropertyPaymentTermRouter);
 
-// app.use(getUsername);
+app.use(getUsername);
 
 app.use('/apartment/create', createNewApartmentRouter);
 app.use('/apartment/read', readApartmentRouter);
