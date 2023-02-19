@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Op } = require('sequelize');
 const { SuccessResponse, DataDetails } = require("../../../models/response");
-const { getAllApartmentIconicPlaceWithCondition, getAllApartmentIconicPlace, getApartmentIconicPlaceById, } = require("../../../services/property/iconic_places");
+const { getAllPropertyIconicPlaceWithCondition, getAllPropertyIconicPlace, getPropertyIconicPlaceById, } = require("../../../services/property/iconic_places");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -14,16 +14,16 @@ router.get("/", async (req, res, next) => {
     }
 
     if (Object.keys(where).length === 0) {
-      const iconicPlaces = await getAllApartmentIconicPlace();
+      const iconicPlaces = await getAllPropertyIconicPlace();
 
-      const response = new SuccessResponse(200, "OK", new DataDetails("apartment_iconic_places", iconicPlaces));
+      const response = new SuccessResponse(200, "OK", new DataDetails("property_iconic_places", iconicPlaces));
       res.status(response.code).json(response);
       return;
     }
 
-    const iconicPlaces = await getAllApartmentIconicPlaceWithCondition(where);
+    const iconicPlaces = await getAllPropertyIconicPlaceWithCondition(where);
 
-    const response = new SuccessResponse(200, "OK", new DataDetails("apartment_iconic_places", iconicPlaces));
+    const response = new SuccessResponse(200, "OK", new DataDetails("property_iconic_places", iconicPlaces));
     res.status(response.code).json(response);
   } catch (error) {
     next(error);
@@ -32,9 +32,9 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const iconicPlace = await getApartmentIconicPlaceById(Number(req.params.id));
+    const iconicPlace = await getPropertyIconicPlaceById(Number(req.params.id));
 
-    const response = new SuccessResponse(200, "OK", new DataDetails("apartment_iconic_places", iconicPlace));
+    const response = new SuccessResponse(200, "OK", new DataDetails("property_iconic_places", iconicPlace));
     res.status(response.code).json(response);
   } catch (error) {
     next(error);
